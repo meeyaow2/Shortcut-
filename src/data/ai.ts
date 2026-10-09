@@ -306,6 +306,9 @@ export const aiToolJobs = ["Research", "UI generation", "Prototyping", "Coding",
 
 const tool = (input: Omit<AiTool, "pricing" | "dateVerified">): AiTool => ({ pricing: null, dateVerified: VERIFIED, ...input });
 
+/** Tools whose pages were read on a later day than the first pass. */
+const readLater = (input: Omit<AiTool, "pricing" | "dateVerified">): AiTool => ({ ...tool(input), dateVerified: "2026-10-09" });
+
 // Alphabetical by name. Every tool uses the same fields, from its own vendor's pages.
 export const aiTools: AiTool[] = [
   tool({
@@ -322,6 +325,36 @@ export const aiTools: AiTool[] = [
     officialUrl: "https://www.adobe.com/products/firefly.html",
     sourceLabel: "Adobe Firefly product page",
     sourceUrl: "https://www.adobe.com/products/firefly.html",
+  }),
+  readLater({
+    id: "canva-ai",
+    name: "Canva AI",
+    vendor: "Canva",
+    jobs: ["Images"],
+    description: "Canva describes Canva AI 2.0 as going from idea to finished design in one conversation. It says every generated text box, image and graphic is fully editable, and that a memory learns your Brand System, style and preferences.",
+    goodFor: ["Marketing and social graphics from a description", "Staying on brand without a designer checking each piece", "Non-designers who need something presentable quickly"],
+    lessSuitableFor: ["Product UI and interaction design", "Work that has to live in a design system or in code"],
+    workflowExample: "Describe the piece you need, let it draft, then edit the layers by hand until it says what you mean.",
+    difficulty: "Low",
+    platform: "Web and apps",
+    officialUrl: "https://www.canva.com/ai-assistant/",
+    sourceLabel: "Canva AI page",
+    sourceUrl: "https://www.canva.com/ai-assistant/",
+  }),
+  readLater({
+    id: "chatgpt",
+    name: "ChatGPT",
+    vendor: "OpenAI",
+    jobs: ["Research", "UX writing", "Images", "Coding"],
+    description: "A general assistant that OpenAI describes as chat, work and code in one place. Its overview lists drafting and editing writing, creating images and graphic designs from a prompt, writing and debugging code, voice, and connecting to work files and apps.",
+    goodFor: ["Thinking through a problem or a decision in conversation", "First drafts of copy, research plans and summaries", "Quick visual directions from a prompt"],
+    lessSuitableFor: ["Anything that needs your own research data, unless you supply it", "Final interface design inside your design system"],
+    workflowExample: "Paste your interview notes, ask for themes with the quotes behind each, then check every theme against the notes yourself.",
+    difficulty: "Low",
+    platform: "Web, desktop and mobile apps",
+    officialUrl: "https://chatgpt.com/",
+    sourceLabel: "ChatGPT overview",
+    sourceUrl: "https://chatgpt.com/overview/",
   }),
   tool({
     id: "claude",
@@ -428,6 +461,21 @@ export const aiTools: AiTool[] = [
     sourceLabel: "Lovable documentation",
     sourceUrl: "https://docs.lovable.dev/introduction/welcome",
   }),
+  readLater({
+    id: "replit-agent",
+    name: "Replit Agent",
+    vendor: "Replit",
+    jobs: ["Prototyping", "Coding"],
+    description: "Replit says Agent turns ideas into apps, designs, slides and more from plain language. Its documentation describes it setting up the project, writing code, setting up infrastructure, testing the result and publishing, with project types including web app, mobile app, slides and design.",
+    goodFor: ["A working, hosted prototype from a description", "People without a development environment of their own", "Small internal tools"],
+    lessSuitableFor: ["Following an existing design system closely", "Work that has to fit an existing codebase"],
+    workflowExample: "Describe one task end to end, publish it, and put it in front of five people before refining anything.",
+    difficulty: "Medium",
+    platform: "Web",
+    officialUrl: "https://replit.com/",
+    sourceLabel: "Replit documentation, Agent",
+    sourceUrl: "https://docs.replit.com/features/agent/overview",
+  }),
   tool({
     id: "stark",
     name: "Stark",
@@ -458,10 +506,28 @@ export const aiTools: AiTool[] = [
     sourceLabel: "v0 documentation",
     sourceUrl: "https://v0.app/docs/introduction",
   }),
+  readLater({
+    id: "webflow-ai",
+    name: "Webflow AI",
+    vendor: "Webflow",
+    jobs: ["UI generation", "UX writing", "Coding"],
+    description: "Webflow says its AI can build a site, modify page designs, generate copy, generate code and optimise for conversion. It lists an AI site builder, React components generated with AI and then edited visually, and generated CMS collection items.",
+    goodFor: ["Marketing sites and landing pages", "Teams already building in Webflow", "Generating a component, then adjusting it visually"],
+    lessSuitableFor: ["Application UI with complex state", "Teams whose site is not on Webflow"],
+    workflowExample: "Generate a first version of a landing page, replace every line of generated copy with your own, then test it on a phone.",
+    difficulty: "Medium",
+    platform: "Web",
+    officialUrl: "https://webflow.com/ai",
+    sourceLabel: "Webflow AI page",
+    sourceUrl: "https://webflow.com/ai",
+  }),
 ];
 
 /** Tools that were considered but could not be read for checking, so are not described. */
-export const unverifiedTools = ["ChatGPT", "Webflow", "Canva", "Replit"];
+export const unverifiedTools: string[] = [];
+
+/** Tools whose release notes could not be read, so no updates are reported for them. */
+export const unverifiedUpdateSources = ["ChatGPT", "Webflow", "Canva", "Replit"];
 
 export function getAiTool(id: string): AiTool {
   return aiTools.find((t) => t.id === id)!;

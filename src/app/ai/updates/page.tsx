@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/primitives";
 import { UpdateCard } from "@/components/updates/UpdateCard";
-import { unverifiedTools } from "@/data/ai";
+import { unverifiedUpdateSources } from "@/data/ai";
 import { aiFeed } from "@/data/updates";
 
 export const metadata: Metadata = { title: "AI Updates" };
@@ -23,7 +23,7 @@ export default function AiUpdatesPage() {
       </div>
       <p className="mt-8 max-w-read text-sm text-ink-2">
         <span className="font-semibold text-ink">Not covered yet: </span>
-        {unverifiedTools.join(", ")}. Their release pages could not be read for checking, so nothing about them is
+        {unverifiedUpdateSources.join(", ")}. Their release pages could not be read for checking, so nothing about them is
         stated here.
       </p>
     </div>

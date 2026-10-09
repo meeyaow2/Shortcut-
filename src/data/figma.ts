@@ -15,7 +15,12 @@ const fig = (label: string, url: string): Citation => ({ sourceId: "figma", labe
 
 const HELP = "https://help.figma.com/hc/en-us/articles/";
 
+/** A Figma Help page read on 9 October 2026. */
+const figLater = (label: string, url: string): Citation => ({ ...fig(label, url), dateVerified: "2026-10-09" });
+
 export const figmaCite = {
+  devMode: figLater("Figma Help, Guide to Dev Mode", `${HELP}15023124644247-Guide-to-Dev-Mode-in-Figma`),
+  prototyping: figLater("Figma Help, Guide to prototyping", `${HELP}360040314193-Guide-to-prototyping-in-Figma`),
   autoLayout: fig("Figma Help, Guide to auto layout", `${HELP}360040451373-Guide-to-auto-layout`),
   variables: fig("Figma Help, Guide to variables", `${HELP}15339657135383-Guide-to-variables-in-Figma`),
   variablesVsStyles: fig("Figma Help, The difference between variables and styles", `${HELP}15871097384471-The-difference-between-variables-and-styles`),
@@ -558,9 +563,10 @@ export const figmaHandoverChecklist = [
 
 // --- Cheat sheets ----------------------------------------------------------------
 
-const entry = (input: Omit<CraftEntry, "dateReviewed" | "kind"> & { kind?: CraftEntry["kind"] }): CraftEntry => ({
+/** `writtenLater` marks entries written on 9 October 2026, after the first review pass. */
+const entry = ({ dateReviewedOverride, ...input }: Omit<CraftEntry, "dateReviewed" | "kind"> & { kind?: CraftEntry["kind"]; dateReviewedOverride?: boolean }): CraftEntry => ({
   kind: "craft-guidance",
-  dateReviewed: VERIFIED,
+  dateReviewed: dateReviewedOverride ? "2026-10-09" : VERIFIED,
   ...input,
 });
 
@@ -693,6 +699,78 @@ const f = {
       { text: "Available on all paid plans.", citation: figmaCite.libraries },
     ],
   }),
+  devMode: entry({
+    id: "figma-dev-mode",
+    title: "What Dev Mode is for",
+    dateReviewedOverride: true,
+    summary: "Dev Mode is the view developers use to read a design: sizes, properties, generated code, assets and what changed. It only helps them if the file was prepared for it.",
+    why: "A developer in Dev Mode sees exactly what you built, including the detached instances and hard-coded values. The file is the spec.",
+    whenToUse: ["The design is decided and someone is about to build it.", "Developers need to compare a frame with its previous version.", "You want design linked to tickets, documentation or code components."],
+    commonMistakes: ["Handing over a link to a whole file with nothing marked ready.", "Explorations and final screens on the same page.", "Values that are not variables, so the developer sees a hex code with no name."],
+    mentorNote: "Open your own file in Dev Mode before you send it. What a developer will see is rarely what you think you made.",
+    official: [
+      { text: "Dev Mode is a developer-focused workspace for inspecting designs, viewing properties and generated code, downloading assets, comparing changes and managing design handoff.", citation: figmaCite.devMode },
+      { text: "Available on all paid plans, and requires a Full or a Dev seat.", citation: figmaCite.devMode },
+      { text: "Developers can compare frame versions, explore all variants in a component set without editing the file, and link designs to tickets, documentation and code components.", citation: figmaCite.devMode },
+    ],
+  }),
+  readyForDev: entry({
+    id: "figma-ready-for-dev",
+    title: "Marking work ready for development",
+    dateReviewedOverride: true,
+    safeStartingPoint: "One section per deliverable",
+    summary: "Ready for dev is a status, not a feeling. Mark the frames that are decided, group them in a section, and leave everything else unmarked.",
+    why: "It tells a developer where to look and what to ignore, and it gives you a record of what you actually handed over.",
+    commonMistakes: ["Marking a whole page ready when half of it is still being discussed.", "Changing a ready frame without saying so.", "No annotation on behaviour that a static frame cannot show."],
+    official: [
+      { text: "Select a frame, component, instance or section and mark it as ready for dev. Objects marked ready appear under Ready for development in the Dev Mode layers panel.", citation: figmaCite.devMode },
+      { text: "Anyone can group related content into sections and mark sections as ready for development. Dev Mode prioritises content in a section.", citation: figmaCite.devMode },
+      { text: "The navigation panel shows when a frame was last edited.", citation: figmaCite.devMode },
+    ],
+  }),
+  prototypeFlows: entry({
+    id: "figma-prototype-flows",
+    title: "Flows and starting points",
+    dateReviewedOverride: true,
+    safeStartingPoint: "One flow per task",
+    summary: "A flow is one path through your frames with a named place to start. Make one for each task you want someone to try, not one prototype of everything.",
+    why: "A test participant or stakeholder needs to start in the right place and reach an end. A flow per task makes each one a link you can send.",
+    commonMistakes: ["One enormous prototype with no clear start.", "Flows named Flow 1, Flow 2.", "Dead ends where a tap does nothing and the participant thinks it is broken."],
+    official: [
+      { text: "A flow is the network of frames and connections in a single page. A prototype can map a whole journey or focus on one segment through its own flow.", citation: figmaCite.prototyping },
+      { text: "Figma creates a flow starting point when you add the first connection between two frames.", citation: figmaCite.prototyping },
+      { text: "You can share the entire prototype or copy the link to a flow starting point.", citation: figmaCite.prototyping },
+      { text: "Supported on any team or plan. Anyone with can-view access can play prototypes back in Presentation view.", citation: figmaCite.prototyping },
+    ],
+  }),
+  prototypeScope: entry({
+    id: "figma-prototype-scope",
+    title: "How much to prototype",
+    dateReviewedOverride: true,
+    summary: "Prototype what you need an answer about, and nothing else. A prototype is a question put to a user or a stakeholder.",
+    why: "Every connection you add has to be maintained when the design changes. A prototype of everything is out of date within a week.",
+    scale: [
+      { value: "Clickable", label: "Does the flow make sense?", use: "Plain taps between frames. Enough for most usability tests." },
+      { value: "Interactive", label: "Does the component feel right?", use: "Hover, press and variants on one component, built once in the component." },
+      { value: "Detailed", label: "Does the motion matter?", use: "Timing and transitions, only where the motion is the thing being decided." },
+    ],
+    commonMistakes: ["Polishing transitions before the flow has been tested.", "Testing one fixed frame size and calling the design responsive.", "Using a prototype to show developers behaviour that an annotation would explain better."],
+    mentorNote: "If nobody is going to click it, do not wire it.",
+  }),
+  systemSetup: entry({
+    id: "figma-system-setup",
+    title: "Setting up a design system file, in order",
+    dateReviewedOverride: true,
+    safeStartingPoint: "Foundations before components",
+    summary: "The order matters more than the tooling. Each step depends on the one before, and skipping ahead to components is why most libraries get rebuilt.",
+    why: "A component built before its variables exist carries hard-coded values that someone has to find and replace later.",
+    scale: figmaSystemSteps.map((step, index) => ({ value: String(index + 1), label: step.title, use: step.body })),
+    commonMistakes: ["Starting with a button.", "Designs that point at primitive variables directly.", "A library nobody is told how to use."],
+    mentorNote: "A design system is finished when someone new can use it without asking you.",
+    official: [
+      { text: "A main component defines the properties of the component. Instances are linked to it and receive any updates.", citation: figmaCite.components },
+    ],
+  }),
 } satisfies Record<string, CraftEntry>;
 
 export const figmaSheets: CheatSheet[] = [
@@ -731,7 +809,37 @@ export const figmaSheets: CheatSheet[] = [
       { id: "libraries", title: "Libraries", rules: [], entries: [f.libraries] },
     ],
   },
+  {
+    slug: "figma-dev-mode",
+    title: "Figma Dev Mode",
+    description: "What developers see in Dev Mode, and how to mark work ready for them.",
+    group: "Figma",
+    dateUpdated: "2026-10-09",
+    sections: [
+      { id: "basics", title: "Dev Mode", rules: [], entries: [f.devMode] },
+      { id: "ready", title: "Ready for development", rules: [], entries: [f.readyForDev] },
+    ],
+  },
+  {
+    slug: "figma-prototyping",
+    title: "Figma Prototyping",
+    description: "Flows, starting points, and how much of a design is worth wiring up.",
+    group: "Figma",
+    dateUpdated: "2026-10-09",
+    sections: [
+      { id: "flows", title: "Flows", rules: [], entries: [f.prototypeFlows] },
+      { id: "scope", title: "Scope", rules: [], entries: [f.prototypeScope] },
+    ],
+  },
+  {
+    slug: "figma-design-system-setup",
+    title: "Figma Design System Setup",
+    description: "The order to build a design system file in, from foundations to a published library.",
+    group: "Figma",
+    dateUpdated: "2026-10-09",
+    sections: [{ id: "order", title: "The order", rules: [], entries: [f.systemSetup] }],
+  },
 ];
 
 /** Cheat sheets from the brief that are not written yet. */
-export const plannedFigmaSheets = ["Dev Mode", "Prototyping", "Design system setup"];
+export const plannedFigmaSheets: string[] = [];

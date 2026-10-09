@@ -247,7 +247,7 @@ export default function FigmaPage() {
                 </li>
               ))}
             </ul>
-            <p className="mt-3 text-sm text-ink-2">Not written yet: {plannedFigmaSheets.join(", ")}.</p>
+            {plannedFigmaSheets.length > 0 && <p className="mt-3 text-sm text-ink-2">Not written yet: {plannedFigmaSheets.join(", ")}.</p>}
           </aside>
         </div>
       </section>

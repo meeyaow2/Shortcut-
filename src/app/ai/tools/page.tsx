@@ -75,11 +75,13 @@ export default function AiToolsPage() {
             );
           })}
         </div>
-        <p className="mt-10 max-w-read text-sm text-ink-2">
-          <span className="font-semibold text-ink">Not listed yet: </span>
-          {unverifiedTools.join(", ")}. Their official pages could not be read for checking, so Shortcut does not
-          describe them from memory.
-        </p>
+        {unverifiedTools.length > 0 && (
+          <p className="mt-10 max-w-read text-sm text-ink-2">
+            <span className="font-semibold text-ink">Not listed yet: </span>
+            {unverifiedTools.join(", ")}. Their official pages could not be read for checking, so Shortcut does not
+            describe them from memory.
+          </p>
+        )}
       </section>
     </div>
   );
