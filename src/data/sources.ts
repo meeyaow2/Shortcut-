@@ -23,6 +23,7 @@ export const sources: Source[] = [
   { id: "fluent", name: "Fluent 2 Design System", short: "Fluent", url: "https://fluent2.microsoft.design/", color: "#0F548C", tint: "#E3F0FA", context: "global", organisation: "Microsoft", sourceType: "design-system", requirementLevel: "design-system-guidance" },
   { id: "webflow", name: "Webflow", short: "Webflow", url: "https://webflow.com/updates", color: "#1F3FC4", tint: "#E8ECFD", context: "global", organisation: "Webflow", sourceType: "tool-documentation", requirementLevel: "recommendation" },
   { id: "wai", name: "W3C Web Accessibility Initiative", short: "W3C WAI", url: "https://www.w3.org/WAI/", color: "#0B4F9C", tint: "#E7F0FB", context: "global", organisation: "W3C", sourceType: "guideline", requirementLevel: "recommendation" },
+  { id: "gojek", name: "Gojek Design", short: "Gojek", url: "https://www.gojek.design/", color: "#1F6B2A", tint: "#E3F3E5", context: "global", organisation: "Gojek", sourceType: "article", requirementLevel: "best-practice" },
   { id: "grab", name: "Grab", short: "Grab", url: "https://engineering.grab.com/categories/design/", color: "#00632B", tint: "#E2F4E8", context: "global", organisation: "Grab", sourceType: "article", requirementLevel: "best-practice" },
   { id: "granola", name: "Granola", short: "Granola", url: "https://www.granola.ai/updates", color: "#4A5A1E", tint: "#EEF2DD", context: "global", organisation: "Granola", sourceType: "tool-documentation", requirementLevel: "recommendation" },
 ];

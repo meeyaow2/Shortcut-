@@ -3,7 +3,9 @@ import { answers } from "@/data/answers";
 import { aiTools, aiWorkflows, lessons, toolComparisons } from "@/data/ai";
 import { cheatSheets } from "@/data/cheat-sheets";
 import { aiSignals, beforeYouSendIt, designChecks } from "@/data/checks";
-import { explorerSystems, explorerTopics } from "@/data/explorer";
+import { explorerReferences, explorerSystems, explorerTopics } from "@/data/explorer";
+import { gojekComponents, gojekNotFound } from "@/data/gojek";
+import { androidGuidance, decisionHelpers, expressive, getMaterialComponent, materialBreakpoints, materialComponents } from "@/data/material";
 import { figmaComparisons, figmaDecisions, figmaRecipes, figmaTools, getFigmaTool } from "@/data/figma";
 import { guidance } from "@/data/guidance";
 import { openResources, practiceGuides, practiceTemplates } from "@/data/practice";
@@ -73,6 +75,8 @@ const VIEWPORT_WORDS = ["mobile", "tablet", "laptop", "desktop"] as const;
 const systemKeywords: Record<string, string> = {
   grab: "ux ui southeast asia singapore regional superapp ride food low data network emerging markets localisation",
   granola: "ui ux polish changelog release notes craft details small improvements",
+  gojek: "southeast asia sea indonesia regional superapp brand tone voice motion illustration typography maison neue design system sea design systems gojek typography gojek motion",
+  material: "google m3 material 3 expressive android components",
   "uber-base": "uber",
 };
 
@@ -225,6 +229,58 @@ const index: Doc[] = [
       `${list.map((p) => `${p.what} ${p.lesson}`).join(" ")} ${systemKeywords[systemId] ?? ""}`,
     ),
   ),
+  ...materialComponents.map((c) =>
+    doc(
+      { type: "system", id: "material-" + c.id, title: "Material " + c.name.toLowerCase(), detail: c.summary, href: "/systems/material/components#" + c.id, context: "global", source: "Google", contentType: "Component" },
+      [c.group, c.variants ?? "", c.points.join(" "), c.status ?? "", c.watch, "material google m3 design system component handle"].join(" "),
+      "material",
+    ),
+  ),
+  ...decisionHelpers.map((h) =>
+    doc(
+      { type: "system", id: "material-choose-" + h.id, title: h.need + ": which Material component?", detail: h.tradeOff, href: "/systems/material/components#" + h.id, context: "global", source: "Google", contentType: "Decision" },
+      h.options.map((o) => (getMaterialComponent(o.componentId)?.name ?? "") + " " + o.when).join(" ") + " which component should i use choose material google",
+    ),
+  ),
+  doc(
+    { type: "system", id: "material-expressive", title: "Material 3 Expressive: what changed", detail: expressive.whatItIs, href: "/systems/material#expressive", context: "global", source: "Google", contentType: "System" },
+    expressive.changes.map((x) => x.area + " " + x.text).join(" ") + " " + expressive.replaced.map((x) => x.old + " " + x.now).join(" ") + " material google m3 expressive update new springs motion",
+  ),
+  doc(
+    { type: "system", id: "material-breakpoints", title: "Material breakpoints and large screens", detail: materialBreakpoints.points[0], href: "/systems/material#breakpoints", context: "global", source: "Google", contentType: "System" },
+    materialBreakpoints.points.join(" ") + " " + materialBreakpoints.why + " material google window size classes responsive tablet large screens panes",
+  ),
+  doc(
+    { type: "system", id: "material-android", title: "Google's Android guidance: window sizes and foldables", detail: "Platform guidance for Android apps, kept apart from Material.", href: "/systems/material#android", context: "global", source: "Google", contentType: "Platform guidance" },
+    androidGuidance.map((x) => x.topic + " " + x.text).join(" ") + " google android foldable foldables guidance fold posture tabletop window size classes touch targets platform",
+  ),
+  doc(
+    { type: "system", id: "material-tokens", title: "Material tokens and Figma kit", detail: "Not yet read on Material's own site. Shortcut gives no values, and points to what it has read.", href: "/systems/material#tokens", context: "global", source: "Google", contentType: "System" },
+    "material tokens design tokens colour color typography shape elevation figma design kit google m3 foundations",
+  ),
+  doc(
+    { type: "system", id: "google-ai-patterns", title: "Google AI interface patterns: sources in Gemini", detail: "A product pattern, not design-system guidance: how Gemini's help pages say sources are shown.", href: "/systems/material#google-ai", context: "global", source: "Google", contentType: "Product pattern" },
+    "google gemini ai interface patterns sources citations side panel ai design systems product pattern trust",
+  ),
+  doc(
+    { type: "system", id: "gojek-inventory", title: "Gojek design system: component names", detail: "Gojek lists " + gojekComponents.length + " component names and publishes no usage guidance for them.", href: "/systems/gojek#inventory", context: "global", source: "Gojek", contentType: "Reference" },
+    gojekComponents.join(" ") + " gojek design system components inventory asphalt",
+    "gojek",
+  ),
+  doc(
+    { type: "system", id: "gojek-not-found", title: "Gojek: no public guidance found", detail: "What Shortcut looked for on gojek.design and did not find, including colour values, spacing and accessibility.", href: "/systems/gojek#not-found", context: "global", source: "Gojek", contentType: "Reference" },
+    gojekNotFound.map((x) => x.topic + " " + x.note).join(" ") + " gojek colours colors spacing accessibility responsive brandmark photography iconography",
+    "gojek",
+  ),
+  doc(
+    { type: "system", id: "sea-references", title: "Southeast Asian design references", detail: "SGDS, Grab and Gojek: a design system, a product design reference and a brand reference. Three examples, not a survey.", href: "/systems/gojek#sea", context: "global", contentType: "Reference" },
+    "sea southeast asia asian design systems singapore indonesia grab gojek sgds regional",
+  ),
+  doc(
+    { type: "system", id: "material-vs-gojek", title: "Material and Gojek: different kinds of reference", detail: "Material is a documented design system. Gojek's site is a brand showcase. Shortcut can compare them on motion only.", href: "/explorer/motion", context: "global", contentType: "Comparison" },
+    "material vs versus gojek compare google difference motion",
+    "gojek",
+  ),
   // Base's component pages are behind a staff login. Say so instead of returning nothing.
   doc(
     { type: "system", id: "uber-base-components", title: "Uber Base: how it handles a given component", detail: "Base's component pages need an Uber staff login, so Shortcut cannot say. The comparison shows how the systems it has read handle each one.", href: "/systems/uber-base", context: "global", source: "Uber", contentType: "System" },
@@ -339,7 +395,7 @@ const index: Doc[] = [
         `${topic.takeaway ?? ""} ${(topic.themes ?? []).join(" ")} ${(topic.differences ?? []).join(" ")} compare design system ${explorerSystems.map((id) => getSource(id).short).join(" ")}`,
       ),
       // Each other system's column appears only when the query names that system: "Carbon modal".
-      ...explorerSystems
+      ...[...explorerSystems, ...explorerReferences]
         .filter((id) => id !== "sgds" && topic.cells?.[id])
         .map((id) => {
           const cell = topic.cells![id]!;

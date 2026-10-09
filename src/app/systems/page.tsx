@@ -72,7 +72,7 @@ export default function SystemsPage() {
   const profiled = publicSystems.filter((s) => s.status === "profiled");
   const compared = publicSystems.filter((s) => s.status === "listed");
   const planned = publicSystems.filter((s) => s.status === "planned");
-  const references = systems.filter((s) => s.type === "Product design reference");
+  const references = systems.filter((s) => s.type !== "Public design system");
 
   return (
     <div className="page">
@@ -88,6 +88,10 @@ export default function SystemsPage() {
           <div>
             <dt className="font-semibold">Product design reference</dt>
             <dd className="text-ink-2">Useful design material from a company that has no public system Shortcut could verify.</dd>
+          </div>
+          <div>
+            <dt className="font-semibold">Brand and product design reference</dt>
+            <dd className="text-ink-2">A public brand site: voice, motion, illustration. Component names at most, without usage guidance.</dd>
           </div>
         </dl>
         <p className="mt-5">
@@ -128,7 +132,7 @@ export default function SystemsPage() {
       <Group
         id="references"
         title="Product design references"
-        note="Companies whose published design material is worth studying. Shortcut found no public design system for either, so neither is described as having one."
+        note="Companies whose published design material is worth studying. None publishes a documented design system Shortcut could verify, so none is described as having one. Gojek names its components but gives no guidance for them."
         list={references}
       />
 

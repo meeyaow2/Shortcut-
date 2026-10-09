@@ -2,7 +2,7 @@
 
 import { ArrowDown, Check } from "lucide-react";
 import { useState } from "react";
-import { MAX_COMPARED, explorerSystems, sgdsTokenLayers } from "@/data/explorer";
+import { MAX_COMPARED, explorerReferences, explorerSystems, sgdsTokenLayers } from "@/data/explorer";
 import { getSource } from "@/data/sources";
 import { citationAuthority } from "@/lib/authority";
 import type { ExplorerCell, ExplorerTopic, SourceId } from "@/types";
@@ -62,7 +62,7 @@ function ReadingList({ title, items }: { title: string; items: string[] }) {
 /** One topic, up to four design systems side by side, then Shortcut's synthesis. */
 export function TopicComparison({ topic }: { topic: ExplorerTopic }) {
   // Only systems Shortcut has read on this topic can be compared.
-  const available = explorerSystems.filter((id) => topic.cells?.[id]);
+  const available = [...explorerSystems, ...explorerReferences].filter((id) => topic.cells?.[id]);
   const unread = explorerSystems.filter((id) => !topic.cells?.[id]);
   const [chosen, setChosen] = useState<SourceId[]>(available.slice(0, MAX_COMPARED));
   const [selected, setSelected] = useState<SourceId>(chosen[0]);

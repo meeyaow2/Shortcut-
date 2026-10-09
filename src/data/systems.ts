@@ -1,4 +1,5 @@
 import { referenceCaseStudies, referenceProfiles } from "./references";
+import { gojekProfile } from "./gojek";
 import { cite } from "./citations";
 import { getExplorerTopic } from "./explorer";
 import { viewportCite } from "./viewports";
@@ -112,7 +113,7 @@ export const generativeDesignQuestions = [
 
 // --- Library --------------------------------------------------------------------
 
-export type SystemType = "Public design system" | "Product design reference";
+export type SystemType = "Public design system" | "Product design reference" | "Brand and product design reference";
 
 export interface SystemProfile {
   id: string;
@@ -245,7 +246,36 @@ export const systems: SystemProfile[] = [
   // Systems already compared in the Explorer. Their guidance lives there.
   { id: "sgds", name: "Singapore Government Design System", organisation: "GovTech Singapore", type: "Public design system", usedFor: "Singapore government digital services", summary: "Foundations, components, templates and blocks for government digital products.", status: "listed", officialUrl: "https://www.designsystem.tech.gov.sg/", dateVerified: "2026-10-07", explorerSystem: "sgds" },
   { id: "govuk", name: "GOV.UK Design System", organisation: "UK Government Digital Service", type: "Public design system", usedFor: "UK government services", summary: "Components and patterns, each with the research behind it.", status: "listed", officialUrl: "https://design-system.service.gov.uk/", dateVerified: "2026-10-07", explorerSystem: "govuk" },
-  { id: "material", name: "Material Design", organisation: "Google", type: "Public design system", usedFor: "Android and Google products", summary: "Google's design system. Shortcut cites Google's Android developer documentation for it.", status: "listed", officialUrl: "https://m3.material.io/", dateVerified: "2026-10-07", explorerSystem: "material" },
+  {
+    id: "material",
+    knownFor: ["A complete component set", "Breakpoints for any window", "Material 3 Expressive"],
+    name: "Material Design",
+    organisation: "Google",
+    type: "Public design system",
+    usedFor: "Android, the web and Google products",
+    summary: "Google's open-source design system. Material 3 is the current version, and Material 3 Expressive is its 2025 update: new components, spring-based motion and stronger emphasis, without replacing Material 3.",
+    status: "profiled",
+    officialUrl: "https://m3.material.io/",
+    dateVerified: "2026-10-09",
+    explorerSystem: "material",
+    caveat: "Shortcut has read the Overview page of all 36 components, the Breakpoints page and the Expressive announcement. It has not read Material's pages on tokens, colour, typography, shape or elevation, nor any component's Specs or Accessibility tab.",
+    explore: [
+      { area: "Components", items: "36 components in six groups: action, communication, containment, navigation, selection and text input.", access: "Public" },
+      { area: "Layout", items: "Five breakpoints, from compact to extra-large, for Android and the web.", access: "Public" },
+      { area: "Material 3 Expressive", items: "Fourteen new or updated components, motion springs, emphasised type, a shape library.", access: "Public" },
+    ],
+    interesting: [
+      "It retires its own components in public. Segmented buttons and the navigation drawer are marked no longer recommended, each with a named replacement.",
+      "Every component has the same four tabs: overview, specs, guidelines and accessibility.",
+      "It designs to window size, not device. The same breakpoints cover a phone, a foldable and a browser window.",
+      "It says where its Expressive research figures come from, though the studies are Google's own.",
+    ],
+    learn: [
+      "How to choose between similar components. Material states the rule each time: checkboxes, not switches, when several can be selected.",
+      "How to change navigation as the window grows: bar, then rail.",
+      "How to evolve a system without a version break.",
+    ],
+  },
   { id: "apple", name: "Human Interface Guidelines", organisation: "Apple", type: "Public design system", usedFor: "Apple platforms", summary: "Platform conventions for iOS, iPadOS, macOS, watchOS and visionOS.", status: "listed", officialUrl: "https://developer.apple.com/design/human-interface-guidelines/", dateVerified: "2026-10-07", explorerSystem: "apple" },
   // Named in the brief; profiles not written yet. Listed so the gap is visible.
   { id: "fluent", name: "Fluent", organisation: "Microsoft", type: "Public design system", usedFor: "Windows and Microsoft 365", summary: "Microsoft's design system. Shortcut has read its layout, button and dialog pages.", status: "listed", officialUrl: "https://fluent2.microsoft.design/", dateVerified: "2026-10-09", explorerSystem: "fluent" },
@@ -255,6 +285,7 @@ export const systems: SystemProfile[] = [
   { id: "uswds", name: "U.S. Web Design System", organisation: "U.S. General Services Administration", type: "Public design system", usedFor: "United States federal websites", summary: "The design system for federal websites. Shortcut has read its button, design token and modal pages.", status: "listed", officialUrl: "https://designsystem.digital.gov/", dateVerified: CHECKED, explorerSystem: "uswds" },
   // Companies with useful design material and no verified public design system.
   ...referenceProfiles,
+  gojekProfile,
 ];
 
 // --- Responsive and device guidance ----------------------------------------------
@@ -427,9 +458,11 @@ export const learnFrom = [
   { want: "Tokens", where: [{ label: "SGDS token layers", href: "/explorer/design-tokens" }, { label: "Atlassian token naming", href: "/systems/atlassian" }, { label: "Seven systems compared", href: "/explorer/design-tokens" }] },
   { want: "Content design", where: [{ label: "GOV.UK error messages", href: "/cheat-sheets/error-states" }, { label: "Atlassian", href: "/systems/atlassian" }] },
   { want: "Public services", where: [{ label: "Singapore UX", href: "/singapore" }, { label: "Compare SGDS, GOV.UK and USWDS", href: "/explorer/button" }] },
-  { want: "Designing for Southeast Asia", where: [{ label: "Grab's UX breakdowns", href: "/systems/grab" }, { label: "Singapore UX", href: "/singapore" }] },
+  { want: "Designing for Southeast Asia", where: [{ label: "Grab's UX breakdowns", href: "/systems/grab" }, { label: "Gojek's brand expression", href: "/systems/gojek" }, { label: "Singapore UX", href: "/singapore" }] },
+  { want: "Choosing a component", where: [{ label: "Material's 36 components", href: "/systems/material/components" }, { label: "Which component?", href: "/systems/material/components#choose" }] },
+  { want: "Tone of voice", where: [{ label: "Gojek's voice by audience", href: "/systems/gojek" }, { label: "UX Writing", href: "/cheat-sheets/ux-writing" }] },
   { want: "Product polish", where: [{ label: "Granola's changelog", href: "/systems/granola" }, { label: "Before You Send It", href: "/checks/before-you-send-it" }] },
   { want: "AI interfaces", where: [{ label: "Atlassian Rovo UI", href: "/systems/atlassian" }, { label: "Generative UI", href: "/ai/generative-ui" }] },
-  { want: "Large multi-product ecosystems", where: [{ label: "Uber Base extensions", href: "/systems/uber-base" }, { label: "Material across systems", href: "/explorer" }] },
+  { want: "Large multi-product ecosystems", where: [{ label: "Uber Base extensions", href: "/systems/uber-base" }, { label: "Material Design", href: "/systems/material" }] },
   { want: "Design systems and AI", where: [{ label: "Uber's spec-writing agent", href: "/systems/uber-base#uber-uspec" }, { label: "Atlassian's DESIGN.md test", href: "/systems/atlassian#atlassian-design-md" }] },
 ];

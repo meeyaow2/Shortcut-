@@ -5,6 +5,9 @@ import { viewportCite } from "./viewports";
 /** Systems compared in the Explorer, in column order. */
 export const explorerSystems: SourceId[] = ["sgds", "material", "apple", "govuk", "atlassian", "carbon", "primer", "uswds", "fluent"];
 
+/** References that are not design systems but publish something on a topic. Shown only where they have a cell. */
+export const explorerReferences: SourceId[] = ["gojek"];
+
 /** How many systems are shown side by side at once. */
 export const MAX_COMPARED = 4;
 
@@ -15,8 +18,8 @@ export const MAX_COMPARED = 4;
  * that shows it. A missing cell means that system has not been read on that
  * topic yet. `themes` and `differences` are Shortcut's reading of the cells
  * and may only repeat what a cell already says.
- * Material cells cite Google's Android developer documentation, because
- * Material's own site could not be read for checking.
+ * Most Material cells cite Google's Android developer documentation. Cells
+ * read from m3.material.io say so in their citation.
  */
 export const explorerTopics: ExplorerTopic[] = [
   {
@@ -753,6 +756,26 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: src("sgds", "SGDS, Motion", "https://www.designsystem.tech.gov.sg/foundations/motion"),
       },
+      material: {
+        headline: "Springs, split by what they animate",
+        points: [
+          "Material 3 Expressive introduces a spring-based motion system.",
+          "Spatial springs handle movement; effects springs handle colour and opacity.",
+          "Components such as button groups apply a shape morph when pressed and selected.",
+          "The announcement gives no duration values. Material's motion pages have not been read.",
+        ],
+        citation: { sourceId: "material", label: "Material Design 3, Start building with Material 3 Expressive", url: "https://m3.material.io/blog/building-with-m3-expressive", datePublished: "2025-05-13", dateVerified: "2026-10-09" },
+      },
+      gojek: {
+        headline: "Move with Purpose (brand reference)",
+        points: [
+          "Four principles: purposeful, delightful, responsive and expressive.",
+          "Four named curves: Move-In, Move-Out, Flair-In and Linear.",
+          "Describes its motion as functional, not flashy.",
+          "No duration or easing values on the page.",
+        ],
+        citation: { sourceId: "gojek", label: "Gojek Design, Motion", url: "https://www.gojek.design/motion-design", dateVerified: "2026-10-09" },
+      },
       apple: {
         headline: "Purposeful, brief and optional",
         points: [
@@ -791,7 +814,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "Material and Apple agree: animate only to explain a change, keep it short, and respect reduced-motion settings. Carbon and Fluent also want motion quick and purposeful. Only Carbon publishes durations, from 70 to 700 ms. The government systems say little, so a Singapore service has no official motion spec to follow.",
+      "Apple, Carbon and Fluent agree: animate to explain a change, and keep it quick. Material's Expressive update moves to springs, one kind for movement and one for colour and opacity. Only Carbon publishes durations, from 70 to 700 ms. Gojek, a brand reference and not a design system, names its curves but gives no values. The government systems say little, so a Singapore service has no official motion spec to follow.",
   },
   {
     id: "text-input",

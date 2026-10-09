@@ -36,7 +36,7 @@ function TopicList({ kind }: { kind: ExplorerTopic["kind"] }) {
               <span className="text-ink-2">{ready ? topic.summary : "Sources not yet checked. Nothing is shown until they are."}</span>
               {ready ? (
                 <Tag tone="ok">
-                  {Object.keys(topic.cells ?? {}).length} of {explorerSystems.length} systems read
+                  {explorerSystems.filter((id) => topic.cells?.[id]).length} of {explorerSystems.length} systems read
                 </Tag>
               ) : (
                 <Tag tone="outline">In progress</Tag>

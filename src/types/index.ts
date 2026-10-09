@@ -26,7 +26,8 @@ export type SourceId =
   | "webflow"
   | "wai"
   | "grab"
-  | "granola";
+  | "granola"
+  | "gojek";
 
 export interface Source {
   id: SourceId;

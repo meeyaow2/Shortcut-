@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { EditorialLabel } from "@/components/craft/Craft";
 import { FreshnessStatus, SourceBadge, SourceMeta } from "@/components/source/Source";
+import { GojekProfile, MaterialProfile } from "@/components/systems/Profiles";
 import { Breakdown, CaseStudyCard, Flow, PolishList, ResponsiveBlock } from "@/components/systems/Systems";
 import { Tag } from "@/components/ui/Tag";
 import { ExternalLink } from "@/components/ui/primitives";
@@ -17,7 +18,7 @@ type Props = { params: Promise<{ id: string }> };
 const profiled = systems.filter((s) => s.status === "profiled");
 
 // The badge to show for each profiled system.
-const badge: Record<string, SourceId> = { "uber-base": "uber", atlassian: "atlassian", grab: "grab", granola: "granola" };
+const badge: Record<string, SourceId> = { "uber-base": "uber", atlassian: "atlassian", grab: "grab", granola: "granola", material: "material", gojek: "gojek" };
 
 export function generateStaticParams() {
   return profiled.map((system) => ({ id: system.id }));
@@ -146,6 +147,8 @@ async function Profile({ params }: Props) {
         </section>
         )}
 
+        {system.id === "material" && <MaterialProfile />}
+
         {breakdowns.length > 0 && (
           <section aria-labelledby="breakdowns">
             <h2 id="breakdowns" className="border-b-2 border-ink pb-2 text-2xl font-semibold">
@@ -189,6 +192,8 @@ async function Profile({ params }: Props) {
             </div>
           </section>
         ))}
+
+        {system.id === "gojek" && <GojekProfile />}
 
         {responsiveGuidance[system.id] && (
           <section aria-labelledby="responsive" className="max-w-3xl">

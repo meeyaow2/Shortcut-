@@ -44,8 +44,8 @@ async function Chapter({ params }: Props) {
         </div>
       </header>
 
-      <div className="grid gap-x-10 gap-y-6 pt-6 lg:grid-cols-[14rem_1fr] lg:pt-8">
-        <div className="lg:sticky lg:top-24 lg:self-start">
+      <div className="grid grid-cols-1 gap-x-10 gap-y-6 pt-6 lg:grid-cols-[14rem_1fr] lg:pt-8">
+        <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
           <ChapterNav current={chapter.id} />
         </div>
 
