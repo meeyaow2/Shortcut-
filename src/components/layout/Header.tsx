@@ -42,6 +42,7 @@ const nav: NavItem[] = [
       { href: "/cheat-sheets", label: "Cheat Sheets" },
       { href: "/starting-points", label: "Safe Starting Points" },
       { href: "/cheat-sheets/responsive-design", label: "Responsive & Viewports" },
+      { href: "/cheat-sheets/foldables", label: "Foldables & Multi-state Devices" },
       { href: "/systems", label: "Design System Library" },
       { href: "/explorer", label: "Compare Design Systems" },
       { href: "/figma", label: "Figma Guide" },

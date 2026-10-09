@@ -49,7 +49,7 @@ export const uxBreakdowns: Record<string, UxBreakdown[]> = {
       id: "grab-low-data",
       title: "Designing for patchy networks and small data budgets",
       problem: "Grab says the main challenge for its consumers is finding a reliable network, and that many use prepaid plans and switch data off after a ride.",
-      change: "It designs blank, loading, partial and error states alongside the happy path, shows loading skeletons when the app opens, replaced a video tutorial with SVG animation, and turned off autoplay on the home feed.",
+      change: "It designs blank, loading, partial and error states alongside the happy path. The app opens with loading skeletons. A video tutorial became an SVG animation, and autoplay is off on the home feed.",
       stated: "The article advises keeping screens alive through visual cues, messaging and cached content, and preferring simple animation because elaborate transitions look choppy on older phones.",
       principle: "The non-happy states are the product for people on a poor connection. Design them first, not last.",
       context: "A ride or food order is often placed on the move, on a low-cost phone. A screen that waits for the network is a screen that fails.",
@@ -69,7 +69,7 @@ export const uxBreakdowns: Record<string, UxBreakdown[]> = {
       id: "grab-chat-support",
       title: "Rebuilding chat support around how agents actually worked",
       problem: "Users needing help had to phone and queue, and chat sessions dropped. Grab also found agents ignored reply templates: 85% of replies were typed freehand because templates felt impersonal.",
-      change: "Grab built chat into the app, with file and picture sharing, autocomplete suggestions while agents type, a colour-coded chat timer, prompts when others are waiting, and a queue limit that sends people to another channel when the wait would be too long.",
+      change: "Grab built chat into the app, with file and picture sharing. Agents get autocomplete suggestions as they type, a colour-coded timer and prompts when others are waiting. A queue limit sends people to another channel when the wait would be too long.",
       stated: "Grab reports the queue limit cut waiting time by about 30%, autocomplete cut average chat time by 12%, and timers and nudges cut it by 22%. The team writes: \"we are not our users.\"",
       principle: "When people work around a feature, study the workaround. Autocomplete kept the speed of templates and the personal tone agents wanted.",
       context: "Shadowing agents revealed the template problem. It would not have shown up in usage numbers alone.",
@@ -164,7 +164,7 @@ export const referenceCaseStudies: CaseStudy[] = [
       "The article stresses human oversight, and notes that models trained on past data are weaker at predicting future trends or reactions to new technology.",
     ],
     lesson:
-      "A regional example of AI being folded into an existing design practice instead of set up as a separate discipline. Two details are worth copying: the tool was trained on the company's own visual language, which is why its output is usable, and the designer's job moved toward judging output, not away from design. The article is from June 2025 and comes from the team itself, so read the figures as its own account.",
+      "AI folded into an existing design practice, not set up beside it. Two things to copy: the tool was trained on Grab's own visual language, and the designer's job moved toward judging output. The figures are Grab's own, from June 2025.",
     citation: refCite.grabAi,
   },
 ];

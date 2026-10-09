@@ -18,7 +18,7 @@ const touchTargets: Comparison = {
     { sourceId: "sgds", label: "SGDS, Button", value: "Not stated", qualifier: "The Button page gives no minimum touch-target size", citation: cite.sgdsButton },
   ],
   takeaway:
-    "Treat 24 × 24 CSS px as the floor that a standard requires, and the platform figures as the size to design to. SGDS states no minimum of its own on its Button page, so for a Singapore government web service the WCAG figure is the one you are held to.",
+    "Treat 24 × 24 CSS px as the floor a standard requires, and the platform figures as the size to design to. SGDS's Button page states no minimum of its own. For a Singapore government web service, the WCAG figure is the one you are held to.",
 };
 
 const textContrast: Comparison = {
@@ -42,7 +42,7 @@ const mandatoryFields: Comparison = {
     { sourceId: "wcag", label: "WCAG 2.2 (A), SC 3.3.2", value: "Labels or instructions are provided when content requires user input", qualifier: "Does not prescribe how to mark required fields", citation: wcag("3.3.2") },
   ],
   takeaway:
-    "The sources disagree on asterisks: Singapore's control recommends them and GOV.UK rules them out. They agree that people must be able to tell which fields can be skipped. Labelling the optional fields in words satisfies all four when most fields are mandatory, and is the safest default. On a Singapore government service, BD-7 is the one that binds.",
+    "The sources disagree on asterisks: Singapore's control recommends them, GOV.UK rules them out. All agree people must be able to tell which fields can be skipped. Marking optional fields in words satisfies all four when most fields are required. On a Singapore government service, BD-7 is the one that binds.",
 };
 
 const r = {
@@ -115,7 +115,7 @@ const r = {
   hoverFocus: {
     id: "content-on-hover-or-focus",
     title: "Content that appears on hover or focus",
-    body: "It must be dismissible without moving the pointer or focus, hoverable so the pointer can move onto it without it disappearing, and persistent until the user dismisses it or the trigger is removed.",
+    body: "It must be dismissible without moving the pointer or focus. It must be hoverable, so the pointer can move onto it without it disappearing. And it must persist until the user dismisses it or the trigger is removed.",
     citations: [wcag("1.4.13")],
   },
   reflow: {
@@ -162,7 +162,7 @@ const r = {
   auth: {
     id: "accessible-authentication",
     title: "Accessible authentication",
-    body: "No step of signing in may require a cognitive function test, such as remembering a password or solving a puzzle, unless there is an alternative method or a mechanism to help, such as allowing password managers and paste.",
+    body: "No step of signing in may require a cognitive function test, such as remembering a password or solving a puzzle. The exception is when there is another method, or a mechanism to help, such as allowing password managers and paste.",
     citations: [wcag("3.3.8")],
   },
   labels: {
@@ -198,7 +198,7 @@ const r = {
   errorPrevent: {
     id: "error-prevention",
     title: "High-stakes submissions can be undone, checked or confirmed",
-    body: "For legal commitments, financial transactions and changes to user data, at least one must be true: the submission is reversible, the data is checked and can be corrected, or the user can review and confirm before finalising.",
+    body: "For legal commitments, financial transactions and changes to user data, at least one must be true. The submission is reversible, the data is checked and can be corrected, or the user can review and confirm before finalising.",
     citations: [wcag("3.3.4")],
   },
   errorNextToField: {
@@ -598,7 +598,7 @@ const sourcedSheets: CheatSheet[] = [
             id: "five-users",
             title: "Qualitative usability tests",
             value: "5 users",
-            body: "NN/g's long-standing advice is to test with no more than 5 users and run as many small tests as you can afford, for example three studies of 5 instead of one study of 15. With several highly distinct user groups, test 3 to 4 users per group for two groups, or 3 per group for three or more.",
+            body: "NN/g advises testing with no more than 5 users and running as many small tests as you can afford: three studies of 5, not one of 15. With distinct user groups, test 3 to 4 per group for two groups, or 3 per group for three or more.",
             citations: [cite.nngFiveUsers],
           },
         ],
@@ -640,20 +640,29 @@ const sourcedSheets: CheatSheet[] = [
   },
   {
     slug: "responsive-design",
-    inThirty: ["Design for the space available, not the name of the device", "Add a breakpoint where the layout breaks", "Physical pixels are not the CSS viewport", "Content must still work at 320 CSS px wide", "On a foldable, expand the same layout; keep state when it opens", "Test the widths between your breakpoints"],
+    inThirty: ["Design for the space available, not the name of the device", "Add a breakpoint where the layout breaks", "Physical pixels are not the CSS viewport", "Content must still work at 320 CSS px wide", "Test the widths between your breakpoints"],
     title: "Responsive & Viewports",
-    description: "Viewports, breakpoints, fluid layout, touch and pointer, foldables, and the widths a layout has to survive.",
+    description: "Viewports, breakpoints, fluid layout, touch and pointer, and the widths a layout has to survive.",
     dateUpdated: "2026-10-09",
     viewportSensitivity: "high",
     sections: [
       { id: "viewports", title: "Viewports and breakpoints", rules: [], entries: [e.viewportVsPixels, e.breakpoints] },
       { id: "fluid", title: "Fluid layout and priority", rules: [], entries: [e.mobileFirst, e.fluidLayout, e.contentPriority] },
       { id: "input", title: "Touch and pointer", rules: [], entries: [e.touchVsPointer] },
-      { id: "foldables", title: "Foldables", rules: [], entries: [e.foldables] },
       { id: "reflow", title: "Reflow and zoom", rules: [r.reflow, r.resize, r.textSpacing] },
       { id: "singapore", title: "Singapore government services", rules: [guidanceRule("bd-1"), guidanceRule("sgds-breakpoints")] },
-      { id: "orientation", title: "Orientation and input", rules: [r.orientation, r.targetSize] },
+      // Target sizes are compared on the Accessibility and Mobile sheets, and cited under Touch and pointer above.
+      { id: "orientation", title: "Orientation", rules: [r.orientation] },
     ],
+  },
+  {
+    slug: "foldables",
+    title: "Foldables & Multi-state Devices",
+    description: "Designing interfaces that adapt across closed, open and changing device states.",
+    dateUpdated: "2026-10-09",
+    viewportSensitivity: "high",
+    inThirty: ["Design one responsive interface", "Keep the same task and state when the device opens", "Use the space available, not fixed device layouts", "Keep the fold clear of controls and text", "Test closed, open and half-open"],
+    sections: [{ id: "different", title: "What makes foldables different", rules: [], entries: [e.foldables] }],
   },
 ];
 

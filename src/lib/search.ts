@@ -177,7 +177,7 @@ const index: Doc[] = [
     ),
   ),
   doc(
-    { type: "cheatsheet", id: "iphone-duo", title: "Designing for iPhone Duo", detail: "Apple gives the outer display a compact width layout and the inner display a regular width one. Physical pixels are not the CSS viewport.", href: "/cheat-sheets/responsive-design#iphone-duo", context: "global", contentType: "Craft guidance" },
+    { type: "cheatsheet", id: "iphone-duo", title: "Designing for iPhone Duo", detail: "Apple gives the outer display a compact width layout and the inner display a regular width one. Physical pixels are not the CSS viewport.", href: "/cheat-sheets/foldables#iphone-duo", context: "global", contentType: "Craft guidance" },
     "apple hig foldable folding fold closed open outer inner display continuity hinge dual pane split view toolbar tab bar side vertical controls viewport resolution pixels",
   ),
   doc(

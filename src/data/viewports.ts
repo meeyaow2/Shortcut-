@@ -132,7 +132,7 @@ export function getFoldableDevice(id: string): FoldableDevice | undefined {
 
 /** Said wherever physical pixels are shown, so they are not read as a CSS width. */
 export const pixelsNote =
-  "These are physical pixels. A browser reports a much smaller CSS width, because each CSS pixel is drawn with several physical ones. Apple's specifications page does not give the CSS viewport width, so Shortcut does not either. Do not set a breakpoint at 1398 px because the outer display has that many pixels.";
+  "These are physical pixels. A browser reports a much smaller CSS width, because each CSS pixel is drawn with several physical ones. Apple's specifications page gives no CSS viewport width, so Shortcut gives none either.";
 
 /**
  * Apple's guidance for iPhone Duo, one subject per card. `apple`, `pairs`,
@@ -160,19 +160,19 @@ export const duoGuidance: DuoCard[] = [
   },
   {
     title: "Keep state and function",
-    apple: "Keep functionality and the state of elements the same between displays. Show an additional level of hierarchy on the inner display if it suits the content.",
+    apple: "Keep the same functions and state on both displays. Add a level of hierarchy on the inner display if it suits the content.",
     takeaway: "Opening the device should feel like gaining space, not entering another app.",
   },
   {
     title: "Let the layout expand",
-    apple: "Do not reinvent the app when it resizes. Let the existing layout expand with the available space.",
+    apple: "Do not reinvent the app when it resizes. Let the existing layout expand.",
     use: ["Size classes", "Layout margins", "Safe area insets"],
     avoid: ["Fixed widths", "Anything tied to one display"],
   },
   {
     title: "Toolbars and tab bars",
-    apple: "On the outer display, and on the inner display in landscape, the system moves toolbars and tab bars to the side to keep vertical space for content.",
-    takeaway: "Apple says not to override this placement in general. Leave it unless you have a strong reason.",
+    apple: "The system moves toolbars and tab bars to the side on the outer display, and on the inner display in landscape. This keeps vertical space for content.",
+    takeaway: "Apple says not to override this in general. Leave it unless you have a strong reason.",
   },
   {
     title: "Partial fold",
@@ -188,22 +188,21 @@ export const duoGuidance: DuoCard[] = [
 export const foldableDo = ["Design one layout that expands", "Keep the task, selection and typed text across the fold", "Use flexible sizing, margins and safe areas", "Test closed, open and half-open"];
 export const foldableDont = ["Build a separate app for each state", "Use fixed screen dimensions", "Rearrange everything when it opens", "Put controls or text on the fold"];
 
-export const foldableThirty = ["Design one responsive interface", "Preserve state as the device opens", "Use the space available, not fixed device layouts", "Keep the fold region clear", "Test closed, open and intermediate states"];
+/** States and situations to try before calling a foldable layout done. Shortcut's list. */
+export const foldableTests = ["Closed", "Open, portrait", "Open, landscape", "Half open, with the fold across the screen", "Opened in the middle of a task", "Closed in the middle of a task", "Sharing the open screen with another app"];
 
 /** Questions to ask in each state. These are Shortcut's, written to sit alongside Apple's guidance above. */
 export const duoQuestions: Record<FoldState, { lead: string; items: string[]; caution?: string }> = {
   closed: {
-    lead: "A compact width layout, on a display that is wider and shorter than other iPhones. Check that:",
+    lead: "Wider and shorter than other iPhones. Check that:",
     items: ["Navigation still works with bars on the side instead of the bottom.", "Primary content stays visible without scrolling past chrome.", "Forms remain usable.", "Touch targets stay comfortable.", "Text does not become overly dense."],
   },
   open: {
-    lead: "Considerably more room. Let the layout grow into it; do not scale everything up in proportion, and do not build a different app. Consider:",
+    lead: "More room. Let the layout grow into it. Consider:",
     items: ["A two-column layout.", "A list beside its detail.", "A contextual side panel.", "Showing content that was behind a tap when closed.", "Use beside another app in a split view.", "A second level of information hierarchy."],
     caution: "More space does not automatically mean more content.",
   },
 };
-
-export const continuityItems = ["The current task", "Navigation state", "Anything already typed", "The selected item", "Scroll position, where it still makes sense"];
 
 /** How each cheat sheet subject reads in each fold state. Shortcut's reading; `apple` is what Apple's page says on the subject. */
 export const foldComparison: { subject: string; closed: string; open: string; apple?: string }[] = [

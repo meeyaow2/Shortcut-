@@ -236,7 +236,7 @@ const baseUpdates: Update[] = [
       "List which of your screens depend on a fixed bottom tab bar or toolbar, and check them against the new page.",
     sourceUrl: APPLE,
     relevantTo: ["Foldable", "Mobile"],
-    links: [{ label: "Designing for iPhone Duo", href: "/cheat-sheets/responsive-design#iphone-duo" }],
+    links: [{ label: "Designing for iPhone Duo", href: "/cheat-sheets/foldables#iphone-duo" }],
   },
   {
     id: "apple-layout",

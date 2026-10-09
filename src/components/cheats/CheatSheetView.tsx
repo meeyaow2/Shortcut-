@@ -15,7 +15,7 @@ import { ComponentQABlock, CraftBlock } from "../craft/Craft";
 import { ContextNotice } from "../layout/ContextSwitch";
 import { FreshnessStatus, SourceBadge } from "../source/Source";
 import { isSpecificTo } from "../viewport/Scope";
-import { ComponentComparisons, FoldableGuide, FoldableNote, TestMatrix } from "../viewport/Viewport";
+import { ComponentComparisons, FoldableGuide, FoldableNote, RelatedLinks, TestMatrix } from "../viewport/Viewport";
 import { ViewportBar } from "../viewport/ViewportBar";
 import { InThirty } from "../ui/Scan";
 import { RuleBlock } from "./RuleBlock";
@@ -23,10 +23,17 @@ import { RuleBlock } from "./RuleBlock";
 // Blocks that follow the sections on one sheet, listed so the side navigation can link to them.
 const extras: Record<string, { id: string; title: string }[]> = {
   "responsive-design": [
-    { id: "foldable-guide", title: "Foldable reference" },
-    { id: "iphone-duo", title: "Designing for iPhone Duo" },
     { id: "components", title: "Same component, different viewports" },
     { id: "test-matrix", title: "Responsive test matrix" },
+    { id: "related", title: "Related" },
+  ],
+  foldables: [
+    { id: "closed-open", title: "Closed and open" },
+    { id: "iphone-duo", title: "What Apple says" },
+    { id: "recommends", title: "What Shortcut recommends" },
+    { id: "testing", title: "Testing across states" },
+    { id: "sources", title: "Official sources" },
+    { id: "related", title: "Related" },
   ],
 };
 
@@ -48,6 +55,14 @@ export function CheatSheetView({ sheet }: { sheet: CheatSheet }) {
       rules: first(section.rules.filter((rule) => context !== "global" || !rule.context)),
     }))
     .filter((section) => section.rules.length > 0 || (section.entries?.length ?? 0) > 0);
+
+  // The foldable material used to live on the responsive sheet. Old links to it still land in the right place.
+  useEffect(() => {
+    if (sheet.slug !== "responsive-design") return;
+    const moved: Record<string, string> = { "#iphone-duo": "#iphone-duo", "#foldables": "#foldables", "#foldable-guide": "#recommends" };
+    const target = moved[window.location.hash];
+    if (target) window.location.replace(`/cheat-sheets/foldables${window.location.search}${target}`);
+  }, [sheet.slug]);
 
   // Recording the visit is what lets the library flag later changes.
   useEffect(() => {
@@ -145,9 +160,33 @@ export function CheatSheetView({ sheet }: { sheet: CheatSheet }) {
           ))}
           {sheet.slug === "responsive-design" && (
             <>
-              <FoldableGuide />
               <ComponentComparisons />
               <TestMatrix />
+              <RelatedLinks
+                links={[
+                  { href: "/cheat-sheets/foldables", label: "Foldables & Multi-state Devices" },
+                  { href: "/cheat-sheets/spacing", label: "Spacing by viewport" },
+                  { href: "/cheat-sheets/typography", label: "Type by viewport" },
+                  { href: "/cheat-sheets/layout", label: "Columns and content width" },
+                  { href: "/cheat-sheets/navigation", label: "Navigation by viewport" },
+                  { href: "/cheat-sheets/tables", label: "Tables by viewport" },
+                  { href: "/cheat-sheets/modals", label: "Modal sizes" },
+                  { href: "/cheat-sheets/drawers", label: "Drawers" },
+                ]}
+              />
+            </>
+          )}
+          {sheet.slug === "foldables" && (
+            <>
+              <FoldableGuide />
+              <RelatedLinks
+                links={[
+                  { href: "/cheat-sheets/responsive-design", label: "Responsive & Viewports" },
+                  { href: "/cheat-sheets/responsive-design#test-matrix", label: "Viewport testing" },
+                  { href: "/checks/before-you-send-it#responsive", label: "Responsive QA checklist" },
+                  { href: "/explorer/foldables", label: "Apple and Google compared" },
+                ]}
+              />
             </>
           )}
         </div>

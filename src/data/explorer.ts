@@ -190,7 +190,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "The numbers differ because the units and platforms differ, so do not copy one system's breakpoints into another. What they agree on: design for the space available, start small, and keep the same functionality at every size. For a Singapore government web service, SGDS's 320, 768 and 1440 are the sizes to hand off.",
+      "The numbers differ because units and platforms differ, so do not copy one system's breakpoints into another. They agree on three things: design for the space available, start small, and keep the same functions at every size. For a Singapore government service, hand off SGDS's 320, 768 and 1440.",
   },
   {
     id: "button",
@@ -368,7 +368,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "The first four put the message at the field, and USWDS says to do so even when there is also a message at the top of the form. They differ on timing: the Android example validates while typing, Apple varies it by field, and GOV.UK's pattern assumes validation on submit with a summary. Choose timing per field type, always say how to fix the problem, and keep what the user typed.",
+      "The first four put the message at the field. USWDS says to do that even when there is also a message at the top. Timing differs: Android's example validates while typing, Apple varies it by field, and GOV.UK validates on submit with a summary. Always say how to fix it, and keep what was typed.",
   },
   {
     id: "colour",
@@ -464,7 +464,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "Every system gives colours role-based names, whatever else it layers on top, and several ask you not to reuse a role for a different job. Carbon and Fluent both keep neutrals dominant and colour sparing. USWDS adds a grade scale that makes lightness comparable across hues. None of the pages read sets its own contrast ratio; the testable numbers come from WCAG.",
+      "Every system names colours by role, and several ask you not to reuse a role for another job. Carbon and Fluent keep neutrals dominant and colour sparing. USWDS adds a grade scale so lightness compares across hues. None of the pages read sets a contrast ratio; those numbers come from WCAG.",
   },
   {
     id: "typography",
@@ -551,7 +551,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "On the web, body size runs from 14 px in Fluent to 19 px in GOV.UK, and Apple's is 17 pt on iPhone. The common 14 px product-UI body matches Fluent and is smaller than the government systems' defaults. Most build hierarchy from a few clear steps, and Carbon is explicit that product screens and marketing pages need different type sets.",
+      "On the web, body text runs from 14 px in Fluent to 19 px in GOV.UK. Apple's is 17 pt on iPhone. The common 14 px product body matches Fluent and is smaller than the government defaults. Most build hierarchy from a few steps. Carbon says product screens and marketing pages need different type sets.",
   },
   {
     id: "spacing",
@@ -670,7 +670,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "SGDS and Material land on the same steps, 4, 8, 12, 16 and 24, and both tie the value to the size or kind of component. Atlassian and Fluent run smaller, at 6 and 4 px for a button, and also size the radius to the element. None applies one radius to everything.",
+      "SGDS and Material share the same steps: 4, 8, 12, 16 and 24. Atlassian and Fluent run smaller, at 6 and 4 px for a button. All four tie the radius to the size or kind of element. None applies one radius to everything.",
   },
   {
     id: "elevation",
@@ -735,7 +735,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "Among the first four systems only one leans on drop shadows, and asks for them to be subtle: Material uses colour, Apple translucent materials, GOV.UK nothing. Atlassian and Fluent do use shadows, though Atlassian only on its two highest levels. Height is mostly kept for things that sit above the page, not ordinary content.",
+      "Of the first four, only one leans on drop shadows, and it asks for subtle ones. Material uses colour, Apple translucent materials, GOV.UK nothing. Atlassian and Fluent do use shadows; Atlassian only on its two highest levels. Height is mostly kept for things that sit above the page.",
   },
   {
     id: "motion",
@@ -791,7 +791,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "Material and Apple say the same thing: animate only when it explains a change, keep it short, and respect reduced-motion settings. Carbon and Fluent agree that motion should be quick and purposeful, and Carbon is the only one read that publishes durations, from 70 to 700 ms. The two government systems give little or nothing, so there is no official motion spec to follow for a Singapore service.",
+      "Material and Apple agree: animate only to explain a change, keep it short, and respect reduced-motion settings. Carbon and Fluent also want motion quick and purposeful. Only Carbon publishes durations, from 70 to 700 ms. The government systems say little, so a Singapore service has no official motion spec to follow.",
   },
   {
     id: "text-input",
@@ -885,7 +885,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "Most of these systems warn that placeholder text disappears and cannot stand in for a label. A visible label above the field is the one choice none of them argues against. Sizing the field to the expected answer, which GOV.UK, USWDS and Fluent each ask for, is the least followed and easiest to adopt.",
+      "Most of these systems warn that placeholder text disappears and cannot replace a label. None argues against a visible label above the field. GOV.UK, USWDS and Fluent each ask you to size the field to the expected answer. It is the least followed advice and the easiest to adopt.",
   },
   {
     id: "select",
@@ -974,7 +974,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "This is the sharpest disagreement in the Explorer: GOV.UK and USWDS both treat select as a last resort, while most others treat it as a normal space-saving control. They agree at the edges: radios for a few options, something searchable for long lists. USWDS puts numbers on it: fewer than seven, use radios; more than 15, consider a combo box.",
+      "The sharpest disagreement here. GOV.UK and USWDS treat select as a last resort; most others treat it as a normal space-saver. All agree at the edges: radios for a few options, something searchable for long lists. USWDS gives numbers: under seven, use radios; over 15, consider a combo box.",
   },
   {
     id: "modal",
@@ -1224,7 +1224,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "Five is the ceiling in both systems that give a number. The first four keep primary navigation for destinations only, in the same place on every screen; actions, account controls and secondary links go elsewhere. USWDS adds that the order should follow demand and the structure should follow what people need, not the organisation chart.",
+      "Five is the ceiling in both systems that give a number. The first four keep primary navigation for destinations only, in the same place on every screen. Actions and account controls go elsewhere. USWDS adds: order by demand, and structure by what people need, not the organisation chart.",
   },
   {
     id: "table",
@@ -1460,7 +1460,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "Every system here agrees on the core: checkboxes for many, radios for one. Most describe a mixed state for a parent checkbox. GOV.UK adds two rules worth taking anywhere: never pre-select, and offer an explicit none. USWDS adds a third: list them vertically, with labels that are positive statements.",
+      "All agree on the core: checkboxes for many, radios for one. Most describe a mixed state for a parent checkbox. GOV.UK adds: never pre-select, and offer an explicit none. USWDS adds: list them vertically, with positively worded labels.",
   },
   {
     id: "radio",
@@ -1540,7 +1540,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "Radios are for short lists where seeing every option helps; when the list is long or space is short, several systems send you to a select. They disagree on defaults: Atlassian says to preselect the safest option, Carbon preselects nothing, and USWDS warns that a default can bias the choice. Stack them vertically unless there are only two short options.",
+      "Radios suit short lists where seeing every option helps. For long lists or tight space, several systems point to a select. Defaults divide them: Atlassian preselects the safest option, Carbon preselects nothing, and USWDS warns a default can bias the choice. Stack them vertically unless there are two short options.",
   },
   {
     id: "alert",
@@ -1630,7 +1630,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "The same word means different things: Apple's alert blocks the screen, while SGDS's alert and GOV.UK's banner sit in the page and Material's snackbar disappears on its own. Carbon names the kinds outright: inline, toast and callout. Atlassian's section message stays until the situation is resolved. Choose by how much interruption the message deserves, and use every kind sparingly.",
+      "One word, several meanings. Apple's alert blocks the screen. SGDS's alert and GOV.UK's banner sit in the page. Material's snackbar disappears on its own. Carbon names its kinds: inline, toast and callout. Atlassian's section message stays until resolved. Choose by how much interruption the message deserves, and use each sparingly.",
   },
   {
     id: "touch-targets",
@@ -1661,7 +1661,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "Apple and Android give touch sizes in their own units, and they are not the same number. On the web, WCAG's 24 by 24 CSS pixel minimum sits beneath both as a floor, and applies to a mouse as well as a finger. Design to the platform you ship on.",
+      "Apple and Android give touch sizes in their own units, and the numbers differ. On the web, WCAG's 24 by 24 CSS pixel minimum sits beneath both, and applies to a mouse as well as a finger. Design to the platform you ship on.",
     themes: ["Both platforms give one minimum for anything tappable, not a size per component.", "The visible control can be smaller than the area that responds to touch."],
     differences: ["Units: Apple uses points, Android density-independent pixels. Neither is a CSS pixel.", "SGDS gives a default button height; the page read gives no separate touch target figure.", "Not read on this topic: GOV.UK, Atlassian, Carbon, Primer and USWDS."],
   },
@@ -1695,7 +1695,7 @@ export const explorerTopics: ExplorerTopic[] = [
       },
     },
     takeaway:
-      "Both treat a folding device as two layouts of one app, joined by kept state, and both keep content off the fold. They differ on navigation: Apple's system puts bars on the side even when closed, while Google describes a bottom bar folded and a rail unfolded. Follow the platform you are designing for.",
+      "Both treat a folding device as two layouts of one app, joined by kept state. Both keep content off the fold. Navigation differs: Apple puts bars at the side even when closed; Google describes a bottom bar folded and a rail unfolded. Follow the platform you are designing for.",
     themes: ["Two layouts, one app: a narrow one closed and a wider one open.", "State survives the fold.", "Nothing important sits on the fold line."],
     differences: ["Navigation placement: at the side on iPhone Duo; bottom bar when folded on Android.", "Apple stresses expanding the existing layout. Google speaks of alternative layouts optimised for each.", "Not read on this topic: SGDS, GOV.UK, Atlassian, Carbon, Primer, USWDS and Fluent."],
   },

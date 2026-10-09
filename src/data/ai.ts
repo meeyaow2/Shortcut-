@@ -80,7 +80,7 @@ export const aiUpdates: Update[] = [
     kind: "tool",
     datePublished: "2026-09-02",
     dateVerified: "2026-10-09",
-    summary: "Webflow says you can now select any element inside an AI code component and adjust it in the Style Panel like any other element, add an element as context in a prompt, and edit text on the canvas.",
+    summary: "Webflow says you can now select any element inside an AI code component and style it like any other element. You can also add an element as context in a prompt, and edit text on the canvas.",
     whyItMatters: "Generated components stop being sealed boxes. Small fixes no longer need another prompt, which is where generated output usually drifts.",
     designerAction: "Generate one component, then make every refinement by hand and note which ones you would have struggled to describe in a prompt.",
     sourceUrl: "https://webflow.com/updates/ai-code-components-visual-editing",

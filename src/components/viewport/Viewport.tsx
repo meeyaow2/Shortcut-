@@ -3,11 +3,10 @@
 import Link from "next/link";
 import {
   componentComparisons,
-  continuityItems,
   duoGuidance,
   foldableDo,
   foldableDont,
-  foldableThirty,
+  foldableTests,
   duoQuestions,
   foldComparison,
   foldableDevices,
@@ -23,7 +22,7 @@ import type { FoldState } from "@/types";
 import { Check, X } from "lucide-react";
 import { EditorialLabel, Why } from "../craft/Craft";
 import { DoDont } from "../practice/Practice";
-import { InThirty, KeyTakeaway } from "../ui/Scan";
+import { KeyTakeaway } from "../ui/Scan";
 import { SourceMeta } from "../source/Source";
 import { FoldDemo, FoldSchematic } from "../visual/ViewportPreviews";
 
@@ -72,8 +71,8 @@ export function FoldableNote() {
       <p className="text-sm text-ink-2">{pixelsNote}</p>
       <p className="text-sm text-ink-2">
         Where an entry has no value of its own for a folding screen, it shows the {foldState === "closed" ? "mobile" : "tablet"} one and says so.{" "}
-        <Link href="/cheat-sheets/responsive-design#iphone-duo" className="font-medium text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">
-          Designing for {device.name}
+        <Link href="/cheat-sheets/foldables#iphone-duo" className="font-medium text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">
+          What Apple says about {device.name}
         </Link>
       </p>
       <SourceMeta citations={[device.citation, viewportCite.duoHig]} heading="Official sources" />
@@ -81,22 +80,151 @@ export function FoldableNote() {
   );
 }
 
-/** The foldable reference: topics, the iPhone Duo in each state, continuity, and how each subject reads. */
+/** A short list of places to go next, at the foot of a sheet. */
+export function RelatedLinks({ links }: { links: { href: string; label: string }[] }) {
+  return (
+    <section id="related" aria-labelledby="related-title">
+      <h2 id="related-title" className={sectionTitle}>
+        Related
+      </h2>
+      <ul className="flex flex-wrap gap-x-6 gap-y-2 pt-4">
+        {links.map((item) => (
+          <li key={item.href}>
+            <Link href={item.href} className="font-medium text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">
+              {item.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+/**
+ * The foldables sheet below its opening entry: the two states, what Apple
+ * says, what Shortcut recommends, how to test, and the sources once at the
+ * end. Each idea appears in one place only.
+ */
 export function FoldableGuide() {
   const device = foldableDevices[0];
   return (
     <>
-      <section id="foldable-guide" aria-labelledby="foldable-guide-title">
+      <section id="closed-open" aria-labelledby="closed-open-title" className="anchor-target">
+        <h2 id="closed-open-title" className={sectionTitle}>
+          Closed and open
+        </h2>
+        <div className="space-y-5 pt-5">
+          <FoldDemo />
+          <DisplayFacts />
+          <KeyTakeaway>Those are physical pixels, not a CSS width. Do not set a breakpoint at 1398 px.</KeyTakeaway>
+          <Why label="Why pixels are not the viewport">
+            <p>{pixelsNote}</p>
+          </Why>
+        </div>
+      </section>
+
+      <section id="iphone-duo" aria-labelledby="iphone-duo-title" className="anchor-target">
+        <h2 id="iphone-duo-title" className={sectionTitle}>
+          What Apple says
+        </h2>
+        <p className="mt-3 max-w-read text-sm text-ink-2">
+          Apple&rsquo;s guidance for {device.name}, restated. Lines marked Shortcut takeaway are Shortcut&rsquo;s reading, not Apple&rsquo;s wording.
+        </p>
+        <ul className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          {duoGuidance.map((card) => (
+            <li key={card.title} className="flex flex-col rounded-md border border-line p-4">
+              <h3 className="font-display text-lg font-semibold tracking-tight">{card.title}</h3>
+              <p className="mt-1.5 text-ink-2">{card.apple}</p>
+              {card.pairs && (
+                <dl className="mt-3 grid grid-cols-2 gap-2">
+                  {card.pairs.map((pair) => (
+                    <div key={pair.label} className="rounded-sm bg-wash px-3 py-2">
+                      <dt className="text-sm text-ink-3">{pair.label}</dt>
+                      <dd className="font-semibold">{pair.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+              {(card.use || card.avoid) && (
+                <div className="mt-3 grid grid-cols-2 gap-3 text-[0.9375rem]">
+                  <ul className="space-y-1">
+                    {card.use?.map((item) => (
+                      <li key={item} className="flex gap-1.5">
+                        <Check aria-hidden className="mt-1 size-3.5 shrink-0 text-ok" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <ul className="space-y-1">
+                    {card.avoid?.map((item) => (
+                      <li key={item} className="flex gap-1.5">
+                        <X aria-hidden className="mt-1 size-3.5 shrink-0 text-warn" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {card.takeaway && (
+                <p className="mt-auto border-l-2 border-mark pl-3 pt-3 text-[0.9375rem]">
+                  <span className="block text-sm font-semibold text-ink-3">Shortcut takeaway</span>
+                  {card.takeaway}
+                </p>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section id="recommends" aria-labelledby="recommends-title" className="anchor-target">
         <div className="flex flex-wrap items-end justify-between gap-2 border-b-2 border-ink pb-2">
-          <h2 id="foldable-guide-title" className="text-2xl font-semibold">
-            Foldable reference
+          <h2 id="recommends-title" className="text-2xl font-semibold">
+            What Shortcut recommends
           </h2>
           <EditorialLabel kind="craft-guidance" />
         </div>
         <div className="space-y-5 pt-5">
-          <InThirty title="Designing for a foldable? In 30 seconds" items={foldableThirty} />
           <DoDont dos={foldableDo} donts={foldableDont} />
-          <Why label={`All ${foldableTopics.length} topics, one line each`}>
+          <div className="grid gap-4 md:grid-cols-2">
+            {(["closed", "open"] as const).map((mode) => (
+              <div key={mode} className="rounded-md border border-line p-4">
+                <h3 className="text-lg font-semibold capitalize">{mode}</h3>
+                <p className="mt-1 text-ink-2">{duoQuestions[mode].lead}</p>
+                <ul className="mt-2 space-y-1">
+                  {duoQuestions[mode].items.map((item) => (
+                    <li key={item} className="border-l border-line-strong pl-3">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <KeyTakeaway label="Design review note">More space does not automatically mean more content.</KeyTakeaway>
+          <Why label="How spacing, navigation, layout and density read in each state">
+            <dl className="divide-y divide-line text-ink">
+              {foldComparison.map((row) => (
+                <div key={row.subject} className="grid gap-x-4 gap-y-1 py-2.5 md:grid-cols-[8rem_1fr_1fr]">
+                  <dt className="font-semibold">{row.subject}</dt>
+                  <dd>
+                    <span className="text-sm font-semibold text-ink-3">Closed. </span>
+                    {row.closed}
+                  </dd>
+                  <dd>
+                    <span className="text-sm font-semibold text-ink-3">Open. </span>
+                    {row.open}
+                  </dd>
+                  {row.apple && (
+                    <dd className="text-sm text-ink-2 md:col-span-2 md:col-start-2">
+                      <span className="font-semibold text-ink-3">Apple: </span>
+                      {row.apple}
+                    </dd>
+                  )}
+                </div>
+              ))}
+            </dl>
+          </Why>
+          <Why label={`All ${foldableTopics.length} foldable topics, one line each`}>
             <dl className="divide-y divide-line text-ink">
               {foldableTopics.map((topic) => (
                 <div key={topic.title} className="grid gap-x-6 gap-y-0.5 py-2.5 sm:grid-cols-[12rem_1fr]">
@@ -109,130 +237,26 @@ export function FoldableGuide() {
         </div>
       </section>
 
-      <section id="iphone-duo" aria-labelledby="iphone-duo-title" className="anchor-target">
-        <h2 id="iphone-duo-title" className={sectionTitle}>
-          Designing for {device.name}
+      <section id="testing" aria-labelledby="testing-title" className="anchor-target">
+        <h2 id="testing-title" className={sectionTitle}>
+          Testing across states
         </h2>
-        <div className="space-y-5 pt-5">
-          <FoldDemo />
-          <DisplayFacts />
-          <KeyTakeaway>Those are physical pixels, not a CSS width. Do not set a breakpoint at 1398 px.</KeyTakeaway>
-          <Why label="Why pixels are not the viewport">
-            <p>{pixelsNote}</p>
-          </Why>
-          <div>
-            <h3 className="text-lg font-semibold">What Apple says</h3>
-            <p className="mt-1 max-w-read text-sm text-ink-2">
-              Each card restates Apple&rsquo;s guidance. Lines marked Shortcut takeaway are Shortcut&rsquo;s reading, not Apple&rsquo;s wording.
-            </p>
-            <ul className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-              {duoGuidance.map((card) => (
-                <li key={card.title} className="flex flex-col rounded-md border border-line p-4">
-                  <h4 className="font-display text-lg font-semibold tracking-tight">{card.title}</h4>
-                  <p className="mt-1.5 text-ink-2">{card.apple}</p>
-                  {card.pairs && (
-                    <dl className="mt-3 grid grid-cols-2 gap-2">
-                      {card.pairs.map((pair) => (
-                        <div key={pair.label} className="rounded-sm bg-wash px-3 py-2">
-                          <dt className="text-sm text-ink-3">{pair.label}</dt>
-                          <dd className="font-semibold">{pair.value}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  )}
-                  {(card.use || card.avoid) && (
-                    <div className="mt-3 grid grid-cols-2 gap-3 text-[0.9375rem]">
-                      <ul className="space-y-1">
-                        {card.use?.map((item) => (
-                          <li key={item} className="flex gap-1.5">
-                            <Check aria-hidden className="mt-1 size-3.5 shrink-0 text-ok" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <ul className="space-y-1">
-                        {card.avoid?.map((item) => (
-                          <li key={item} className="flex gap-1.5">
-                            <X aria-hidden className="mt-1 size-3.5 shrink-0 text-warn" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {card.takeaway && (
-                    <p className="mt-auto border-l-2 border-mark pl-3 pt-3 text-[0.9375rem]">
-                      <span className="block text-sm font-semibold text-ink-3">Shortcut takeaway</span>
-                      {card.takeaway}
-                    </p>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="flex flex-wrap items-center justify-between gap-2 border-t border-line pt-4">
-            <p className="max-w-read text-sm text-ink-2">
-              From here down is Shortcut&rsquo;s, not Apple&rsquo;s: questions to ask of your own design in each state.
-            </p>
-            <EditorialLabel kind="craft-guidance" />
-          </div>
-          <div className="grid gap-6 md:grid-cols-2">
-            {(["closed", "open"] as const).map((mode) => (
-              <div key={mode}>
-                <h3 className="text-lg font-semibold capitalize">{mode}</h3>
-                <p className="mt-1 text-ink-2">{duoQuestions[mode].lead}</p>
-                <ul className="mt-2 space-y-1">
-                  {duoQuestions[mode].items.map((item) => (
-                    <li key={item} className="border-l border-line-strong pl-3">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                {duoQuestions[mode].caution && <p className="mt-3 border-l-2 border-mark pl-3 font-medium">{duoQuestions[mode].caution}</p>}
-              </div>
-            ))}
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold">Continuity</h3>
-            <p className="mt-1 max-w-read text-ink-2">
-              Someone starts a task on the outer display, then opens the device. It should not feel like arriving in a different app. Keep:
-            </p>
-            <ul className="mt-2 flex flex-wrap gap-1.5">
-              {continuityItems.map((item) => (
-                <li key={item} className="rounded-sm bg-wash px-2 py-0.5 text-sm text-ink-2">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold">How each subject reads, closed and open</h3>
-            <dl className="mt-2 divide-y divide-line rounded-md border border-line">
-              {foldComparison.map((row) => (
-                <div key={row.subject} className="grid gap-x-4 gap-y-1 px-4 py-3 md:grid-cols-[8rem_1fr_1fr]">
-                  <dt className="font-semibold">{row.subject}</dt>
-                  <dd>
-                    <span className="text-sm font-semibold text-ink-3 md:hidden">Closed. </span>
-                    {row.closed}
-                  </dd>
-                  <dd>
-                    <span className="text-sm font-semibold text-ink-3 md:hidden">Open. </span>
-                    {row.open}
-                  </dd>
-                  {row.apple && (
-                    <dd className="text-sm text-ink-2 md:col-span-2 md:col-start-2">
-                      <span className="font-semibold text-ink-3">Apple: </span>
-                      {row.apple}
-                    </dd>
-                  )}
-                </div>
-              ))}
-            </dl>
-            <p className="mt-2 text-sm text-ink-3">Closed is the middle column and open the right, from tablet width up. The rows are Shortcut&rsquo;s reading; the Apple line restates Apple&rsquo;s page.</p>
-          </div>
-          <div className="border-t border-line pt-4">
-            <SourceMeta citations={[viewportCite.duoHig, device.citation]} heading="Official sources" />
-          </div>
+        <ul className="flex flex-wrap gap-1.5 pt-4">
+          {foldableTests.map((item) => (
+            <li key={item} className="rounded-sm border border-line px-2.5 py-1 text-[0.9375rem]">
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3 max-w-read text-sm text-ink-2">In each one, check that the task, the selection and anything typed are still there.</p>
+      </section>
+
+      <section id="sources" aria-labelledby="sources-title" className="anchor-target">
+        <h2 id="sources-title" className={sectionTitle}>
+          Official sources
+        </h2>
+        <div className="pt-4">
+          <SourceMeta citations={[viewportCite.duoHig, device.citation, viewportCite.androidFoldables]} />
         </div>
       </section>
     </>
@@ -250,7 +274,10 @@ export function ComponentComparisons() {
         <EditorialLabel kind="industry-convention" />
       </div>
       <p className="mt-3 max-w-read text-ink-2">Common ways a component changes with the space available. Patterns to choose from, not rules.</p>
-      <div className="mt-3 hidden gap-x-6 border-b border-line pb-2 text-sm font-semibold text-ink-3 md:grid md:grid-cols-[8rem_1fr_1fr_1fr]">
+      <div className="mt-4">
+      <Why label={`${componentComparisons.length} components at mobile, tablet and desktop`}>
+      <div className="text-ink">
+      <div className="hidden gap-x-6 border-b border-line pb-2 text-sm font-semibold text-ink-3 md:grid md:grid-cols-[8rem_1fr_1fr_1fr]">
         <span>Component</span>
         <span>Mobile</span>
         <span>Tablet</span>
@@ -277,6 +304,9 @@ export function ComponentComparisons() {
           </li>
         ))}
       </ul>
+      </div>
+      </Why>
+      </div>
     </section>
   );
 }

@@ -15,7 +15,7 @@ export const answers: Answer[] = [
     triggers: ["tooltip", "hover"],
     shortAnswer: "No.",
     explanation:
-      "Content that appears on hover must also be reachable by keyboard focus, and WCAG requires it to be dismissible, hoverable and persistent. NN/g adds that a tooltip should never hold information that is vital to completing the task, because touch users may not be able to open it at all.",
+      "Content shown on hover must also be reachable by keyboard focus. WCAG requires it to be dismissible, hoverable and persistent. NN/g adds that a tooltip should never hold information vital to the task, because touch users may not be able to open it.",
     checklist: [
       "Appears on keyboard focus as well as hover",
       "Can be dismissed without moving the pointer or focus",
@@ -32,7 +32,7 @@ export const answers: Answer[] = [
     triggers: ["modal", "dialog", "wide", "width"],
     shortAnswer: "No tracked guideline sets a width.",
     explanation:
-      "None of the sources Shortcut tracks gives a required modal width, so any number you see quoted is a team convention. What is required is that the dialog still works at 320 CSS pixels wide without two-directional scrolling. The more useful question is whether it should be a modal at all: NN/g reserves modals for critical warnings and information needed to continue the current task.",
+      "No source Shortcut tracks sets a modal width, so any number you see is a team convention. The requirement is that it works at 320 CSS pixels wide without scrolling in two directions. Ask first whether it should be a modal: NN/g reserves them for critical warnings and information needed to continue.",
     checklist: [
       "Works at 320 CSS px wide without horizontal scrolling",
       "Width is set by the content, not by a fixed number",
@@ -48,7 +48,7 @@ export const answers: Answer[] = [
     triggers: ["table", "column", "20", "grid", "wide"],
     shortAnswer: "Decide what people do with it, then keep their place for them.",
     explanation:
-      "NN/g groups table use into four tasks: finding records, comparing data, editing a row and acting on records. With many columns, comparison is what breaks first, so freeze the header row and identifier column, let people hide and reorder columns, and show clearly when columns are hidden. WCAG's reflow rule exempts content that needs a two-dimensional layout, so horizontal scrolling inside the table is acceptable, but the page around it should still reflow.",
+      "NN/g names four table tasks: find, compare, edit and act. With many columns, comparing breaks first. Freeze the header row and identifier column, let people hide and reorder columns, and show when columns are hidden. Scrolling sideways inside the table is fine under WCAG; the page around it should still reflow.",
     checklist: [
       "First column is a human-readable identifier, and it is frozen",
       "Header row stays visible while scrolling",
@@ -66,7 +66,7 @@ export const answers: Answer[] = [
     triggers: ["touch", "target", "tap", "size", "minimum", "button"],
     shortAnswer: "24 × 24 CSS px under WCAG 2.2 AA. Platforms recommend more.",
     explanation:
-      "WCAG 2.2 sets the minimum at 24 by 24 CSS pixels at Level AA, with exceptions for spacing and inline links, and 44 by 44 at Level AAA. Apple's default control size on iOS is 44 × 44 pt with a 28 × 28 pt minimum. Android guidance recommends 48 × 48 dp with at least 8 dp between targets. These are different rules for different platforms, not competing versions of one rule.",
+      "WCAG 2.2 asks for 24 by 24 CSS pixels at Level AA, with exceptions for spacing and inline links, and 44 by 44 at AAA. Apple's default control is 44 × 44 pt, with a 28 × 28 pt minimum. Android recommends 48 × 48 dp, at least 8 dp apart. Different rules for different platforms, not rival versions of one.",
     checklist: [
       "Never below 24 × 24 CSS px on the web",
       "44 × 44 pt as the default on iOS",
@@ -98,7 +98,7 @@ export const answers: Answer[] = [
     triggers: ["error", "validation", "message", "form", "invalid"],
     shortAnswer: "Next to the field, in words, saying how to fix it.",
     explanation:
-      "WCAG requires the field in error to be identified and the error described in text, with a suggested fix where one is known. GOV.UK's pattern shows the message beside the field and repeats it in a summary at the top of the page, using the same wording in both, and keeps everything the user already typed.",
+      "WCAG requires the field in error to be identified and the error described in text, with a fix suggested where one is known. GOV.UK shows the message beside the field and repeats it, in the same words, in a summary at the top. It keeps everything the user typed.",
     checklist: [
       "Error is described in text, not colour alone",
       "Message sits next to the field it belongs to",
@@ -232,7 +232,7 @@ export const answers: Answer[] = [
     triggers: ["token", "sgds", "semantic", "primitive", "variable"],
     shortAnswer: "A simplified semantic token, unless the context needs a scoped one.",
     explanation:
-      "SGDS has five token layers. Its own advice is to start with simplified semantic tokens when the UI role is clear, and to reach for granular semantic tokens when a context like forms, actions or feedback needs a scoped variant.",
+      "SGDS has five token layers. Its own advice: start with simplified semantic tokens when the UI role is clear. Reach for granular semantic tokens when forms, actions or feedback need a scoped variant.",
     checklist: [
       "Start with a simplified semantic token",
       "Move to a granular semantic token only for forms, actions or feedback variants",
@@ -406,7 +406,7 @@ answers.push(
     triggers: ["modal", "dialog", "tablet", "wide", "width"],
     shortAnswer: "As wide as its content needs, inside the page margins.",
     explanation:
-      "No source Shortcut tracks gives a tablet modal width. A common desktop range is 400–480 px for a confirmation, 560–720 for a short form and 800–960 for anything larger. On a tablet those still fit, so size it to the content and keep it inside the margins. On a phone, anything beyond a confirmation works better full width or full screen.",
+      "No source Shortcut tracks gives a tablet width. Common desktop ranges are 400–480 px for a confirmation, 560–720 for a short form and 800–960 for more. Those fit a tablet, so size to the content and stay inside the margins. On a phone, go full width or full screen for anything beyond a confirmation.",
     director: {
       commonPractice: "Small 400–480 px, medium 560–720, large 800–960 on desktop. Sized to content on tablet. Full width or full screen on mobile.",
       whenToBreak: "If it needs the large size, or scrolls, ask whether it should be a page or a full-screen step.",
@@ -422,7 +422,7 @@ answers.push(
     triggers: ["button", "tall", "height", "touch", "tap", "mobile"],
     shortAnswer: "40–48 px visible, with a touch area of at least 44 or 48.",
     explanation:
-      "Two different measurements. The visible button is commonly 40–48 px tall. The area that responds to touch is set by the platform: Apple asks for at least 44 by 44 pt and Android for 48 by 48 dp, and WCAG sets a 24 by 24 CSS pixel floor on the web. A button can look 40 px tall and still meet the larger target through the space around it.",
+      "Two measurements. The visible button is commonly 40–48 px tall. The touch area is set by the platform: 44 by 44 pt on Apple, 48 by 48 dp on Android, and at least 24 by 24 CSS px on the web. A 40 px button can meet the larger target through the space around it.",
     director: {
       commonPractice: "40–48 px visible height on any viewport. On touch, make sure the tappable area reaches the platform minimum.",
       whenToBreak: "Dense desktop toolbars use 28–32 px with a pointer. That is a density choice, not a lower accessibility bar.",
@@ -438,7 +438,7 @@ answers.push(
     triggers: ["desktop", "tablet", "mobile", "change", "responsive", "moving", "smaller"],
     shortAnswer: "Layout and large spacing change most. Body text barely changes.",
     explanation:
-      "Columns reduce, navigation collapses to what matters most, tables and side panels swap to patterns that suit a narrow screen, and the large gaps shrink first. Body text stays about the same size, and nothing people need to finish the task should disappear. Add a breakpoint where the layout actually breaks, not at a device's width.",
+      "Columns reduce and navigation collapses to what matters most. Tables and side panels swap to patterns that suit a narrow screen. Large gaps shrink first; body text barely changes. Nothing needed to finish the task should disappear. Add a breakpoint where the layout breaks, not at a device's width.",
     director: {
       commonPractice: "One column on mobile, one or two on tablet, two to four on desktop. Page margins and section spacing step down; small gaps and body text stay.",
       whenToBreak: "A tool used only at a desk can start from desktop, but it still has to work in a narrow window.",
@@ -454,15 +454,15 @@ answers.push(
     triggers: ["foldable", "fold", "folding", "duo", "iphone", "open", "closed"],
     shortAnswer: "A compact layout closed, the same layout expanded when open.",
     explanation:
-      "Apple's guidance gives the outer display a compact width layout and the inner display a regular width one, and says not to reinvent the app when it resizes: let the existing layout expand, and show an additional level of hierarchy if it suits. State should be the same on both displays. On iPhone Duo the system also moves toolbars and tab bars to the side.",
+      "Apple gives the outer display a compact width layout and the inner display a regular width one. Let the existing layout expand; do not reinvent it. Add a level of hierarchy when open if it suits. Keep state the same on both. The system also moves toolbars and tab bars to the side.",
     director: {
       commonPractice: "Design the closed state as a complete compact experience. When open, add a second pane beside the first instead of scaling everything up.",
       whenToBreak: "Follow the platform. Google's guidance for Android foldables describes a bottom bar folded and a navigation rail unfolded, which differs from Apple's.",
-      readNext: { label: "Designing for iPhone Duo", href: "/cheat-sheets/responsive-design#iphone-duo" },
+      readNext: { label: "Designing for iPhone Duo", href: "/cheat-sheets/foldables#iphone-duo" },
     },
     checklist: ["Does opening the device keep the task, the selection and anything typed?", "Is anything important sitting on the fold?", "Are physical pixels being mistaken for the CSS viewport?"],
     citations: [viewportCite.duoHig, viewportCite.androidFoldables],
-    relatedSheet: "responsive-design",
+    relatedSheet: "foldables",
   },
 );
 

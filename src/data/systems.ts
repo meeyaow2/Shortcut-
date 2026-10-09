@@ -49,12 +49,12 @@ export const systemUpdates: Update[] = [
     datePublished: "2026-10-07",
     dateVerified: CHECKED,
     summary:
-      "OpenAI says GPT-6 in ChatGPT can answer with interactive interfaces, composing text, graphics, tappable buttons, forms, charts and interactive elements according to the question. A comparison may appear side by side, an explanation as an interactive diagram, and a simple question still gets text. OpenAI says it built a library of native components and a compiler that renders the interface as the model generates it.",
+      "OpenAI says GPT-6 in ChatGPT can answer with interactive interfaces: text, graphics, buttons, forms and charts, chosen to fit the question. A comparison may appear side by side; a simple question still gets text. OpenAI says a library of native components and a compiler render the interface as the model generates it.",
     whyItMatters:
-      "The interface is composed around what the person asked, not laid out in advance. OpenAI's own description is that a component library gives each response a familiar foundation while the model decides how the pieces fit together. That is a design system doing the job of keeping generated screens coherent.",
+      "The interface is composed around what the person asked, not laid out in advance. OpenAI says a component library gives each response a familiar foundation while the model decides how the pieces fit. That is a design system keeping generated screens coherent.",
     relevantTo: ["Adaptive interfaces", "Generative UI", "All devices"],
     designerAction:
-      "Nothing in your product has to change. Try it: ask ChatGPT the same comparison question twice and note what stays the same between the two interfaces and what does not. Then ask what your own component library would need to tell a model for it to do this well.",
+      "Nothing in your product has to change. Ask ChatGPT the same comparison question twice and note what stays the same between the two interfaces. Then ask what your own component library would need to tell a model to do this well.",
     sourceUrl: "https://openai.com/index/gpt-6-for-everyone/",
     ai: {
       updateType: "New capability",
@@ -378,7 +378,7 @@ export const caseStudies: CaseStudy[] = [
       "It says unstructured sources led to outdated patterns, missed accessibility requirements and invented components.",
     ],
     lesson:
-      "The old model was a design system read by designers and developers. The emerging one adds AI agents as a third reader, and that reader cannot skim a Figma file or watch a video. If guidance is not written down in a structured form, a model fills the gap with something generic. Atlassian's own line is that documentation which drifts from the code is worse than none.",
+      "Design systems used to have two readers: designers and developers. AI agents are a third, and they cannot skim a Figma file or watch a video. Guidance that is not written down in a structured form gets replaced with something generic. Atlassian's line: documentation that drifts from the code is worse than none.",
     citation: systemCite.adsStructured,
   },
   {
@@ -395,7 +395,7 @@ export const caseStudies: CaseStudy[] = [
       "Atlassian suggests it for art direction, quick prototyping and theming, and MCP servers or skills with lint rules for production work.",
     ],
     lesson:
-      "Generated UI looks generic when the model knows nothing about your brand, components, spacing or patterns. A portable design file fixes the look cheaply, which is why it helps prototypes. It does not make a model use your real components, so on its own it can produce a convincing second system. That is the same failure Shortcut lists under AI-look signals, arriving by a more polished route.",
+      "Generated UI looks generic when the model knows nothing about your brand, components or spacing. A portable design file fixes the look cheaply, which helps prototypes. It does not make a model use your real components, so alone it can produce a convincing second system. That is an AI-look signal by a more polished route.",
     citation: systemCite.adsDesignMd,
   },
   {
@@ -411,7 +411,7 @@ export const caseStudies: CaseStudy[] = [
       "Its advice includes keeping these interfaces in sync, and reading agent transcripts alongside the metrics.",
     ],
     lesson:
-      "How the design system reaches the model is now a design-system decision, with costs and trade-offs like any other. Designers do not need to build this, but they should know it exists and ask which route their team's tools use, because it decides whether generated UI follows the system.",
+      "How the design system reaches the model is now a design-system decision, with costs and trade-offs. Designers need not build it. They should ask which route their team's tools use, because it decides whether generated UI follows the system.",
     citation: systemCite.adsCli,
   },
 ];
