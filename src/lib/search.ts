@@ -86,6 +86,7 @@ const guideKeywords: Record<string, string> = {
   discovery: "research plan stakeholder interviews problem framing",
   synthesis: "synthesise interview notes affinity mapping themes present presenting research findings insight report",
   "design-critique": "feedback review crit",
+  "remote-workshop": "remote online virtual video call zoom breakout rooms time zones cameras fatigue hybrid async asynchronous miro figjam",
   recruiting: "recruit participants screener incentive find users sample",
   "note-taking": "notes note taker recording observation quotes",
   "journey-mapping": "journey map customer journey service blueprint experience map",

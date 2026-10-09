@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/primitives";
 import { UpdateCard } from "@/components/updates/UpdateCard";
-import { unverifiedUpdateSources } from "@/data/ai";
+import { toolChangelogs } from "@/data/ai";
+import { ExternalLink } from "@/components/ui/primitives";
 import { aiFeed } from "@/data/updates";
 
 export const metadata: Metadata = { title: "AI Updates" };
@@ -21,11 +22,24 @@ export default function AiUpdatesPage() {
           <UpdateCard key={update.id} update={update} />
         ))}
       </div>
-      <p className="mt-8 max-w-read text-sm text-ink-2">
-        <span className="font-semibold text-ink">Not covered yet: </span>
-        {unverifiedUpdateSources.join(", ")}. Their release pages could not be read for checking, so nothing about them is
-        stated here.
-      </p>
+      <section aria-labelledby="changelogs" className="section-gap max-w-3xl">
+        <h2 id="changelogs" className="border-b-2 border-ink pb-2 text-2xl font-semibold">
+          Where these tools publish changes
+        </h2>
+        <dl className="divide-y divide-line">
+          {toolChangelogs.map((item) => (
+            <div key={item.tool} className="grid gap-x-6 gap-y-1 py-3.5 sm:grid-cols-[8rem_1fr]">
+              <dt className="font-semibold">{item.tool}</dt>
+              <dd>
+                <p className="text-ink-2">{item.note}</p>
+                <p className="mt-1 text-sm">
+                  <ExternalLink href={item.url}>{item.label}</ExternalLink>
+                </p>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
     </div>
   );
 }

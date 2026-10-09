@@ -93,6 +93,15 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: read("uswds", "USWDS, Design tokens", "https://designsystem.digital.gov/design-tokens/"),
       },
+      primer: {
+        headline: "Base, functional, and component or pattern",
+        points: [
+          "Tokens fall into three groups: base, functional, and component or pattern.",
+          "Base tokens map directly to a raw value, do not respect colour modes, and should never be used directly in code or design.",
+          "Functional tokens represent global UI patterns such as text, borders, shadows and backgrounds, and are the most commonly used.",
+        ],
+        citation: read9("primer", "Primer, Color usage", "https://primer.style/product/getting-started/foundations/color-usage/"),
+      },
     },
     takeaway:
       "Every system here separates what a value is from what it is for, whatever it calls that. Work in the purpose-named layer, and never borrow a purpose-named value for a different job because the colour happens to match. SGDS documents the fullest hierarchy on the pages checked.",
@@ -101,10 +110,10 @@ export const explorerTopics: ExplorerTopic[] = [
       "A value made for one job stays in that job. GOV.UK says it of functional colours, Carbon of component tokens, Apple of semantic colours.",
     ],
     differences: [
-      "Layers: SGDS documents five. Carbon splits colour tokens into core and component. Atlassian describes the parts of a name instead of layers.",
+      "Layers: SGDS documents five. Primer has three groups, and Carbon splits colour tokens into core and component. Atlassian describes the parts of a name instead of layers.",
       "Vocabulary: the Material, Apple and GOV.UK pages checked do not use the word token.",
       "Framing: USWDS presents tokens as a way to limit choice. The others present them as a way to name decisions.",
-      "Not read on this topic: Primer and Fluent.",
+      "Not read on this topic: Fluent.",
     ],
   },
   {
@@ -444,6 +453,15 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: read9("fluent", "Fluent 2, Color", "https://fluent2.microsoft.design/color"),
       },
+      primer: {
+        headline: "Two modes, nine themes",
+        points: [
+          "The UI offers light and dark colour modes, supported across nine themes.",
+          "Colours are delivered as design tokens: CSS variables in code and Figma variables in design.",
+          "A token such as bgColor-default changes value with the colour mode.",
+        ],
+        citation: read9("primer", "Primer, Color usage", "https://primer.style/product/getting-started/foundations/color-usage/"),
+      },
     },
     takeaway:
       "Every system gives colours role-based names, whatever else it layers on top, and several ask you not to reuse a role for a different job. Carbon and Fluent both keep neutrals dominant and colour sparing. USWDS adds a grade scale that makes lightness comparable across hues. None of the pages read sets its own contrast ratio; the testable numbers come from WCAG.",
@@ -520,6 +538,16 @@ export const explorerTopics: ExplorerTopic[] = [
           "Use sentence case; avoid all caps.",
         ],
         citation: read9("fluent", "Fluent 2, Typography", "https://fluent2.microsoft.design/typography"),
+      },
+      primer: {
+        headline: "Rem units on a 4 px grid",
+        points: [
+          "Typography tokens use rem units, for a more accessible browser zoom experience.",
+          "Line heights are unitless and align to a 4 px grid.",
+          "Keep lines around 80 characters or less.",
+          "Do not use colour as the primary method of emphasis.",
+        ],
+        citation: read9("primer", "Primer, Typography", "https://primer.style/product/getting-started/foundations/typography/"),
       },
     },
     takeaway:
@@ -845,6 +873,16 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: read9("fluent", "Fluent 2, Input usage", "https://fluent2.microsoft.design/components/web/react/core/input/usage"),
       },
+      primer: {
+        headline: "Width matches the expected value",
+        points: [
+          "A label must exist for screen readers, even if it is visually hidden.",
+          "A required indicator must be shown for any required field, even if every field in the form is required.",
+          "Use placeholder text only as an example of expected input, never for critical information.",
+          "Match the input width to the expected length of the value.",
+        ],
+        citation: read9("primer", "Primer, TextInput guidelines", "https://primer.style/product/components/text-input/guidelines/"),
+      },
     },
     takeaway:
       "Most of these systems warn that placeholder text disappears and cannot stand in for a label. A visible label above the field is the one choice none of them argues against. Sizing the field to the expected answer, which GOV.UK, USWDS and Fluent each ask for, is the least followed and easiest to adopt.",
@@ -923,6 +961,16 @@ export const explorerTopics: ExplorerTopic[] = [
           "Do not submit the form automatically when an option is chosen.",
         ],
         citation: read9("uswds", "USWDS, Select", "https://designsystem.digital.gov/components/select/"),
+      },
+      primer: {
+        headline: "For longer lists",
+        points: [
+          "Use a Select for longer lists. With six or fewer options and no need to save vertical space, consider a RadioGroup.",
+          "Provide a default selected option when possible.",
+          "Order the options logically, defaulting to alphabetical.",
+          "It is a native select.",
+        ],
+        citation: read9("primer", "Primer, Select guidelines", "https://primer.style/product/components/select/guidelines/"),
       },
     },
     takeaway:
@@ -1231,6 +1279,16 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: read9("uswds", "USWDS, Table", "https://designsystem.digital.gov/components/table/"),
       },
+      primer: {
+        headline: "For comparing across rows and columns",
+        points: [
+          "Use a DataTable to navigate a lot of information at once and compare data points between rows or columns.",
+          "Use a list instead when cells will often be empty, or when rows and columns are only a means of layout.",
+          "It is easier to scan many rows than many columns: minimise the number of columns.",
+          "Render rows in an intuitive order to begin with.",
+        ],
+        citation: read9("primer", "Primer, DataTable guidelines", "https://primer.style/product/components/data-table/guidelines/"),
+      },
     },
     takeaway:
       "The basic table in every system is for reading and comparing, not managing data. Sorting, selection and pagination are treated as a separate, heavier component or left to you. Write real column headers, which the systems ask for outright, and right-align numbers you want compared.",
@@ -1300,6 +1358,17 @@ export const explorerTopics: ExplorerTopic[] = [
           "One tab, usually the first, should be active on first render.",
         ],
         citation: read9("fluent", "Fluent 2, Tablist usage", "https://fluent2.microsoft.design/components/web/react/core/tablist/usage"),
+      },
+      primer: {
+        headline: "Each tab has its own URL",
+        points: [
+          "Each tab should load unique content with a dedicated URL, and one should be preselected on page load.",
+          "Limit the number of tabs. For larger menus, consider a NavList.",
+          "Each view should let people complete tasks without switching tabs.",
+          "Tabs support free, non-sequential navigation, not stepped flows.",
+          "An overflow menu reveals extra items when space is limited.",
+        ],
+        citation: read9("primer", "Primer, UnderlineNav guidelines", "https://primer.style/product/components/underline-nav/guidelines/"),
       },
     },
     takeaway:
@@ -1380,6 +1449,15 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: read9("uswds", "USWDS, Checkbox", "https://designsystem.digital.gov/components/checkbox/"),
       },
+      primer: {
+        headline: "Independent choices, in a logical order",
+        points: [
+          "Put checkboxes in a logical order.",
+          "If people may select only one option, consider a RadioGroup instead.",
+          "Each checkbox's state should be independent: checking one should not check or disable another.",
+        ],
+        citation: read9("primer", "Primer, CheckboxGroup guidelines", "https://primer.style/product/components/checkbox-group/guidelines/"),
+      },
     },
     takeaway:
       "Every system here agrees on the core: checkboxes for many, radios for one. Most describe a mixed state for a parent checkbox. GOV.UK adds two rules worth taking anywhere: never pre-select, and offer an explicit none. USWDS adds a third: list them vertically, with labels that are positive statements.",
@@ -1449,6 +1527,16 @@ export const explorerTopics: ExplorerTopic[] = [
           "If people should be able to select nothing, use checkboxes or add a none of the above option.",
         ],
         citation: read9("uswds", "USWDS, Radio buttons", "https://designsystem.digital.gov/components/radio-buttons/"),
+      },
+      primer: {
+        headline: "Six options or fewer",
+        points: [
+          "Only use a RadioGroup for a short list: aim for six or fewer options. For longer sets, consider a select, an ActionMenu or an autocomplete.",
+          "Radio buttons cannot be unchecked, so only use them when a selection is required, or include a none of these option.",
+          "If one option is the most likely, check it by default.",
+          "Put radio buttons in a logical order.",
+        ],
+        citation: read9("primer", "Primer, RadioGroup guidelines", "https://primer.style/product/components/radio-group/guidelines/"),
       },
     },
     takeaway:
@@ -1529,6 +1617,16 @@ export const explorerTopics: ExplorerTopic[] = [
           "Keep the alert title to one line.",
         ],
         citation: read9("uswds", "USWDS, Alert", "https://designsystem.digital.gov/components/alert/"),
+      },
+      primer: {
+        headline: "One banner per page",
+        points: [
+          "Banners highlight important information or give feedback after an action.",
+          "Use banners sparingly, only when and where relevant.",
+          "Do not display more than one banner on a page at the same time.",
+          "Only use a success message if the success is not easily apparent in the UI.",
+        ],
+        citation: read9("primer", "Primer, Banner guidelines", "https://primer.style/product/components/banner/guidelines/"),
       },
     },
     takeaway:

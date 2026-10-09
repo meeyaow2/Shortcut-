@@ -12,7 +12,25 @@ interface NavItem {
   href: string;
   label: string;
   /** Pages grouped under this item. */
-  children?: { href: string; label: string }[];
+  children?: NavChild[];
+}
+
+interface NavChild {
+  href: string;
+  label: string;
+  /** A heading the page sits under, for menus too long to scan as one list. */
+  group?: string;
+}
+
+/** Children in order, split wherever the group name changes. */
+function grouped(children: NavChild[]): { group?: string; items: NavChild[] }[] {
+  const sections: { group?: string; items: NavChild[] }[] = [];
+  for (const child of children) {
+    const last = sections[sections.length - 1];
+    if (last && last.group === child.group) last.items.push(child);
+    else sections.push({ group: child.group, items: [child] });
+  }
+  return sections;
 }
 
 const nav: NavItem[] = [
@@ -45,15 +63,24 @@ const nav: NavItem[] = [
     href: "/practice",
     label: "UX Practice",
     children: [
-      { href: "/practice", label: "Overview" },
-      { href: "/practice/user-interview", label: "User Interviews" },
-      { href: "/practice/usability-test", label: "Usability Testing" },
-      { href: "/practice/workshop", label: "Workshop Facilitation" },
-      { href: "/practice/discovery", label: "Discovery" },
-      { href: "/practice/synthesis", label: "Synthesis and Findings" },
-      { href: "/practice/design-critique", label: "Design Critique" },
-      { href: "/practice/templates", label: "Templates" },
-      { href: "/practice/library", label: "Open Design Library" },
+      { href: "/practice", label: "Overview", group: "Start here" },
+      { href: "/practice/templates", label: "Templates", group: "Start here" },
+      { href: "/practice/library", label: "Open Design Library", group: "Start here" },
+      { href: "/practice/discovery", label: "Discovery", group: "Research" },
+      { href: "/practice/recruiting", label: "Recruiting Participants", group: "Research" },
+      { href: "/practice/user-interview", label: "User Interviews", group: "Research" },
+      { href: "/practice/usability-test", label: "Usability Testing", group: "Research" },
+      { href: "/practice/note-taking", label: "Note Taking", group: "Research" },
+      { href: "/practice/synthesis", label: "Synthesis and Findings", group: "Research" },
+      { href: "/practice/presenting-findings", label: "Presenting Findings", group: "Research" },
+      { href: "/practice/research-repository", label: "Research Repositories", group: "Research" },
+      { href: "/practice/workshop", label: "Workshop Facilitation", group: "Facilitation" },
+      { href: "/practice/remote-workshop", label: "Remote Workshops", group: "Facilitation" },
+      { href: "/practice/ideation-workshop", label: "Ideation Workshops", group: "Facilitation" },
+      { href: "/practice/design-critique", label: "Design Critique", group: "Facilitation" },
+      { href: "/practice/retrospective", label: "Retrospectives", group: "Facilitation" },
+      { href: "/practice/journey-mapping", label: "Journey Mapping", group: "Methods" },
+      { href: "/practice/prioritisation", label: "Prioritisation", group: "Methods" },
     ],
   },
   {
@@ -199,6 +226,7 @@ function NavMenu({ item, pathname }: { item: NavItem; pathname: string }) {
   const wrapper = useRef<HTMLLIElement>(null);
   const children = item.children ?? [];
   const current = children.some((child) => isCurrent(pathname, child.href));
+  const sections = grouped(children);
 
   useEffect(() => {
     if (!open) return;
@@ -223,20 +251,32 @@ function NavMenu({ item, pathname }: { item: NavItem; pathname: string }) {
         <ChevronDown aria-hidden className={`size-4 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
       {open && (
-        <ul className="pop-in absolute left-0 top-full z-30 -mt-1 w-60 rounded-lg border border-line-strong bg-paper p-1.5 shadow-[0_8px_24px_-12px_rgb(20_23_31/0.3)]">
-          {children.map((child) => (
-            <li key={child.href}>
-              <Link
-                href={child.href}
-                onClick={() => setOpen(false)}
-                aria-current={isCurrent(pathname, child.href) ? "page" : undefined}
-                className="flex min-h-11 md:min-h-10 items-center rounded-sm px-2.5 text-[0.9375rem] text-ink-2 hover:bg-wash hover:text-ink aria-[current]:font-semibold aria-[current]:text-ink"
-              >
-                {child.label}
-              </Link>
-            </li>
+        // A grouped menu sets its sections in two columns, and scrolls inside itself before it can outgrow the window.
+        <div
+          className={`pop-in absolute left-0 top-full z-30 -mt-1 max-h-[calc(100dvh-5rem)] overflow-y-auto rounded-lg border border-line-strong bg-paper p-1.5 shadow-[0_8px_24px_-12px_rgb(20_23_31/0.3)] ${
+            sections.length > 1 ? "w-[32rem] columns-2 gap-1.5" : "w-60"
+          }`}
+        >
+          {sections.map((section) => (
+            <div key={section.group ?? "all"} className="break-inside-avoid pb-1.5">
+              {section.group && <p className="px-2.5 pb-0.5 pt-1.5 text-sm font-semibold text-ink-3">{section.group}</p>}
+              <ul>
+                {section.items.map((child) => (
+                  <li key={child.href}>
+                    <Link
+                      href={child.href}
+                      onClick={() => setOpen(false)}
+                      aria-current={isCurrent(pathname, child.href) ? "page" : undefined}
+                      className={`flex items-center rounded-sm px-2.5 text-[0.9375rem] text-ink-2 hover:bg-wash hover:text-ink aria-[current]:font-semibold aria-[current]:text-ink ${section.group ? "min-h-9" : "min-h-10"}`}
+                    >
+                      {child.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </li>
   );
@@ -292,7 +332,12 @@ function MobileMenu({ ref, pathname }: MobileMenuProps) {
             item.children ? (
               <li key={item.label} className="pt-3">
                 <p className="px-3 pb-1 text-sm font-semibold text-ink-3">{item.label}</p>
-                <ul className="space-y-0.5">{item.children.map((child) => link(child.href, child.label, true))}</ul>
+                {grouped(item.children).map((section) => (
+                  <div key={section.group ?? "all"}>
+                    {section.group && <p className="px-6 pb-0.5 pt-2 text-sm text-ink-3">{section.group}</p>}
+                    <ul className="space-y-0.5">{section.items.map((child) => link(child.href, child.label, true))}</ul>
+                  </div>
+                ))}
               </li>
             ) : (
               link(item.href, item.label)

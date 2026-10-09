@@ -55,6 +55,8 @@ export interface PracticeGuide {
   prepare: string[];
   steps: { title: string; detail: string }[];
   agenda?: { time: string; activity: string }[];
+  /** Heading for the agenda, when the guide has one of its own. */
+  agendaTitle?: string;
   script?: string[];
   examples?: { heading: string; pairs: { weak: string; better: string; why: string }[] };
   /** Extra reference blocks specific to the guide, e.g. what to capture. */
@@ -396,7 +398,7 @@ export function getPracticeGuide(id: string): PracticeGuide | undefined {
 }
 
 /** Topics from the brief that are not written yet. */
-export const plannedGuides = ["Remote workshops in depth"];
+export const plannedGuides: string[] = [];
 
 // --- Quick-reference cards -------------------------------------------------------
 

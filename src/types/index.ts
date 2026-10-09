@@ -23,6 +23,8 @@ export type SourceId =
   | "primer"
   | "uswds"
   | "fluent"
+  | "webflow"
+  | "wai"
   | "grab"
   | "granola";
 

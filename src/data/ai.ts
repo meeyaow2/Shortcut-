@@ -53,6 +53,60 @@ export const figmaOnlyUpdates: Update[] = [
 /** Updates that exist only because of their AI relevance. */
 export const aiUpdates: Update[] = [
   {
+    id: "chatgpt-audio-uploads",
+    title: "ChatGPT accepts audio uploads",
+    sourceId: "openai",
+    category: "AI",
+    kind: "tool",
+    datePublished: "2026-10-06",
+    dateVerified: "2026-10-09",
+    summary: "You can upload audio files to ChatGPT to create transcripts, summarise recordings and ask questions about their contents. OpenAI notes that transcripts may contain errors, and that it is available with paid subscriptions and workspaces.",
+    whyItMatters: "An interview recording can become a transcript without a separate tool, which shortens the gap between a session and synthesis.",
+    designerAction: "Try it on one recording you have consent to process, and check the transcript against the audio before quoting from it.",
+    sourceUrl: "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+    ai: {
+      updateType: "New capability",
+      useFor: ["Transcribing a research session you have consent to process", "A first summary to check against your own notes"],
+      carefulWith: ["Participant recordings that your consent form does not cover", "Quotes taken from a transcript nobody checked"],
+      workflow: "Upload one interview, ask for a transcript with timestamps, then verify three quotes against the recording before using any.",
+    },
+    links: [{ label: "How to take research notes", href: "/practice/note-taking" }],
+  },
+  {
+    id: "webflow-visual-editing-ai-components",
+    title: "Webflow: edit AI code components visually",
+    sourceId: "webflow",
+    category: "AI",
+    kind: "tool",
+    datePublished: "2026-09-02",
+    dateVerified: "2026-10-09",
+    summary: "Webflow says you can now select any element inside an AI code component and adjust it in the Style Panel like any other element, add an element as context in a prompt, and edit text on the canvas.",
+    whyItMatters: "Generated components stop being sealed boxes. Small fixes no longer need another prompt, which is where generated output usually drifts.",
+    designerAction: "Generate one component, then make every refinement by hand and note which ones you would have struggled to describe in a prompt.",
+    sourceUrl: "https://webflow.com/updates/ai-code-components-visual-editing",
+    ai: {
+      updateType: "New capability",
+      useFor: ["Correcting spacing and type in a generated component directly", "Scoping a prompt to one element"],
+      carefulWith: ["Styles applied by hand that bypass your site's classes", "Assuming the generated markup is accessible"],
+      workflow: "Generate a pricing section, fix its spacing in the Style Panel, then check it at every breakpoint.",
+    },
+  },
+  {
+    id: "webflow-breakpoints-side-by-side",
+    title: "Webflow: see every breakpoint while you edit",
+    sourceId: "webflow",
+    category: "Tools",
+    kind: "tool",
+    datePublished: "2026-09-02",
+    dateVerified: "2026-10-09",
+    summary: "Webflow's Designer can show breakpoints side by side, which it describes as giving instant visibility into cascading changes.",
+    whyItMatters: "A change made at one width often breaks another. Seeing them together catches that while you are still editing.",
+    designerAction: "Open a page you consider finished in the side-by-side view and look at the widths you did not design for.",
+    sourceUrl: "https://webflow.com/updates",
+    relevantTo: ["All viewports"],
+    links: [{ label: "Responsive & Viewports", href: "/cheat-sheets/responsive-design" }],
+  },
+  {
     id: "v0-team-workspaces",
     title: "v0 personal accounts are now team workspaces",
     sourceId: "v0",
@@ -527,7 +581,20 @@ export const aiTools: AiTool[] = [
 export const unverifiedTools: string[] = [];
 
 /** Tools whose release notes could not be read, so no updates are reported for them. */
-export const unverifiedUpdateSources = ["ChatGPT", "Webflow", "Canva", "Replit"];
+export const unverifiedUpdateSources: string[] = [];
+
+/**
+ * Where each of the later-added tools publishes its changes, and what Shortcut
+ * found there on READ_LATER. "none-relevant" means a changelog exists and was
+ * read, and nothing recent bore on design work. "no-public-changelog" means
+ * no changelog could be read without signing in.
+ */
+export const toolChangelogs: { tool: string; status: "updates" | "none-relevant" | "no-public-changelog"; label: string; url: string; note: string }[] = [
+  { tool: "ChatGPT", status: "updates", label: "ChatGPT release notes", url: "https://help.openai.com/en/articles/6825453-chatgpt-release-notes", note: "Entries from 1 to 8 October 2026 were read. Two bear on design work and are listed above." },
+  { tool: "Webflow", status: "updates", label: "Webflow updates", url: "https://webflow.com/updates", note: "Entries from 2 to 29 September 2026 were read. Two bear on design work: visual editing of AI code components is listed above, and side-by-side breakpoints is in Updates." },
+  { tool: "Replit", status: "none-relevant", label: "Replit changelog", url: "https://docs.replit.com/updates", note: "The 25 September and 2 October 2026 entries were read. They cover new models, integrations and settings; nothing in them is specific to design work." },
+  { tool: "Canva", status: "no-public-changelog", label: "Canva newsroom", url: "https://www.canva.com/newsroom/news/", note: "No public product changelog found. Canva's What's new page asks you to sign in, and its newsroom carries press announcements, not release notes." },
+];
 
 export function getAiTool(id: string): AiTool {
   return aiTools.find((t) => t.id === id)!;

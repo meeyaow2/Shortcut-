@@ -151,7 +151,7 @@ async function Guide({ params }: Props) {
           </Section>
 
           {guide.agenda && (
-            <Section id="agenda" title="Example agenda: problem framing, 80 minutes">
+            <Section id="agenda" title={guide.agendaTitle ?? "Example agenda: problem framing, 80 minutes"}>
               <div className="mb-4">
                 <AgendaTimeline rows={guide.agenda} />
               </div>

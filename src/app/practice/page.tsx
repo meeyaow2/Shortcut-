@@ -55,10 +55,12 @@ export default function PracticePage() {
             </li>
           ))}
         </ul>
-        <p className="mt-5 max-w-read text-ink-2">
-          <span className="font-semibold text-ink">Not written yet: </span>
-          {plannedGuides.join(", ")}.
-        </p>
+        {plannedGuides.length > 0 && (
+          <p className="mt-5 max-w-read text-ink-2">
+            <span className="font-semibold text-ink">Not written yet: </span>
+            {plannedGuides.join(", ")}.
+          </p>
+        )}
       </section>
 
       <section aria-labelledby="before" className="section-gap">

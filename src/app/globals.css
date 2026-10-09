@@ -45,6 +45,11 @@
   --duration-normal: 200ms;
   --duration-slow: 320ms;
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Tailwind's transition utilities take the fast duration and the same curve,
+     so a class such as transition-colors cannot drift from the tokens above. */
+  --default-transition-duration: 120ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
 @layer base {
@@ -127,7 +132,15 @@
     *::before,
     *::after {
       animation-duration: 0.01ms !important;
+      /* Without this, delayed animations would still hold content back before appearing. */
+      animation-delay: 0s !important;
+      animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+    }
+
+    /* Hover lift is movement, so it goes; the border change stays. */
+    .lift:hover {
+      transform: none;
     }
   }
 }
@@ -169,7 +182,11 @@
     max-width: var(--container-page);
     margin-inline: auto;
     padding-inline: 1rem;
-    /* Content arrives with a short fade and a 4 px rise, so navigation still feels immediate. */
+  }
+
+  /* Page content arrives with a short fade and a 4 px rise. The header and
+     footer share the container but stay put, so only what changed moves. */
+  main .page {
     animation: page-in var(--duration-normal) var(--ease-standard);
   }
 
@@ -228,7 +245,7 @@
   }
 
   .draw-in {
-    animation: draw-in 480ms var(--ease-standard) 520ms backwards;
+    animation: draw-in var(--duration-slow) var(--ease-standard) 480ms backwards;
   }
 }
 
