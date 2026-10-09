@@ -1,4 +1,4 @@
-import type { ContextFilter } from "@/types";
+import type { ContextFilter, FoldState, ViewportFilter } from "@/types";
 
 // A few reader preferences kept in localStorage behind this small store.
 // Components read it through hooks/useLibrary. Nothing here needs an account
@@ -11,6 +11,10 @@ export interface LibraryState {
   context: ContextFilter;
   /** Ticked item ids on the Before You Send It checklist. */
   checklist: string[];
+  /** The viewport the cheat sheets are read for. */
+  viewport: ViewportFilter;
+  /** Which state of a folding screen, when the viewport is "foldable". */
+  foldState: FoldState;
 }
 
 const STORAGE_KEY = "shortcut.library.v1";
@@ -19,6 +23,8 @@ const initialState: LibraryState = {
   lastViewed: {},
   context: "all",
   checklist: [],
+  viewport: "all",
+  foldState: "closed",
 };
 
 let state: LibraryState = initialState;
@@ -37,6 +43,8 @@ function load() {
         lastViewed: stored.lastViewed ?? initialState.lastViewed,
         context: stored.context ?? initialState.context,
         checklist: stored.checklist ?? initialState.checklist,
+        viewport: stored.viewport ?? initialState.viewport,
+        foldState: stored.foldState ?? initialState.foldState,
       };
     }
   } catch {
@@ -72,6 +80,14 @@ export function getServerSnapshot(): LibraryState {
 export const library = {
   setContext(context: ContextFilter) {
     if (state.context !== context) update({ ...state, context });
+  },
+
+  setViewport(viewport: ViewportFilter) {
+    if (state.viewport !== viewport) update({ ...state, viewport });
+  },
+
+  setFoldState(foldState: FoldState) {
+    if (state.foldState !== foldState) update({ ...state, foldState });
   },
 
   toggleChecklistItem(id: string) {

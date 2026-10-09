@@ -110,7 +110,7 @@ export interface Comparison {
   takeaway?: string;
 }
 
-export interface Rule {
+export interface Rule extends ViewportScope {
   id: string;
   title: string;
   /** The number or phrase a designer came for, e.g. "4.5:1". */
@@ -140,6 +140,8 @@ export interface CheatSheet {
   sections: CheatSheetSection[];
   group?: SheetGroup;
   component?: ComponentQA;
+  /** How much of the sheet changes with viewport. Absent means mostly universal. */
+  viewportSensitivity?: "high" | "partial";
 }
 
 export interface ResourceIntent {
@@ -280,10 +282,44 @@ export interface ExplorerTopic {
  * - industry-convention: ranges many shipping products use.
  * - craft-guidance: judgement of the kind given in design review.
  */
+// ---------------------------------------------------------------------------
+// Viewports
+// ---------------------------------------------------------------------------
+
+/** A band of available width. A reference for reading guidance, not a breakpoint. */
+export type Viewport = "mobile" | "tablet" | "laptop" | "desktop" | "large";
+
+/** What a value can be given for: a viewport, or one state of a folding screen. */
+export type ViewportKey = Viewport | "foldableClosed" | "foldableOpen";
+
+/** What the reader can choose. "foldable" is refined by a fold state. */
+export type ViewportFilter = "all" | Viewport | "foldable";
+
+export type FoldState = "closed" | "open";
+
+/** Kept apart from viewport: a phone is not always touch, a desktop not always a mouse. */
+export type InputMethod = "touch" | "pointer" | "keyboard";
+
+/**
+ * Where a piece of guidance applies. Both fields are optional, and guidance
+ * with neither is general: it is shown at every viewport and never hidden.
+ */
+export interface ViewportScope {
+  viewportApplicability?: ("all" | Viewport | "foldable")[];
+  input?: InputMethod[];
+}
+
+/** A note about one real device in one state. */
+export interface DeviceReference {
+  device: string;
+  mode: FoldState;
+  guidance: string;
+}
+
 export type EditorialKind = "industry-convention" | "craft-guidance";
 
 /** What an official source says on the same subject, kept apart from the editorial text. */
-export interface OfficialNote {
+export interface OfficialNote extends ViewportScope {
   text: string;
   citation: Citation;
 }
@@ -294,7 +330,7 @@ export interface ScaleStep {
   use: string;
 }
 
-export interface CraftEntry {
+export interface CraftEntry extends ViewportScope {
   id: string;
   title: string;
   kind: EditorialKind;
@@ -312,6 +348,14 @@ export interface CraftEntry {
   official?: OfficialNote[];
   /** Set when overuse is a common mark of generated UI. */
   aiWarning?: string;
+  /**
+   * Starting points by viewport. A missing laptop or large value falls back to
+   * desktop, and a missing fold state to mobile (closed) or tablet (open).
+   */
+  viewportValues?: Partial<Record<ViewportKey, string>>;
+  /** What moves the value within its range. */
+  dependsOn?: string[];
+  deviceReferences?: DeviceReference[];
   /** Present when the entry belongs on the Safe Starting Points table. */
   starter?: { label: string; context: string };
   dateReviewed: string;

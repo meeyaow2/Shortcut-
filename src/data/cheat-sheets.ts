@@ -79,6 +79,8 @@ const r = {
     body: "There is no single number. WCAG sets a floor for the web; Apple and Android recommend larger targets for their platforms. Design to the platform you are shipping on, and never below the WCAG minimum.",
     citations: [wcag("2.5.8"), wcag("2.5.5"), cite.appleAccessibility, cite.androidTargets],
     comparison: touchTargets,
+    viewportApplicability: ["all"],
+    input: ["touch", "pointer"],
   },
   keyboard: {
     id: "keyboard-operable",
@@ -122,6 +124,7 @@ const r = {
     value: "320 px",
     body: "Content must work at a width equivalent to 320 CSS pixels without scrolling in two directions. Parts that need a two-dimensional layout for usage or meaning are exempt.",
     citations: [wcag("1.4.10")],
+    viewportApplicability: ["all"],
   },
   resize: {
     id: "resize-text",
@@ -142,6 +145,7 @@ const r = {
     title: "Orientation",
     body: "Do not lock content to portrait or landscape unless a specific orientation is essential.",
     citations: [wcag("1.3.4")],
+    viewportApplicability: ["all"],
   },
   dragging: {
     id: "dragging-alternative",
@@ -273,6 +277,7 @@ const sourcedSheets: CheatSheet[] = [
     title: "Forms",
     description: "Control height, labels, validation, field states and not asking for the same thing twice.",
     dateUpdated: VERIFIED,
+    viewportSensitivity: "partial",
     component: {
       anatomy: ["Label", "Required or optional marker", "Hint text", "Control", "Error message"],
       states: ["Empty", "Filled", "Focus", "Error", "Disabled", "Read-only", "Loading", "Success"],
@@ -289,9 +294,11 @@ const sourcedSheets: CheatSheet[] = [
   {
     slug: "tables",
     title: "Tables",
-    description: "Design data tables around what people do with them, then make them survive small screens.",
+    description: "Design data tables around what people do with them, then choose a pattern for each viewport.",
     dateUpdated: VERIFIED,
+    viewportSensitivity: "high",
     sections: [
+      { id: "viewports", title: "Across viewports", rules: [], entries: [e.tablePatterns] },
       {
         id: "tasks",
         title: "Start from the task",
@@ -335,9 +342,11 @@ const sourcedSheets: CheatSheet[] = [
   {
     slug: "modals",
     title: "Modals",
-    description: "When interrupting is justified, and how to keep keyboard users in control.",
+    description: "When interrupting is justified, how wide to make it at each viewport, and how to keep keyboard users in control.",
     dateUpdated: VERIFIED,
+    viewportSensitivity: "high",
     sections: [
+      { id: "size", title: "Size and pattern", rules: [], entries: [e.modalWidth, e.overlayChoice] },
       {
         id: "when",
         title: "When to use one",
@@ -368,9 +377,11 @@ const sourcedSheets: CheatSheet[] = [
   {
     slug: "navigation",
     title: "Navigation",
-    description: "Consistency, wayfinding and keyboard access across a set of pages.",
+    description: "What stays visible at each viewport, plus consistency, wayfinding and keyboard access.",
     dateUpdated: VERIFIED,
+    viewportSensitivity: "high",
     sections: [
+      { id: "viewports", title: "Across viewports", rules: [], entries: [e.navPatterns] },
       {
         id: "consistency",
         title: "Consistency",
@@ -424,6 +435,7 @@ const sourcedSheets: CheatSheet[] = [
     title: "Mobile",
     description: "Target sizes by platform, gestures and orientation.",
     dateUpdated: VERIFIED,
+    viewportSensitivity: "partial",
     sections: [
       { id: "targets", title: "Touch targets", rules: [r.targetSize] },
       { id: "gestures", title: "Gestures", rules: [r.gestures, r.dragging] },
@@ -625,10 +637,15 @@ const sourcedSheets: CheatSheet[] = [
   },
   {
     slug: "responsive-design",
-    title: "Responsive Design",
-    description: "The widths, zoom levels and spacing overrides a layout has to survive.",
-    dateUpdated: VERIFIED,
+    title: "Responsive & Viewports",
+    description: "Viewports, breakpoints, fluid layout, touch and pointer, foldables, and the widths a layout has to survive.",
+    dateUpdated: "2026-10-09",
+    viewportSensitivity: "high",
     sections: [
+      { id: "viewports", title: "Viewports and breakpoints", rules: [], entries: [e.viewportVsPixels, e.breakpoints] },
+      { id: "fluid", title: "Fluid layout and priority", rules: [], entries: [e.fluidLayout, e.contentPriority] },
+      { id: "input", title: "Touch and pointer", rules: [], entries: [e.touchVsPointer] },
+      { id: "foldables", title: "Foldables", rules: [], entries: [e.foldables] },
       { id: "reflow", title: "Reflow and zoom", rules: [r.reflow, r.resize, r.textSpacing] },
       { id: "singapore", title: "Singapore government services", rules: [guidanceRule("bd-1"), guidanceRule("sgds-breakpoints")] },
       { id: "orientation", title: "Orientation and input", rules: [r.orientation, r.targetSize] },
@@ -652,7 +669,7 @@ export const cheatSheets: CheatSheet[] = [
 export const sheetGroups: SheetGroup[] = ["Foundations", "Components", "Patterns and standards", "Figma"];
 
 /** Topics from the brief that are not written yet. Listed so the gap is visible. */
-export const plannedSheets = ["Drawers", "Dropdowns", "Tabs", "Loading states", "Icons"];
+export const plannedSheets = ["Dropdowns", "Tabs", "Loading states", "Icons"];
 
 export function getCheatSheet(slug: string): CheatSheet | undefined {
   return cheatSheets.find((s) => s.slug === slug);

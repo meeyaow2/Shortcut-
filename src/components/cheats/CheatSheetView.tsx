@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { sheetAiLinks } from "@/data/ai";
 import { useContentContext } from "@/hooks/useLibrary";
+import { useViewport } from "@/hooks/useViewport";
 import { useToday } from "@/hooks/useToday";
 import { formatDate } from "@/lib/dates";
 import { sheetStats } from "@/lib/sheets";
@@ -13,17 +14,38 @@ import type { CheatSheet } from "@/types";
 import { ComponentQABlock, CraftBlock } from "../craft/Craft";
 import { ContextNotice } from "../layout/ContextSwitch";
 import { FreshnessStatus, SourceBadge } from "../source/Source";
+import { isSpecificTo } from "../viewport/Scope";
+import { ComponentComparisons, FoldableGuide, FoldableNote, TestMatrix } from "../viewport/Viewport";
+import { ViewportBar } from "../viewport/ViewportBar";
 import { RuleBlock } from "./RuleBlock";
+
+// Blocks that follow the sections on one sheet, listed so the side navigation can link to them.
+const extras: Record<string, { id: string; title: string }[]> = {
+  "responsive-design": [
+    { id: "foldable-guide", title: "Foldable reference" },
+    { id: "iphone-duo", title: "Designing for iPhone Duo" },
+    { id: "components", title: "Same component, different viewports" },
+    { id: "test-matrix", title: "Responsive test matrix" },
+  ],
+};
 
 export function CheatSheetView({ sheet }: { sheet: CheatSheet }) {
   const today = useToday();
   const { ruleCount, sourceIds, dateVerified } = sheetStats(sheet);
   const context = useContentContext();
   const aiLink = sheetAiLinks[sheet.slug];
+  const { viewport, key } = useViewport();
+  const more = extras[sheet.slug] ?? [];
+  // Choosing a viewport reorders, it never removes: what speaks to that viewport comes first.
+  const first = <T extends Parameters<typeof isSpecificTo>[0]>(items: T[]) => [...items.filter((i) => isSpecificTo(i, viewport, key)), ...items.filter((i) => !isSpecificTo(i, viewport, key))];
   // Global context hides region-specific rules. A regional context keeps the
   // global ones, because regional guidance builds on them.
   const sections = sheet.sections
-    .map((section) => ({ ...section, rules: section.rules.filter((rule) => context !== "global" || !rule.context) }))
+    .map((section) => ({
+      ...section,
+      entries: section.entries && first(section.entries),
+      rules: first(section.rules.filter((rule) => context !== "global" || !rule.context)),
+    }))
     .filter((section) => section.rules.length > 0 || (section.entries?.length ?? 0) > 0);
 
   // Recording the visit is what lets the library flag later changes.
@@ -65,11 +87,15 @@ export function CheatSheetView({ sheet }: { sheet: CheatSheet }) {
         )}
       </header>
 
+      <div className="pt-6">
+        <ViewportBar />
+      </div>
+
       <div className="grid gap-10 pt-8 lg:grid-cols-[13rem_1fr]">
         <nav aria-label="On this sheet" className="hidden lg:sticky lg:top-24 lg:block lg:self-start">
           <p className="text-sm font-semibold">On this sheet</p>
           <ul className="mt-2 space-y-0.5 border-l border-line">
-            {sections.map((section) => (
+            {[...sections, ...more].map((section) => (
               <li key={section.id}>
                 <a
                   href={`#${section.id}`}
@@ -90,6 +116,15 @@ export function CheatSheetView({ sheet }: { sheet: CheatSheet }) {
                 : "Singapore guidance is shown alongside the global standards it builds on."}
             </ContextNotice>
           </div>
+          <div className="-mb-6 space-y-3 empty:hidden">
+            {viewport !== "all" && !sheet.viewportSensitivity && (
+              <p role="status" className="rounded-sm bg-wash px-3 py-2 text-sm text-ink-2">
+                <span className="font-semibold text-ink">Mostly universal. </span>
+                The guidance on this sheet is the same at every viewport, so nothing here changes with your selection.
+              </p>
+            )}
+            <FoldableNote />
+          </div>
           {sheet.component && <ComponentQABlock qa={sheet.component} />}
           {sections.map((section) => (
             <section key={section.id} id={section.id} aria-labelledby={`${section.id}-title`}>
@@ -106,6 +141,13 @@ export function CheatSheetView({ sheet }: { sheet: CheatSheet }) {
               </div>
             </section>
           ))}
+          {sheet.slug === "responsive-design" && (
+            <>
+              <FoldableGuide />
+              <ComponentComparisons />
+              <TestMatrix />
+            </>
+          )}
         </div>
       </div>
     </div>

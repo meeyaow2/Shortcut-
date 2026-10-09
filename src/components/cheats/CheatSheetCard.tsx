@@ -23,6 +23,11 @@ export function CheatSheetCard({ sheet }: { sheet: CheatSheet }) {
         </h2>
       </div>
       <p className="mt-2 flex-1 text-ink-2">{sheet.description}</p>
+      {sheet.viewportSensitivity && (
+        <p className="mt-3 text-sm text-ink-3" title={sheet.viewportSensitivity === "high" ? "Most of this sheet changes with viewport" : "Parts of this sheet change with viewport"}>
+          {sheet.viewportSensitivity === "high" ? "Mobile · Tablet · Desktop" : "Viewport-aware in part"}
+        </p>
+      )}
       <div className="mt-4 flex flex-wrap gap-1.5">
         {sourceIds.map((id) => (
           <SourceBadge key={id} id={id} />

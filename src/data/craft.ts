@@ -1,6 +1,8 @@
 import type { CheatSheet, CraftEntry } from "@/types";
 import { VERIFIED, cite, wcag } from "./citations";
+import { getExplorerTopic } from "./explorer";
 import { getGuidance, guidanceCitation } from "./guidance";
+import { viewportCite } from "./viewports";
 
 /**
  * Editorial guidance: conventions and craft. Nothing in `summary`, `why`,
@@ -8,6 +10,10 @@ import { getGuidance, guidanceCitation } from "./guidance";
  * writing and is labelled that way in the UI. Where an official source does
  * speak to the subject, its position sits separately in `official`, with a
  * citation checked on VERIFIED. Never move text between the two.
+ *
+ * `viewportValues` are starting points by available width, written by
+ * Shortcut. They are never attributed to a design system; what a system
+ * itself says about a viewport goes in `official`.
  */
 const REVIEWED = VERIFIED;
 
@@ -15,6 +21,9 @@ type Input = Omit<CraftEntry, "dateReviewed" | "kind"> & { kind?: CraftEntry["ki
 
 const entry = (input: Input): CraftEntry => ({ kind: "industry-convention", dateReviewed: REVIEWED, ...input });
 const craft = (input: Input): CraftEntry => entry({ kind: "craft-guidance", ...input });
+
+/** A cell from the design system comparison, reused as an official note. */
+const cell = (topic: string, system: "sgds" | "carbon" | "uswds" | "atlassian") => getExplorerTopic(topic)!.cells![system]!.citation;
 
 export const e = {
   // --- Spacing -----------------------------------------------------------
@@ -60,16 +69,17 @@ export const e = {
   }),
   padding: entry({
     id: "padding",
+    viewportValues: { mobile: "12–16 px", tablet: "16–20 px", laptop: "16–24 px", desktop: "16–24 px", large: "20–32 px" },
+    dependsOn: ["Information density", "Component size", "Touch interaction", "Product type", "Your design system"],
     title: "Padding",
     safeStartingPoint: "16–24 px",
     commonRange: "8–12 compact control, 16–24 standard card, 24–32 large content card",
-    summary: "Common working ranges for the space inside a container. Page-edge padding depends on the layout, and is usually tighter on mobile than desktop.",
+    summary: "Common working ranges for the space inside a container. Consistency matters more than finding a theoretically perfect value: pick one value per kind of container and keep it.",
     why: "This range tends to give a desktop product card room to breathe while keeping useful density. Compact enterprise tools go lower; large editorial cards go higher.",
     scale: [
       { value: "8–12", label: "Compact control", use: "Buttons, chips, table cells, dense toolbars." },
       { value: "16–24", label: "Standard card", use: "Most cards, panels, popovers and dialogs." },
       { value: "24–32", label: "Large content card", use: "Cards holding long text or a single important object." },
-      { value: "16 or 20", label: "Mobile page edge", use: "A common horizontal page padding on phones." },
     ],
     whenToDeviate: "Go tighter when people scan many items at once. Go looser when a card holds one thing people read carefully.",
     commonMistakes: ["Different padding on cards that sit side by side.", "Padding larger than the gap between cards, so the insides feel further apart than the cards.", "Desktop padding carried unchanged onto a 360 px screen."],
@@ -77,22 +87,26 @@ export const e = {
   }),
   sectionSpacing: entry({
     id: "section-spacing",
+    viewportValues: { mobile: "24–40 px", tablet: "32–48 px", desktop: "40–64 px", large: "48–80 px" },
+    dependsOn: ["How much each section holds", "Density", "Whether the page is read or worked in"],
     title: "Section spacing",
-    safeStartingPoint: "32–64 px",
+    safeStartingPoint: "40–64 px",
     commonRange: "32–48 in product UI, 48–96 on content pages",
     summary: "The vertical gap between major parts of a page.",
     why: "Sections need a gap clearly larger than anything inside them, or the page reads as one undivided list.",
     whenToDeviate: "Tighten in dense tools where people work in one screenful. Loosen on long reading pages.",
-    starter: { label: "Section spacing", context: "Between major page sections" },
+    starter: { label: "Section spacing", context: "Between major page sections, desktop" },
   }),
 
   // --- Typography --------------------------------------------------------
   bodyText: entry({
     id: "body-text-size",
+    viewportValues: { mobile: "14–16 px", tablet: "14–16 px", desktop: "14–16 px", large: "14–18 px" },
+    dependsOn: ["Reading or scanning", "Viewing distance", "Density"],
     title: "Body text size",
     safeStartingPoint: "14–16 px",
     commonRange: "14 in dense product UI, 16 for reading, 12–14 for supporting text",
-    summary: "The size most of your text is set in.",
+    summary: "The size most of your text is set in. It should not scale up much because the screen is larger: people sit about as far from a large monitor as from a laptop.",
     why: "16 px is the browser default and comfortable for sustained reading. Product UI often drops to 14 to fit more on screen.",
     whenToDeviate: "Use 16 or more for anything people read at length, and on mobile. Keep 12 for captions and metadata only.",
     commonMistakes: ["12 px used for body text to make a dense screen fit.", "Supporting text made both small and pale, so it fails twice."],
@@ -105,12 +119,16 @@ export const e = {
   }),
   pageTitle: entry({
     id: "page-title-size",
+    viewportValues: { mobile: "24–32 px", tablet: "28–36 px", desktop: "32–48 px", large: "36–56 px" },
+    dependsOn: ["Product UI or marketing page", "Length of the title", "What the title competes with"],
     title: "Page title size",
-    safeStartingPoint: "24–40 px",
-    commonRange: "20–28 in tools, 32–48 on content pages",
+    safeStartingPoint: "32–48 px",
+    commonRange: "20–28 in tools, 32–48 on content pages, larger on marketing pages",
     summary: "The largest text on a product screen.",
     why: "A title needs to be clearly the largest thing, but in a tool it competes with the content people came for.",
-    whenToDeviate: "Marketing and editorial pages go far larger. A very large heading inside a product screen is a common mark of generated UI.",
+    whenToDeviate: "Marketing and editorial pages go far larger. Dense application screens sit at the bottom of each range or below it.",
+    commonMistakes: ["A marketing-size heading inside a dense application because the viewport is large.", "A desktop title carried onto mobile, where it wraps to four lines."],
+    aiWarning: "A very large heading inside a product screen is a common mark of generated UI.",
     official: [{ text: "Type scale runs 14, 16, 20, 24, 28, 32, 40, 48, 56 px.", citation: cite.sgdsTypography }],
   }),
   lineHeight: entry({
@@ -129,10 +147,11 @@ export const e = {
   }),
   lineLength: entry({
     id: "line-length",
+    viewportApplicability: ["all"],
     title: "Reading line length",
     safeStartingPoint: "45–75 characters",
     commonRange: "45–75 for body text, shorter for captions",
-    summary: "How wide a block of reading text should be.",
+    summary: "How wide a block of reading text should be. It is independent of screen width: a wider monitor does not mean text should stretch across it. Set a maximum width on reading content.",
     why: "Long lines make it hard to find the start of the next line; very short lines break phrases apart.",
     whenToDeviate: "Tables, code and UI labels are not reading text and do not need the limit.",
     commonMistakes: ["Paragraphs stretched to the full width of a wide container."],
@@ -270,6 +289,14 @@ export const e = {
   }),
   contentWidth: entry({
     id: "content-width",
+    viewportValues: { mobile: "Full width, inside the page margins", tablet: "Full width, inside the page margins", laptop: "Full width up to the maximum", desktop: "1200–1440 px maximum", large: "Hold the maximum; let the margins grow" },
+    dependsOn: ["What the content is", "Whether people read or scan it"],
+    scale: [
+      { value: "Wide", label: "Application shell", use: "Can use a wide, responsive layout that follows the viewport." },
+      { value: "600–760", label: "Reading content", use: "A constrained maximum width, whatever the screen." },
+      { value: "Narrow", label: "Forms", use: "Inputs sized to their answers. Do not stretch fields across a very wide screen." },
+      { value: "Wide", label: "Dashboards", use: "A wider grid, still capped so related panels stay near one another." },
+    ],
     title: "Content width",
     safeStartingPoint: "1200–1440 px",
     commonRange: "1200–1440 for application layouts, 600–760 for reading columns",
@@ -294,17 +321,19 @@ export const e = {
   // --- Buttons -----------------------------------------------------------
   buttonHeight: entry({
     id: "button-height",
+    viewportValues: { mobile: "40–48 px", tablet: "40–48 px", desktop: "40–48 px" },
+    dependsOn: ["Touch or pointer", "Density", "The input height beside it"],
     title: "Button height",
     safeStartingPoint: "40–48 px",
     commonRange: "32–36 compact, 40–48 standard, 48–56 large or touch",
-    summary: "Typical heights in desktop product interfaces. Touch sizes are set by standards and platforms, shown separately below.",
+    summary: "Typical visible heights. The visible button and its touch target are two different things: a button can look 40 px tall while its tappable area is larger. Target sizes come from standards and platforms, shown separately below.",
     why: "40 px reads clearly as a button without dominating a form; 48 px is comfortable for touch.",
-    whenToDeviate: "Dense toolbars and tables use 28 to 32. Match your input height so buttons and fields sit on one line.",
+    whenToDeviate: "Dense desktop toolbars and tables use 28 to 32, because a pointer is more precise than a finger. That is a density choice, not a lower accessibility bar: the target-size requirement applies on desktop too. Match your input height so buttons and fields sit on one line.",
     commonMistakes: ["Three or four button heights in one product.", "A button shorter than the field beside it."],
     official: [
-      { text: "The pointer target must be at least 24 by 24 CSS pixels.", citation: wcag("2.5.8") },
-      { text: "A button needs a hit region of at least 44 × 44 pt.", citation: cite.appleButtons },
-      { text: "Touch targets of at least 48 × 48 dp.", citation: cite.androidTargets },
+      { text: "The pointer target must be at least 24 by 24 CSS pixels.", citation: wcag("2.5.8"), viewportApplicability: ["all"], input: ["touch", "pointer"] },
+      { text: "A button needs a hit region of at least 44 × 44 pt.", citation: cite.appleButtons, input: ["touch"] },
+      { text: "Touch targets of at least 48 × 48 dp.", citation: cite.androidTargets, input: ["touch"] },
       { text: "The Button page lists a 48 px height token for the default size.", citation: cite.sgdsButton },
     ],
     starter: { label: "Button height", context: "Desktop product UI" },
@@ -333,12 +362,14 @@ export const e = {
   // --- Inputs and forms --------------------------------------------------
   inputHeight: entry({
     id: "input-height",
+    viewportValues: { mobile: "44–48 px", tablet: "44–48 px", desktop: "40–48 px" },
+    dependsOn: ["Touch or pointer", "Density", "How many fields share the screen"],
     title: "Input height",
     safeStartingPoint: "40–48 px",
     commonRange: "32–36 compact, 40–48 standard",
     summary: "Text fields, selects and buttons in the same form should share one height.",
     why: "Shared height lets controls sit on one baseline, and 40 px or more is comfortable to click and tap.",
-    whenToDeviate: "Filters and table toolbars can be shorter. Mobile forms should stay at 44 to 48.",
+    whenToDeviate: "Filters and table toolbars can be shorter. Dense enterprise screens may use smaller controls, but check they are still easy to hit and read. Do not use one density everywhere by default.",
     starter: { label: "Input height", context: "Desktop forms" },
   }),
   formLayout: entry({
@@ -385,6 +416,8 @@ export const e = {
   // --- Density -----------------------------------------------------------
   density: entry({
     id: "density",
+    viewportValues: { mobile: "Comfortable", tablet: "Comfortable, tighter for data", desktop: "Comfortable or compact", large: "Comfortable or compact" },
+    dependsOn: ["How often people use it", "Touch or pointer", "How much they compare at once"],
     title: "Compact, comfortable or spacious",
     safeStartingPoint: "Comfortable",
     commonRange: "Row height: 32–36 compact, 40–48 comfortable, 56+ spacious",
@@ -395,9 +428,248 @@ export const e = {
       { value: "Comfortable", label: "Most consumer apps and general product UI", use: "A balance of scanning and clarity. The default when unsure." },
       { value: "Spacious", label: "Content sites, marketing pages, onboarding", use: "One idea at a time, generous spacing, larger type." },
     ],
-    whenToDeviate: "Mobile needs touch-sized targets however dense the content. Offer a density setting when both experts and newcomers use the same table.",
+    whenToDeviate: "Mobile usually means comfortable touch spacing. A tablet has to balance touch with showing more. Desktop enterprise tools can go compact. Mobile needs touch-sized targets however dense the content. Offer a density setting when both experts and newcomers use the same table.",
     commonMistakes: ["Marketing-page spacing inside a data tool.", "Dense and spacious areas mixed on one screen without reason."],
     mentorNote: "When people ask for it tighter, they usually mean they want to compare more rows without scrolling.",
+  }),
+
+  // --- Viewport-aware additions ------------------------------------------
+  pageMargins: entry({
+    id: "page-margins",
+    title: "Page margins",
+    safeStartingPoint: "32–64 px",
+    viewportValues: { mobile: "16–20 px", tablet: "24–32 px", desktop: "32–64 px", large: "48–80 px" },
+    dependsOn: ["Container strategy", "Whether content has a maximum width", "Density"],
+    summary: "The space between the edge of the viewport and the content. On large screens it depends on the container: once content reaches its maximum width, the margin is whatever is left over.",
+    why: "Content needs to clear the screen edge, and on a phone every pixel of margin is taken from the content. So margins start small and grow with the space available.",
+    whenToDeviate: "Full-bleed media, maps and data canvases can run to the edge. Keep text and controls inside the margin.",
+    commonMistakes: ["Desktop margins kept on a phone, leaving a narrow strip of content.", "Margins that keep growing on a very wide screen while the content stays small in the middle with no maximum width."],
+    official: [
+      { text: "Deliver at least 320, 768 and 1440 px layouts.", citation: cite.sgdsBreakpoint },
+      { text: "The responsive spacing scale uses smaller values on small screens for its larger steps.", citation: cite.govukSpacing },
+    ],
+    starter: { label: "Page margins", context: "Desktop. 16–20 px on mobile" },
+  }),
+  gaps: entry({
+    id: "gaps",
+    title: "Gaps between elements",
+    safeStartingPoint: "Small 4–12, medium 12–24, large 24–40 px",
+    viewportValues: {
+      mobile: "Small 4–8, medium 8–16, large 16–24 px",
+      desktop: "Small 4–12, medium 12–24, large 24–40 px",
+    },
+    dependsOn: ["How closely the elements relate", "Density", "Touch interaction"],
+    summary: "Three working sizes of gap. Small sits inside a component, medium between related items, large between groups. The relationship between them matters more than the numbers.",
+    why: "People read distance as relatedness. Three clearly different gaps are enough to show what belongs together, on any screen.",
+    scale: [
+      { value: "Small", label: "Inside a component", use: "Icon to label, label to field, lines of a list item." },
+      { value: "Medium", label: "Between related items", use: "Fields in a form group, cards in a grid, items in a toolbar." },
+      { value: "Large", label: "Between groups", use: "One form group and the next, a heading and the block before it." },
+    ],
+    whenToDeviate: "On mobile the large gap shrinks most, because vertical space is scarce. Keep the gap between tappable items large enough that a finger does not hit the neighbour.",
+    commonMistakes: ["The same gap everywhere, so nothing reads as grouped.", "Gaps reduced on mobile until separate tap targets touch."],
+  }),
+  columns: entry({
+    id: "columns",
+    title: "Columns",
+    safeStartingPoint: "2–4 columns",
+    viewportValues: { mobile: "1 column", tablet: "1–2 columns", laptop: "2–3 columns", desktop: "2–4 columns", large: "Hold the count; cap the width" },
+    dependsOn: ["What each column holds", "Minimum useful width of one item", "Whether items are compared or read"],
+    summary: "How many columns of content sit side by side. More available space does not automatically mean adding more columns.",
+    why: "A column is useful while each item in it stays wide enough to read. Past that, extra columns make every item worse.",
+    whenToDeviate: "Dense grids of small, uniform items, such as thumbnails, can go well past four. Long text should stay in one column at any width.",
+    commonMistakes: ["A column added at every breakpoint until cards are too narrow for their titles.", "Columns that keep multiplying on a very wide screen instead of a maximum width."],
+    mentorNote: "Decide the narrowest a card can be and still work. The column count follows from that.",
+    official: [
+      { text: "On iPhone Duo a split view expands on the inner display and collapses to a single pane on the outer display. In a grid, prefer an even number of columns so content divides cleanly at the fold.", citation: viewportCite.duoHig, viewportApplicability: ["foldable"] },
+      { text: "A large unfolded foldable in landscape is like a tablet, and a two-pane layout makes good use of the width. Folded, a single column is straightforward and effective.", citation: viewportCite.androidFoldables, viewportApplicability: ["foldable"] },
+    ],
+  }),
+  tablePatterns: entry({
+    id: "table-by-viewport",
+    title: "Tables across viewports",
+    viewportValues: {
+      mobile: "Stacked rows, key and value pairs, card-like row details or expandable rows",
+      tablet: "Fewer columns, chosen by priority; sideways scrolling only when needed",
+      desktop: "The full table: sticky header, resizable columns, bulk actions",
+    },
+    dependsOn: ["Whether people compare across rows", "How many columns matter", "Touch or pointer"],
+    summary: "A table does not shrink well. Decide which columns matter most, then pick a pattern for each width.",
+    why: "On a wide screen people compare down columns. On a phone there is room for about two columns, so comparison has to give way to reading one row at a time.",
+    whenToUse: ["Stacked or key and value rows when people look up one record.", "Column priority when a few columns carry most of the meaning.", "Sideways scrolling when the data is truly tabular and people compare across it."],
+    whenNotToUse: ["Do not shrink every desktop column to fit a phone.", "Do not hide a column on mobile that people need to complete the task."],
+    commonMistakes: ["Tiny text so that every column fits.", "Sideways scrolling with nothing showing that more is off screen.", "Bulk actions that only exist on desktop."],
+    official: [{ text: "Content must work at 320 CSS pixels without scrolling in two directions. Data tables that need two dimensions are exempt.", citation: wcag("1.4.10"), viewportApplicability: ["all"] }],
+  }),
+  modalWidth: entry({
+    id: "modal-width",
+    title: "Modal width",
+    safeStartingPoint: "560–720 px",
+    viewportValues: {
+      mobile: "Full width or full screen",
+      tablet: "Sized to content, inside the page margins",
+      desktop: "Small 400–480, medium 560–720, large 800–960 px",
+    },
+    dependsOn: ["How much the modal holds", "Whether it contains a form", "Touch or pointer"],
+    summary: "How wide a modal or dialog should be. These are practical starting ranges, not standards. On mobile, avoid a tiny desktop-style modal squeezed into the screen: anything beyond a short confirmation works better near full width or full screen.",
+    why: "A modal should be as wide as its content needs and no wider. On a phone there is no room for a margin around it that does any good.",
+    scale: [
+      { value: "400–480", label: "Small", use: "Confirmations and single decisions." },
+      { value: "560–720", label: "Medium", use: "A short form or a few settings." },
+      { value: "800–960", label: "Large", use: "Content that needs two columns or a preview. Ask whether it should be a page." },
+    ],
+    whenToDeviate: "If a modal needs the large size on desktop, or scrolls on mobile, it is often a page or a full-screen step instead.",
+    commonMistakes: ["A fixed desktop width that overflows a phone.", "A small centred box on mobile with most of the screen dimmed around it.", "A long form in a modal that scrolls inside a page that also scrolls."],
+    official: [
+      { text: "Five sizes: small, medium (default), large, extra large and fullscreen.", citation: cell("modal", "sgds") },
+      { text: "Four responsive sizes: extra small, small, medium and large.", citation: cell("modal", "carbon") },
+      { text: "Two sizes: default and large.", citation: cell("modal", "uswds") },
+      { text: "The usage page gives no pixel widths.", citation: cell("modal", "atlassian") },
+    ],
+    starter: { label: "Modal width", context: "Medium modal, desktop" },
+  }),
+  overlayChoice: craft({
+    id: "modal-drawer-fullscreen",
+    title: "Modal, drawer or full screen",
+    viewportApplicability: ["all"],
+    summary: "Three ways to put something over the page. Choose by how much the person needs to see behind it and how long they will stay.",
+    why: "Each one makes a different promise. A modal says: deal with this now. A drawer says: this goes with what is behind it. Full screen says: this is the task for a while.",
+    scale: [
+      { value: "Modal", label: "A short, blocking decision", use: "Confirm, name, choose one thing. The page behind does not matter until it is done." },
+      { value: "Drawer", label: "Detail or tools beside the page", use: "Filters, a record's details, settings that affect what is behind. The page stays visible and often usable." },
+      { value: "Full screen", label: "A task in its own right", use: "A long form, a multi-step flow, an editor. On mobile, most things that are modals on desktop." },
+    ],
+    commonMistakes: ["A drawer used for a decision that must block.", "A modal used for a ten-field form.", "A different choice for the same job in different parts of one product."],
+    mentorNote: "If people need to look at the page while they do it, it is not a modal.",
+  }),
+  drawerWidth: entry({
+    id: "drawer-width",
+    title: "Drawer width",
+    safeStartingPoint: "320–480 px",
+    viewportValues: {
+      mobile: "Full width or nearly, often from the bottom",
+      tablet: "A moderate width, about half the viewport",
+      desktop: "320–480 px side panel",
+    },
+    dependsOn: ["What the drawer holds", "Whether the page behind stays usable", "Touch or pointer"],
+    summary: "The same drawer changes shape with the space available. A side panel on desktop usually becomes a full-width sheet on a phone, and that is the same component, not a second one.",
+    why: "A drawer earns its place by leaving the page visible. On a phone there is no page left to show beside it, so it takes the width and the page waits behind.",
+    whenToDeviate: "A drawer holding a table or a preview can be wider on desktop. Past about half the viewport it stops reading as a drawer.",
+    commonMistakes: ["A fixed desktop width on mobile, leaving a useless sliver of page.", "No visible way to close it once it covers the screen.", "Losing what was typed when the viewport changes and the drawer re-renders."],
+  }),
+  navPatterns: entry({
+    id: "navigation-by-viewport",
+    title: "Navigation across viewports",
+    viewportValues: {
+      mobile: "A compact header with a menu, or bottom navigation",
+      tablet: "Primary items visible; lower-priority ones collapsed",
+      laptop: "Full navigation, with tighter spacing and fewer secondary actions",
+      desktop: "Full navigation visible",
+      large: "Full navigation visible; do not spread it across the whole width",
+    },
+    dependsOn: ["How many primary destinations there are", "How often people switch between them", "Touch or pointer"],
+    summary: "Navigation is the first thing to stop fitting. Decide what stays visible at each width before deciding how to hide the rest.",
+    why: "Anything behind a menu is used less. So the question at each width is which destinations deserve to stay in view.",
+    whenToUse: ["Bottom navigation when there are three to five primary destinations that people switch between often.", "A menu button when there are many destinations, or they are visited rarely.", "Progressive disclosure for secondary items at any width."],
+    whenNotToUse: ["A menu button is not always the right answer on mobile. It hides every destination equally.", "Do not use bottom navigation for more destinations than fit with readable labels."],
+    commonMistakes: ["The desktop bar squeezed until labels wrap or truncate.", "A menu button on a wide screen that has room for the items.", "Different destination names on mobile and desktop."],
+    official: [
+      { text: "On iPhone Duo the system moves toolbars and tab bars to the side on the outer display, and on the inner display in landscape, to keep vertical space for content. In general, do not override this.", citation: viewportCite.duoHig, viewportApplicability: ["foldable"] },
+      { text: "Folded, a single column layout with a bottom navigation bar is straightforward but effective. Unfolded in landscape, a two-pane layout with a navigation rail makes excellent use of the wide screen.", citation: viewportCite.androidFoldables, viewportApplicability: ["foldable"] },
+    ],
+  }),
+  viewportVsPixels: craft({
+    id: "viewport-vs-resolution",
+    title: "Viewport, not physical resolution",
+    viewportApplicability: ["all"],
+    summary: "A viewport is the space a browser or app actually has, measured in CSS pixels. It is not the screen's physical resolution, and it is not the device. One CSS pixel is drawn with several physical pixels on a modern screen, and a window can be any size on any device.",
+    why: "Design responds to the space available. Two people on the same laptop have different viewports if one has the window split in half.",
+    commonMistakes: ["A breakpoint set at a device's physical pixel width.", "Layouts named after devices: the iPad layout, the iPhone layout.", "Assuming a phone is touch and a desktop is a mouse. Viewport and input method are separate."],
+    mentorNote: "Design for the space available, not the name of the device.",
+    official: [
+      { text: "Window size classes are explicitly not determined by the size of the device screen, but by the window size available to the app. Split-screen, resizable windows and folding all change it while the app runs.", citation: viewportCite.androidSizeClasses, viewportApplicability: ["all"] },
+    ],
+  }),
+  breakpoints: entry({
+    id: "breakpoints",
+    title: "Breakpoints",
+    safeStartingPoint: "Where the layout breaks",
+    viewportValues: { mobile: "Under about 600 px", tablet: "About 600–1024 px", laptop: "About 1024–1280 px", desktop: "About 1280–1600 px", large: "1600 px and up" },
+    dependsOn: ["Your content", "Your navigation", "Your densest screen"],
+    summary: "A breakpoint is a width at which the layout changes. Choose it by when your layout needs to adapt, not by a device. The ranges here are for quick reference only, and are not strict or universal.",
+    why: "Devices come in every width and windows resize freely, so a breakpoint tied to a device is right for one product for one year. A breakpoint tied to the content stays right.",
+    whenToUse: ["The navigation no longer fits.", "Cards become too narrow for their content.", "Text becomes hard to read: lines too long or too short.", "A table becomes unusable.", "Controls become cramped or start to wrap."],
+    commonMistakes: ["Breakpoints copied from a framework without checking where this layout breaks.", "Only the breakpoint widths tested, never the widths between them.", "A new breakpoint for each new device."],
+    mentorNote: "Add a breakpoint because the layout breaks, not because an iPad exists.",
+    official: [
+      { text: "Width classes: compact under 600 dp, medium 600 to 840, expanded 840 to 1200, large 1200 to 1600, extra large 1600 and up. Google calls them opinionated breakpoints.", citation: viewportCite.androidSizeClasses },
+      { text: "Deliver at least 320, 768 and 1440 px layouts.", citation: cite.sgdsBreakpoint },
+    ],
+  }),
+  fluidLayout: craft({
+    id: "fluid-layout",
+    title: "Fluid between breakpoints",
+    viewportApplicability: ["all"],
+    summary: "Between breakpoints the layout should stretch and shrink smoothly. Give things a minimum and a maximum width instead of a fixed one, and let type and spacing step down at small widths.",
+    why: "People do not use the three widths in your design file. A layout that only works at those widths is broken everywhere else.",
+    scale: [
+      { value: "Min width", label: "The narrowest it still works", use: "Stops a card, a column or a field collapsing into something unusable." },
+      { value: "Max width", label: "The widest it is still useful", use: "Stops lines of text, forms and whole pages stretching across a large screen." },
+      { value: "Type", label: "Steps down, modestly", use: "Titles shrink on small screens. Body text barely changes." },
+      { value: "Spacing", label: "Large gaps shrink first", use: "Section spacing and margins tighten on small screens. Small gaps stay." },
+      { value: "Overflow", label: "Decide, do not discover", use: "Say what wraps, what truncates and what scrolls before the content decides for you." },
+    ],
+    commonMistakes: ["Fixed pixel widths on containers.", "Long words, numbers or translated labels that push a layout wider than the screen.", "Everything scaled down in proportion on mobile, so nothing is readable."],
+  }),
+  contentPriority: craft({
+    id: "content-priority",
+    title: "Content priority and layout transformation",
+    viewportApplicability: ["all"],
+    summary: "When space runs out, something has to move, stack, collapse or go. Decide the order of importance first; the layout change follows from it.",
+    why: "A responsive layout is a series of decisions about what matters most. Making them on purpose is the difference between adapting and merely fitting.",
+    scale: [
+      { value: "Stack", label: "Side by side becomes top to bottom", use: "The most important column goes first, not necessarily the leftmost." },
+      { value: "Collapse", label: "Visible becomes one tap away", use: "Secondary navigation, filters and details." },
+      { value: "Swap", label: "One pattern becomes another", use: "A table becomes stacked rows; a side panel becomes a sheet." },
+      { value: "Remove", label: "Only what nobody needs here", use: "Decoration can go. A step in the task cannot." },
+    ],
+    commonMistakes: ["The sidebar stacked above the main content on mobile, pushing the content off screen.", "A feature that exists only on desktop."],
+  }),
+  touchVsPointer: craft({
+    id: "touch-vs-pointer",
+    title: "Touch and pointer",
+    viewportApplicability: ["all"],
+    input: ["touch", "pointer"],
+    summary: "Viewport and input method are separate things. A small window can be driven by a mouse, a large tablet by a finger, and a laptop by both. Do not assume mobile means touch and desktop means mouse.",
+    why: "A finger is less precise than a pointer and cannot hover. Those two facts change target size and what can be hidden behind hover, at any viewport.",
+    commonMistakes: ["Actions that only appear on hover.", "Targets shrunk on desktop on the assumption that nobody touches a large screen.", "Tooltips as the only way to learn what an icon does."],
+    official: [
+      { text: "The pointer target must be at least 24 by 24 CSS pixels.", citation: wcag("2.5.8"), viewportApplicability: ["all"], input: ["touch", "pointer"] },
+      { text: "Touch targets of at least 48 × 48 dp.", citation: cite.androidTargets, input: ["touch"] },
+      { text: "A button needs a hit region of at least 44 × 44 pt.", citation: cite.appleButtons, input: ["touch"] },
+    ],
+  }),
+  foldables: craft({
+    id: "foldables",
+    title: "Folding screens",
+    viewportApplicability: ["foldable"],
+    input: ["touch"],
+    viewportValues: { foldableClosed: "A compact layout", foldableOpen: "The same layout, expanded" },
+    summary: "A folding device is not a step between mobile and tablet. It is two viewports on one device, and people move between them in the middle of a task.",
+    why: "The closed and open screens differ in width and in aspect ratio, and the change between them is instant. A layout has to be right in both and keep its place across the change.",
+    deviceReferences: [
+      { device: "iPhone Duo", mode: "closed", guidance: "Outer display. Apple gives it a compact width layout." },
+      { device: "iPhone Duo", mode: "open", guidance: "Inner folding display. Apple gives it a regular width layout, expanded from the compact one." },
+    ],
+    commonMistakes: ["Everything scaled up in proportion to fill the open screen.", "A completely different layout when open, so people have to find everything again.", "More content added when open only because there is room.", "A control or a line of text placed across the fold.", "Opening the device resets the screen to its start."],
+    official: [
+      { text: "Use a compact width layout for the outer display and a regular width layout for the inner display. Do not reinvent the app when it resizes; let the existing layout expand.", citation: viewportCite.duoHig, viewportApplicability: ["foldable"] },
+      { text: "Keep functionality and the state of elements the same between displays, and show an additional level of hierarchy on the inner display if it suits the content.", citation: viewportCite.duoHig, viewportApplicability: ["foldable"] },
+      { text: "Avoid extreme layout changes as people fold the device. Keep important elements clear of the folding region.", citation: viewportCite.duoHig, viewportApplicability: ["foldable"] },
+      { text: "The differences in screen size and aspect ratio of folded and unfolded screens can be substantial, requiring alternative layouts.", citation: viewportCite.androidFoldables, viewportApplicability: ["foldable"] },
+      { text: "Position dialog boxes and pop-up menus so they do not overlay the fold. When the device is half opened, split content into two areas.", citation: viewportCite.androidFoldables, viewportApplicability: ["foldable"] },
+      { text: "The app must preserve and restore its state as the device folds or unfolds. The unfolded screen should show the same content, plus complementary content.", citation: viewportCite.androidFoldables, viewportApplicability: ["foldable"] },
+    ],
   }),
 
   // --- Tokens ------------------------------------------------------------
@@ -429,19 +701,22 @@ export const craftSheets: CheatSheet[] = [
   {
     slug: "spacing",
     title: "Spacing",
-    description: "A working scale, padding, gaps and section spacing, and how spacing shows what belongs together.",
+    description: "Working spacing scales, padding and gaps across mobile, tablet and desktop.",
     group: "Foundations",
+    viewportSensitivity: "high",
     dateUpdated: REVIEWED,
     sections: [
       { id: "scale", title: "Scale", rules: [], entries: [e.spacingScale, e.spacingRelationships] },
       { id: "padding", title: "Padding and sections", rules: [], entries: [e.padding, e.sectionSpacing] },
+      { id: "margins", title: "Margins and gaps", rules: [], entries: [e.pageMargins, e.gaps] },
     ],
   },
   {
     slug: "typography",
     title: "Typography",
-    description: "Font sizing, line height, line length, and how few sizes you can get away with.",
+    description: "Font sizing, hierarchy, line height and responsive type guidance.",
     group: "Foundations",
+    viewportSensitivity: "partial",
     dateUpdated: REVIEWED,
     sections: [
       { id: "sizes", title: "Sizes", rules: [], entries: [e.bodyText, e.pageTitle, e.typeAudit] },
@@ -481,19 +756,21 @@ export const craftSheets: CheatSheet[] = [
   {
     slug: "layout",
     title: "Layout",
-    description: "Alignment, grid, content width and visual hierarchy.",
+    description: "Containers, columns, content width and responsive behaviour across viewports.",
     group: "Foundations",
+    viewportSensitivity: "high",
     dateUpdated: REVIEWED,
     sections: [
-      { id: "structure", title: "Structure", rules: [], entries: [e.alignment, e.contentWidth] },
+      { id: "structure", title: "Structure", rules: [], entries: [e.alignment, e.columns, e.contentWidth] },
       { id: "hierarchy", title: "Hierarchy", rules: [], entries: [e.hierarchy, e.spacingRelationships] },
     ],
   },
   {
     slug: "density",
     title: "Density",
-    description: "Compact, comfortable or spacious: when to make it tighter.",
+    description: "Compact, comfortable or spacious: when to make it tighter, and how that changes with viewport.",
     group: "Foundations",
+    viewportSensitivity: "partial",
     dateUpdated: REVIEWED,
     sections: [{ id: "density", title: "Density", rules: [], entries: [e.density] }],
   },
@@ -508,8 +785,9 @@ export const craftSheets: CheatSheet[] = [
   {
     slug: "buttons",
     title: "Buttons",
-    description: "Height, hierarchy, labels and the states people forget.",
+    description: "Height, touch targets, hierarchy, labels and the states people forget.",
     group: "Components",
+    viewportSensitivity: "partial",
     dateUpdated: REVIEWED,
     component: {
       anatomy: ["Container", "Label", "Optional icon"],
@@ -527,6 +805,7 @@ export const craftSheets: CheatSheet[] = [
     title: "Cards",
     description: "When a container helps, when it is noise, and what to use instead.",
     group: "Components",
+    viewportSensitivity: "partial",
     dateUpdated: REVIEWED,
     component: {
       anatomy: ["Container", "Optional media", "Title", "Supporting content", "Optional actions"],
@@ -535,5 +814,23 @@ export const craftSheets: CheatSheet[] = [
       checklist: ["Each card is one independent object", "No card inside a card", "Padding and radius match across cards", "If the whole card is clickable, it has one clear target", "Shadow only where the card overlaps something"],
     },
     sections: [{ id: "need", title: "Before adding one", rules: [], entries: [e.needACard, e.padding, e.radius] }],
+  },
+  {
+    slug: "drawers",
+    title: "Drawers",
+    description: "Side panels and sheets: how wide, when to use one, and how the same drawer changes across viewports.",
+    group: "Components",
+    viewportSensitivity: "high",
+    dateUpdated: "2026-10-09",
+    component: {
+      anatomy: ["Container", "Title", "Close control", "Content", "Optional footer actions", "Optional scrim"],
+      states: ["Closed", "Opening", "Open", "Scrolled content", "Loading"],
+      edgeCases: ["Content taller than the screen", "Opened on a phone", "Viewport resized while open", "A second drawer requested from the first", "Unsaved changes when closed"],
+      checklist: ["There is a visible way to close it", "Esc closes it, and focus returns to what opened it", "It is full width or nearly on a phone", "The page behind is either usable or clearly inactive, not ambiguous", "Footer actions stay in view when content scrolls"],
+    },
+    sections: [
+      { id: "choice", title: "When to use one", rules: [], entries: [e.overlayChoice] },
+      { id: "size", title: "Size", rules: [], entries: [e.drawerWidth] },
+    ],
   },
 ];

@@ -2,11 +2,14 @@
 
 import { ChevronDown } from "lucide-react";
 import type { ReactNode } from "react";
+import { resolveViewportValue, viewportKeyLabels } from "@/data/viewports";
+import { useViewport } from "@/hooks/useViewport";
 import { citationAuthority } from "@/lib/authority";
 import { formatDate } from "@/lib/dates";
 import type { ComponentQA, CraftEntry, EditorialKind, OfficialNote, ScaleStep } from "@/types";
 import { AuthorityLabel, SourceBadge } from "../source/Source";
 import { ExternalLink } from "../ui/primitives";
+import { AppliesTo, DependsOn, ViewportTable, appliesTo } from "../viewport/Scope";
 
 const editorial: Record<EditorialKind, { label: string; meaning: string }> = {
   "industry-convention": {
@@ -91,6 +94,7 @@ export function ScaleTable({ steps }: { steps: ScaleStep[] }) {
 
 /** What official sources say on the same subject. Kept visibly apart from the editorial text above it. */
 export function OfficialGuidance({ notes }: { notes: OfficialNote[] }) {
+  const { viewport } = useViewport();
   return (
     <div>
       <h4 className="text-sm font-semibold text-ink">Official guidance</h4>
@@ -106,6 +110,13 @@ export function OfficialGuidance({ notes }: { notes: OfficialNote[] }) {
                 <ExternalLink href={note.citation.url}>{note.citation.label}</ExternalLink>
                 <AuthorityLabel authority={citationAuthority(note.citation)} />
               </p>
+              {/* A source with nothing particular to say about the chosen viewport stays, and says so. */}
+              {(viewport !== "all" || note.viewportApplicability || note.input) && (
+                <p className="mt-0.5 text-sm text-ink-3">
+                  Applies to {appliesTo(note).toLowerCase()}
+                  {viewport !== "all" && !note.viewportApplicability && !note.input && ". No viewport-specific value defined"}
+                </p>
+              )}
             </div>
           </li>
         ))}
@@ -116,15 +127,30 @@ export function OfficialGuidance({ notes }: { notes: OfficialNote[] }) {
 
 /** One editorial entry: a starting point, the range, the reasoning, and what official sources add. */
 export function CraftBlock({ entry }: { entry: CraftEntry }) {
+  const { key } = useViewport();
+  const reference = key ? resolveViewportValue(entry.viewportValues, key) : undefined;
+  // A short value sits in the margin as a figure; a sentence-length one reads better in the text column.
+  const figure = reference && reference.value.length <= 22;
+  const referenceLabel = key ? viewportKeyLabels[key] + " reference" : "";
+  const borrowed = reference?.from ? "Same as " + viewportKeyLabels[reference.from].toLowerCase() + (key?.startsWith("foldable") ? ", Shortcut’s reading" : "") : undefined;
   return (
     <article id={entry.id} className="anchor-target border-t border-line py-6 first:border-t-0 first:pt-2">
       <div className="grid gap-x-8 gap-y-3 md:grid-cols-[9rem_1fr]">
         <div>
-          {entry.safeStartingPoint && (
+          {reference && figure ? (
             <>
-              <p className="text-sm font-semibold text-ink-3">Safe starting point</p>
-              <p className="font-display text-2xl font-semibold leading-tight tracking-tight">{entry.safeStartingPoint}</p>
+              <p className="text-sm font-semibold text-ink-3">{referenceLabel}</p>
+              <p className="font-display text-2xl font-semibold leading-tight tracking-tight">{reference.value}</p>
+              {borrowed && <p className="mt-1 text-sm text-ink-3">{borrowed}</p>}
             </>
+          ) : (
+            entry.safeStartingPoint &&
+            !reference && (
+              <>
+                <p className="text-sm font-semibold text-ink-3">Safe starting point</p>
+                <p className="font-display text-2xl font-semibold leading-tight tracking-tight">{entry.safeStartingPoint}</p>
+              </>
+            )
           )}
         </div>
         <div className="min-w-0 space-y-4">
@@ -133,8 +159,36 @@ export function CraftBlock({ entry }: { entry: CraftEntry }) {
             <div className="mt-1.5">
               <EditorialLabel kind={entry.kind} dateReviewed={entry.dateReviewed} />
             </div>
+            <div className="mt-1">
+              <AppliesTo scope={entry} values={entry.viewportValues} />
+            </div>
           </div>
-          <p className="max-w-read text-ink-2">{entry.summary}</p>
+          {reference && !figure && (
+            <div className="border-l-2 border-mark pl-3">
+              <p className="text-sm font-semibold text-ink-3">{referenceLabel}</p>
+              <p className="text-lg font-medium">{reference.value}</p>
+              {borrowed && <p className="text-sm text-ink-3">{borrowed}</p>}
+            </div>
+          )}
+          <p className="max-w-read text-ink-2">
+            {reference && <span className="font-semibold text-ink">General guidance. </span>}
+            {entry.summary}
+          </p>
+          {entry.viewportValues &&
+            (key ? (
+              <details className="group rounded-sm border border-line">
+                <summary className="flex min-h-10 cursor-pointer list-none items-center justify-between gap-2 px-3 text-[0.9375rem] font-medium hover:bg-wash [&::-webkit-details-marker]:hidden">
+                  Compare all viewports
+                  <ChevronDown aria-hidden className="size-4 text-ink-3 transition-transform group-open:rotate-180" />
+                </summary>
+                <div className="border-t border-line p-3">
+                  <ViewportTable values={entry.viewportValues} highlight={key} />
+                </div>
+              </details>
+            ) : (
+              <ViewportTable values={entry.viewportValues} />
+            ))}
+          {entry.viewportValues && <DependsOn items={entry.dependsOn} />}
           {entry.commonRange && (
             <p>
               <span className="text-sm font-semibold text-ink-3">Common range </span>

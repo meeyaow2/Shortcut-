@@ -75,6 +75,14 @@ In updates, `summary` restates the source. `whyItMatters` and `designerAction` a
 - `src/data/checks.ts` holds the Design Checks, the Before You Send It checklist and the AI-look signals.
 - Safe Starting Points is generated from craft entries that have a `starter` field, so it cannot disagree with the cheat sheets.
 
+## Viewports
+
+- The Viewport control on the cheat sheets changes emphasis and order. It never hides a rule: guidance with no viewport fields is general and always shown.
+- An entry's `viewportValues` are Shortcut's starting points by available width. A missing laptop or large value falls back to desktop; a missing fold state falls back to mobile (closed) or tablet (open), and the UI says so. Never attribute these to a design system; what a system says goes in `official`.
+- `viewportApplicability` and `input` are separate fields, so input method can become its own control later.
+- `src/data/viewports.ts` holds the reference ranges, the folding devices, the foldable guide, the component comparisons and the test matrix. Device facts restate the maker's specifications page. Physical pixels are never presented as a CSS width.
+- The selection is saved in the browser and written to the address (`?viewport=mobile`, `?viewport=foldable&device=iphone-duo&state=open`). The address wins when both exist.
+
 ## AI + Design
 
 - `src/data/ai.ts` holds AI updates, workflows, tools, comparisons and lessons. `src/data/prompts.ts` holds the prompt library and the Prompt Builder's assembly function.

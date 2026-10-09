@@ -124,7 +124,7 @@ const index: Doc[] = [
               context: "global",
               contentType: entry.kind === "industry-convention" ? "Industry convention" : "Craft guidance",
             },
-            `${sheet.title} ${entry.commonRange ?? ""} ${entry.why} ${entry.mentorNote ?? ""} ${(entry.commonMistakes ?? []).join(" ")} ${(entry.scale ?? []).map((s) => `${s.label} ${s.use}`).join(" ")} ${(entry.official ?? []).map((o) => `${o.text} ${o.citation.label}`).join(" ")}`,
+            `${sheet.title} ${entry.viewportValues ? "mobile tablet laptop desktop large viewport responsive screen size " + Object.values(entry.viewportValues).join(" ") : ""} ${(entry.viewportApplicability ?? []).join(" ")} ${(entry.input ?? []).join(" ")} ${(entry.deviceReferences ?? []).map((d) => d.device + " " + d.guidance).join(" ")} ${(entry.whenToUse ?? []).join(" ")} ${entry.commonRange ?? ""} ${entry.why} ${entry.mentorNote ?? ""} ${(entry.commonMistakes ?? []).join(" ")} ${(entry.scale ?? []).map((s) => `${s.label} ${s.use}`).join(" ")} ${(entry.official ?? []).map((o) => `${o.text} ${o.citation.label}`).join(" ")}`,
           ),
         ),
     ),
@@ -159,6 +159,18 @@ const index: Doc[] = [
       { type: "check", id: s.id, title: `AI-look signal: ${s.label}`, detail: s.instead, href: `/checks/ai-look#${s.id}`, context: "global", contentType: "Craft guidance" },
       `${s.why} ${s.group} ai generated look ui design template generic`,
     ),
+  ),
+  doc(
+    { type: "cheatsheet", id: "iphone-duo", title: "Designing for iPhone Duo", detail: "Apple gives the outer display a compact width layout and the inner display a regular width one. Physical pixels are not the CSS viewport.", href: "/cheat-sheets/responsive-design#iphone-duo", context: "global", contentType: "Craft guidance" },
+    "apple hig foldable folding fold closed open outer inner display continuity hinge dual pane split view toolbar tab bar side vertical controls viewport resolution pixels",
+  ),
+  doc(
+    { type: "cheatsheet", id: "component-viewports", title: "Same component, different viewports", detail: "How cards, buttons, inputs, modals, navigation, tables, tabs, drawers and search change from mobile to tablet to desktop.", href: "/cheat-sheets/responsive-design#components", context: "global", contentType: "Industry convention" },
+    "responsive mobile tablet desktop search tabs card button input modal navigation table drawer viewport",
+  ),
+  doc(
+    { type: "cheatsheet", id: "test-matrix", title: "Responsive test matrix", detail: "320, 375, 390, 430, 768, 820, 1024, 1280, 1440 and 1920 px, foldable closed and open, and the widths between.", href: "/cheat-sheets/responsive-design#test-matrix", context: "global", contentType: "Craft guidance" },
+    "responsive widths test testing breakpoints qa viewport foldable",
   ),
   doc(
     { type: "check", id: "ai-look", title: "Why does my UI look AI-generated?", detail: "Patterns that make an interface read as generated, and what to try instead.", href: "/checks/ai-look", context: "global", contentType: "Craft guidance" },
@@ -358,7 +370,7 @@ function emptyResults(): SearchResults {
 }
 
 // Dropped from queries so a question-shaped search still matches.
-const STOP_WORDS = new Set(["a", "an", "the", "for", "in", "on", "of", "to", "my", "i", "is", "are", "what", "how", "do", "should", "and", "with", "does", "this", "that", "it", "be", "can", "am", "use", "much", "need", "before", "me", "we", "our", "when", "over", "up", "best", "example", "examples", "handle", "handles"]);
+const STOP_WORDS = new Set(["a", "an", "the", "for", "in", "on", "of", "to", "my", "i", "is", "are", "what", "how", "do", "should", "and", "with", "does", "this", "that", "it", "be", "can", "am", "use", "much", "need", "before", "me", "we", "our", "when", "over", "up", "best", "example", "examples", "handle", "handles", "tall", "wide", "normal", "device", "devices", "there", "moving", "from", "change", "across"]);
 
 // Everyday words mapped to the words the sources use.
 const SYNONYMS: Record<string, string> = {

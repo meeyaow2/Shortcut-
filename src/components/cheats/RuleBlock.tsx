@@ -7,6 +7,7 @@ import { citationAuthority, contextLabels, contexts, matchesContext } from "@/li
 import type { Comparison, ComparisonRow, Rule } from "@/types";
 import { AuthorityLabel, AuthorityLegend, ContextTag, FreshnessStatus, SourceBadge, SourceMeta } from "../source/Source";
 import { ExternalLink } from "../ui/primitives";
+import { AppliesTo } from "../viewport/Scope";
 
 // Short values such as "4.5:1" are set large; sentence-length guidance reads as text.
 const isFigure = (row: ComparisonRow) => row.value.length <= 12;
@@ -166,6 +167,9 @@ export function RuleBlock({ rule }: { rule: Rule }) {
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <h3 className="text-xl font-semibold">{rule.title}</h3>
             {rule.context && <ContextTag context={rule.context} />}
+          </div>
+          <div className="mt-1">
+            <AppliesTo scope={rule} />
           </div>
           <p className="mt-2 max-w-read text-ink-2">{rule.body}</p>
           {rule.comparison && <ComparisonTable comparison={rule.comparison} />}
