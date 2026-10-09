@@ -134,16 +134,61 @@ export function getFoldableDevice(id: string): FoldableDevice | undefined {
 export const pixelsNote =
   "These are physical pixels. A browser reports a much smaller CSS width, because each CSS pixel is drawn with several physical ones. Apple's specifications page does not give the CSS viewport width, so Shortcut does not either. Do not set a breakpoint at 1398 px because the outer display has that many pixels.";
 
-/** What Apple's own guidance says, restated from its Human Interface Guidelines page. */
-export const duoApple: string[] = [
-  "Use a compact width layout for the outer display and a regular width layout for the inner display. That covers every pose; do not design a custom layout for each one.",
-  "Do not reinvent the app when it resizes. Let the existing layout expand with the available space.",
-  "Build the app to resize. Use size classes, layout margins and safe area insets, and avoid fixed widths or anything tied to one display.",
-  "Keep functionality and the state of elements the same between displays. Keep the information hierarchy, and show an additional level of it on the inner display if that suits the content. Mail shows a list or an email when closed, and both side by side when open.",
-  "On the outer display, and on the inner display in landscape, the system moves toolbars and tab bars to the side to keep vertical space for content. In general, do not override this placement.",
-  "When the device is partially folded, keep important elements clear of the folding region. In a grid, prefer an even number of columns so content divides cleanly.",
-  "Avoid extreme layout changes as people fold the device. Favour small adjustments over rearrangement.",
+/**
+ * Apple's guidance for iPhone Duo, one subject per card. `apple`, `pairs`,
+ * `use` and `avoid` restate its Human Interface Guidelines page. `takeaway`
+ * is Shortcut's and is labelled as such where it shows.
+ */
+export interface DuoCard {
+  title: string;
+  apple: string;
+  pairs?: { label: string; value: string }[];
+  use?: string[];
+  avoid?: string[];
+  takeaway?: string;
+}
+
+export const duoGuidance: DuoCard[] = [
+  {
+    title: "Use size classes",
+    apple: "Two layouts cover every pose. Do not design a custom layout for each one.",
+    pairs: [
+      { label: "Closed", value: "Compact width" },
+      { label: "Open", value: "Regular width" },
+    ],
+    takeaway: "Build one responsive interface, not a separate design for each folding state.",
+  },
+  {
+    title: "Keep state and function",
+    apple: "Keep functionality and the state of elements the same between displays. Show an additional level of hierarchy on the inner display if it suits the content.",
+    takeaway: "Opening the device should feel like gaining space, not entering another app.",
+  },
+  {
+    title: "Let the layout expand",
+    apple: "Do not reinvent the app when it resizes. Let the existing layout expand with the available space.",
+    use: ["Size classes", "Layout margins", "Safe area insets"],
+    avoid: ["Fixed widths", "Anything tied to one display"],
+  },
+  {
+    title: "Toolbars and tab bars",
+    apple: "On the outer display, and on the inner display in landscape, the system moves toolbars and tab bars to the side to keep vertical space for content.",
+    takeaway: "Apple says not to override this placement in general. Leave it unless you have a strong reason.",
+  },
+  {
+    title: "Partial fold",
+    apple: "Keep important elements clear of the folding region. In a grid, prefer an even number of columns so content divides cleanly.",
+  },
+  {
+    title: "Small changes, not rearrangement",
+    apple: "Avoid extreme layout changes as people fold the device. Favour small adjustments.",
+  },
 ];
+
+/** The foldable guidance as a pair of lists. Shortcut's, drawn from the sources cited beside it. */
+export const foldableDo = ["Design one layout that expands", "Keep the task, selection and typed text across the fold", "Use flexible sizing, margins and safe areas", "Test closed, open and half-open"];
+export const foldableDont = ["Build a separate app for each state", "Use fixed screen dimensions", "Rearrange everything when it opens", "Put controls or text on the fold"];
+
+export const foldableThirty = ["Design one responsive interface", "Preserve state as the device opens", "Use the space available, not fixed device layouts", "Keep the fold region clear", "Test closed, open and intermediate states"];
 
 /** Questions to ask in each state. These are Shortcut's, written to sit alongside Apple's guidance above. */
 export const duoQuestions: Record<FoldState, { lead: string; items: string[]; caution?: string }> = {

@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowDown } from "lucide-react";
-import { EditorialLabel, OfficialGuidance } from "@/components/craft/Craft";
+import { EditorialLabel, OfficialGuidance, Why } from "@/components/craft/Craft";
 import { SourceMeta } from "@/components/source/Source";
 import { Tag } from "@/components/ui/Tag";
 import type { UxBreakdown } from "@/data/references";
@@ -32,24 +32,24 @@ export function CaseStudyCard({ study, lessonLabel = "The design-system lesson" 
   return (
     <article id={study.id} className="anchor-target rounded-md border border-line p-4 sm:p-6">
       <h3 className="text-xl font-semibold">{study.title}</h3>
-      <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_1fr]">
-        <div>
-          <p className="text-sm font-semibold text-ink-3">What they say they did</p>
-          <ul className="mt-2 space-y-1.5">
+      {/* The lesson leads; the organisation's own account is one click away, with its source below. */}
+      <div className="mt-3">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <p className="text-sm font-semibold text-ink-3">{lessonLabel}</p>
+          <EditorialLabel kind="craft-guidance" />
+        </div>
+        <p className="mt-2 max-w-3xl border-l-2 border-mark pl-3">{study.lesson}</p>
+      </div>
+      <div className="mt-4">
+        <Why label={`What they say they did (${study.facts.length} points)`}>
+          <ul className="space-y-1.5">
             {study.facts.map((fact) => (
-              <li key={fact} className="border-l border-line-strong pl-3 text-ink-2">
+              <li key={fact} className="border-l border-line-strong pl-3">
                 {fact}
               </li>
             ))}
           </ul>
-        </div>
-        <div>
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-            <p className="text-sm font-semibold text-ink-3">{lessonLabel}</p>
-            <EditorialLabel kind="craft-guidance" />
-          </div>
-          <p className="mt-2 border-l-2 border-mark pl-3">{study.lesson}</p>
-        </div>
+        </Why>
       </div>
       <div className="mt-5 border-t border-line pt-3">
         <SourceMeta citations={[study.citation]} heading="Official source" />
@@ -154,7 +154,11 @@ export function ResponsiveBlock({ name, guidance }: { name: string; guidance: Re
         <span className="text-sm text-ink-3">{guidance.topics ?? guidance.label}</span>
       </div>
       {guidance.status === "read" ? (
-        <OfficialGuidance notes={guidance.notes} />
+        <div className="mt-2">
+          <Why label={`What it says (${guidance.notes.length} points)`}>
+            <OfficialGuidance notes={guidance.notes} bare />
+          </Why>
+        </div>
       ) : (
         <p className="mt-1 text-ink-2">
           {guidance.status === "login"

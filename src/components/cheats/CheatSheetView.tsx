@@ -17,6 +17,7 @@ import { FreshnessStatus, SourceBadge } from "../source/Source";
 import { isSpecificTo } from "../viewport/Scope";
 import { ComponentComparisons, FoldableGuide, FoldableNote, TestMatrix } from "../viewport/Viewport";
 import { ViewportBar } from "../viewport/ViewportBar";
+import { InThirty } from "../ui/Scan";
 import { RuleBlock } from "./RuleBlock";
 
 // Blocks that follow the sections on one sheet, listed so the side navigation can link to them.
@@ -125,6 +126,7 @@ export function CheatSheetView({ sheet }: { sheet: CheatSheet }) {
             )}
             <FoldableNote />
           </div>
+          {sheet.inThirty && <InThirty items={sheet.inThirty} more="Shortcut's summary of this sheet. The detail, the reasoning and the sources are below." />}
           {sheet.component && <ComponentQABlock qa={sheet.component} />}
           {sections.map((section) => (
             <section key={section.id} id={section.id} aria-labelledby={`${section.id}-title`}>

@@ -104,6 +104,7 @@ export const polishExamples: Record<string, { date: string; what: string; lesson
 export const referenceProfiles: SystemProfile[] = [
   {
     id: "grab",
+    knownFor: ["Low-bandwidth design", "Multilingual users", "Field research", "AI in a design team"],
     name: "Grab product design",
     organisation: "Grab",
     type: "Product design reference",
@@ -127,6 +128,7 @@ export const referenceProfiles: SystemProfile[] = [
   },
   {
     id: "granola",
+    knownFor: ["Small refinements", "Removing steps", "A readable changelog"],
     name: "Granola product design",
     organisation: "Granola",
     type: "Product design reference",

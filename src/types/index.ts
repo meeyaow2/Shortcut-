@@ -145,6 +145,8 @@ export interface CheatSheet {
   sections: CheatSheetSection[];
   group?: SheetGroup;
   component?: ComponentQA;
+  /** The sheet in a handful of lines, for a reader who only needs the answer. Shortcut's summary. */
+  inThirty?: string[];
   /** How much of the sheet changes with viewport. Absent means mostly universal. */
   viewportSensitivity?: "high" | "partial";
 }

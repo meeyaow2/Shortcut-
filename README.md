@@ -92,6 +92,13 @@ In updates, `summary` restates the source. `whyItMatters` and `designerAction` a
 - Controls are 44 px tall below tablet width and their compact height above it: write `min-h-11 md:min-h-9`, not a bare `min-h-9`.
 - The navigation collapses at `--breakpoint-nav` (64rem).
 
+## Scan first
+
+- A page should give its answer in thirty seconds and its reasoning on request. Value, summary and takeaway are visible; common mistakes, official notes, examples and rationale sit behind an expandable row (the `Why` component).
+- Nothing is removed to achieve this. A closed row still names its sources, so where guidance comes from is visible without opening it.
+- `src/components/ui/Scan.tsx` holds `KeyTakeaway` and `InThirty`. Both carry Shortcut's summary and must never hold a source's wording. A cheat sheet gets its summary from `inThirty`.
+- Cards are for standalone concepts, comparisons, values and warnings. Introductions and narrative stay as plain text.
+
 ## Visuals and motion
 
 - `src/components/visual` holds the illustration language: thin ink lines, flat fills, and the highlighter yellow for the thing being measured. Everything is HTML, CSS and inline SVG; there is no animation library and no image files.

@@ -50,7 +50,7 @@ export function MentorNote({ children }: { children: ReactNode }) {
 }
 
 /** The reusable "Why?" interaction: reason first, then when to do something else. */
-export function Why({ label = "Why?", children }: { label?: string; children: ReactNode }) {
+export function Why({ label = "Why?", children }: { label?: ReactNode; children: ReactNode }) {
   return (
     <details className="group rounded-sm border border-line">
       <summary className="flex min-h-11 md:min-h-10 cursor-pointer list-none items-center justify-between gap-2 px-3 text-[0.9375rem] font-medium hover:bg-wash [&::-webkit-details-marker]:hidden">
@@ -81,7 +81,7 @@ export function ScaleTable({ steps }: { steps: ScaleStep[] }) {
   return (
     <dl className="divide-y divide-line rounded-md border border-line">
       {steps.map((step) => (
-        <div key={step.value} className="grid gap-x-4 gap-y-0.5 px-4 py-2.5 sm:grid-cols-[7rem_1fr]">
+        <div key={step.value + step.label} className="grid gap-x-4 gap-y-0.5 px-4 py-2.5 sm:grid-cols-[7rem_1fr]">
           <dt className="font-display text-lg font-semibold tabular-nums tracking-tight">{step.value}</dt>
           <dd>
             <span className="font-medium">{step.label}. </span>
@@ -94,11 +94,11 @@ export function ScaleTable({ steps }: { steps: ScaleStep[] }) {
 }
 
 /** What official sources say on the same subject. Kept visibly apart from the editorial text above it. */
-export function OfficialGuidance({ notes }: { notes: OfficialNote[] }) {
+export function OfficialGuidance({ notes, bare = false }: { notes: OfficialNote[]; bare?: boolean }) {
   const { viewport } = useViewport();
   return (
     <div>
-      <h4 className="text-sm font-semibold text-ink">Official guidance</h4>
+      {!bare && <h4 className="text-sm font-semibold text-ink">Official guidance</h4>}
       <ul className="mt-1 divide-y divide-line">
         {notes.map((note) => (
           <li key={note.citation.url + note.text} className="grid gap-x-3 gap-y-1 py-2.5 sm:grid-cols-[5.5rem_1fr]">
@@ -213,7 +213,17 @@ export function CraftBlock({ entry }: { entry: CraftEntry }) {
               {entry.whenNotToUse && <BulletList title="When not to" items={entry.whenNotToUse} />}
             </div>
           )}
-          {entry.commonMistakes && <BulletList title="Common mistakes" items={entry.commonMistakes} />}
+          {entry.commonMistakes && (
+            <Why label={`Common mistakes (${entry.commonMistakes.length})`}>
+              <ul className="space-y-1">
+                {entry.commonMistakes.map((item) => (
+                  <li key={item} className="border-l border-line-strong pl-3">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </Why>
+          )}
           {entry.mentorNote && <MentorNote>{entry.mentorNote}</MentorNote>}
           {entry.aiWarning && (
             <p className="rounded-sm bg-warn-wash px-3 py-2 text-[0.9375rem] text-warn">
@@ -222,7 +232,19 @@ export function CraftBlock({ entry }: { entry: CraftEntry }) {
             </p>
           )}
           {entry.official ? (
-            <OfficialGuidance notes={entry.official} />
+            // The sources stay named on the closed row, so where the guidance comes from is visible without opening it.
+            <Why
+              label={
+                <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  Official guidance
+                  {[...new Set(entry.official.map((note) => note.citation.sourceId))].map((id) => (
+                    <SourceBadge key={id} id={id} />
+                  ))}
+                </span>
+              }
+            >
+              <OfficialGuidance notes={entry.official} bare />
+            </Why>
           ) : (
             <p className="text-sm text-ink-3">No official source Shortcut tracks sets a rule for this. It is a judgement call.</p>
           )}

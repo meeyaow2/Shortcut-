@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { EditorialLabel, MentorNote } from "@/components/craft/Craft";
+import { EditorialLabel, MentorNote, Why } from "@/components/craft/Craft";
 import { DoDont } from "@/components/practice/Practice";
 import { SourceMeta } from "@/components/source/Source";
 import { AgendaTimeline, ProcessStrip } from "@/components/visual/Diagrams";
@@ -129,11 +129,14 @@ async function Guide({ params }: Props) {
           </Section>
 
           <Section id="steps" title="Step by step">
-            {flows[guide.id] && (
-              <div className="mb-5">
+            {/* The shape of the activity before its detail: a drawn flow where one exists, otherwise the step names in order. */}
+            <div className="mb-5">
+              {flows[guide.id] ? (
                 <ProcessStrip {...flows[guide.id]} />
-              </div>
-            )}
+              ) : (
+                <ProcessStrip steps={guide.steps.map((step) => step.title)} caption="The steps in order. Each is explained below." />
+              )}
+            </div>
             {/* Numbered: the steps happen in this order. */}
             <ol className="divide-y divide-line">
               {guide.steps.map((step, index) => (
@@ -203,14 +206,18 @@ async function Guide({ params }: Props) {
             </Section>
           )}
 
-          {guide.extras?.map((extra) => (
-            <section key={extra.title} aria-label={extra.title}>
-              <h2 className="text-xl font-semibold">{extra.title}</h2>
-              <div className="mt-3">
-                <Lines items={extra.items} />
-              </div>
+          {/* Reference blocks specific to this guide. Closed by default: they are for looking up, not reading through. */}
+          {guide.extras && (
+            <section aria-label="Reference" className="space-y-2">
+              {guide.extras.map((extra) => (
+                <Why key={extra.title} label={`${extra.title} (${extra.items.length})`}>
+                  <div className="text-ink">
+                    <Lines items={extra.items} />
+                  </div>
+                </Why>
+              ))}
             </section>
-          ))}
+          )}
 
           <Section id="do-dont" title="Do and don't">
             <DoDont dos={guide.dos} donts={guide.donts} />

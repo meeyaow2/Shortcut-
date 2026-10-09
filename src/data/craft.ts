@@ -860,6 +860,7 @@ export const craftEntries: CraftEntry[] = Object.values(e);
 export const craftSheets: CheatSheet[] = [
   {
     slug: "spacing",
+    inThirty: ["Pick one scale, usually 4 or 8 based, and stay on it", "Small gaps inside a component, larger gaps between groups", "Card padding 12–16 px on mobile, 16–24 on desktop", "Page margins 16–20 px on mobile, 32–64 on desktop", "Consistency matters more than the exact number"],
     title: "Spacing",
     description: "Working spacing scales, padding and gaps across mobile, tablet and desktop.",
     group: "Foundations",
@@ -873,6 +874,7 @@ export const craftSheets: CheatSheet[] = [
   },
   {
     slug: "typography",
+    inThirty: ["Body text 14–16 px, and it barely changes with screen size", "Titles step down on small screens: 24–32 mobile, 32–48 desktop", "Line height around 1.4–1.6 for reading text", "Keep reading lines to about 45–75 characters", "A handful of sizes is enough"],
     title: "Typography",
     description: "Font sizing, hierarchy, line height and responsive type guidance.",
     group: "Foundations",
@@ -915,6 +917,7 @@ export const craftSheets: CheatSheet[] = [
   },
   {
     slug: "layout",
+    inThirty: ["One column on mobile, two to four on desktop", "Give content a maximum width; let margins take the rest", "Reading text and forms should be much narrower than the page", "Align to a few shared edges", "More space does not mean more columns"],
     title: "Layout",
     description: "Containers, columns, content width and responsive behaviour across viewports.",
     group: "Foundations",
@@ -944,6 +947,7 @@ export const craftSheets: CheatSheet[] = [
   },
   {
     slug: "buttons",
+    inThirty: ["One primary action per view", "Visible height 40–48 px", "The touch target is separate: at least 24 px on the web, 44 pt on iOS, 48 dp on Android", "Labels are verbs", "Explain a disabled button, or avoid it"],
     title: "Buttons",
     description: "Height, touch targets, hierarchy, labels and the states people forget.",
     group: "Components",

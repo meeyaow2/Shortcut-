@@ -293,6 +293,7 @@ const sourcedSheets: CheatSheet[] = [
   },
   {
     slug: "tables",
+    inThirty: ["Start from what people do with the table", "Desktop: the full table. Tablet: fewer columns. Mobile: a different pattern", "Do not shrink every column to fit a phone", "Use real header cells", "Never rely on colour alone"],
     title: "Tables",
     description: "Design data tables around what people do with them, then choose a pattern for each viewport.",
     dateUpdated: VERIFIED,
@@ -341,6 +342,7 @@ const sourcedSheets: CheatSheet[] = [
   },
   {
     slug: "modals",
+    inThirty: ["Use a modal for a short task that must interrupt", "No standard sets a required width", "On mobile, go full width or full screen", "Always give an obvious way out, and keep keyboard users in control", "If people need to see the page, it is not a modal"],
     title: "Modals",
     description: "When interrupting is justified, how wide to make it at each viewport, and how to keep keyboard users in control.",
     dateUpdated: VERIFIED,
@@ -376,6 +378,7 @@ const sourcedSheets: CheatSheet[] = [
   },
   {
     slug: "navigation",
+    inThirty: ["Decide what stays visible at each width before hiding the rest", "Bottom navigation suits three to five frequent destinations", "A menu button hides everything equally", "Keep navigation in the same place and order on every page", "It must work by keyboard"],
     title: "Navigation",
     description: "What stays visible at each viewport, plus consistency, wayfinding and keyboard access.",
     dateUpdated: VERIFIED,
@@ -637,6 +640,7 @@ const sourcedSheets: CheatSheet[] = [
   },
   {
     slug: "responsive-design",
+    inThirty: ["Design for the space available, not the name of the device", "Add a breakpoint where the layout breaks", "Physical pixels are not the CSS viewport", "Content must still work at 320 CSS px wide", "On a foldable, expand the same layout; keep state when it opens", "Test the widths between your breakpoints"],
     title: "Responsive & Viewports",
     description: "Viewports, breakpoints, fluid layout, touch and pointer, foldables, and the widths a layout has to survive.",
     dateUpdated: "2026-10-09",

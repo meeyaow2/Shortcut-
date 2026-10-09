@@ -54,6 +54,18 @@ async function Profile({ params }: Props) {
           <Tag tone={isSystem ? "ok" : "outline"}>{system.type}</Tag>
         </div>
         <p className="mt-3 max-w-read text-lg text-ink-2">{system.summary}</p>
+        {system.knownFor && (
+          <div className="mt-4">
+            <p className="text-sm font-semibold text-ink-3">Shortcut points to it for</p>
+            <ul className="mt-1.5 flex flex-wrap gap-1.5">
+              {system.knownFor.map((item) => (
+                <li key={item} className="rounded-sm border border-line-strong px-2.5 py-1 text-[0.9375rem] font-medium">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <dl className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
           <div>
             <dt className="text-sm text-ink-3">Used for</dt>

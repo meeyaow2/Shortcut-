@@ -9,7 +9,7 @@ import { buildPrompt, builderFocusAreas, builderGoals, builderProductTypes, getP
 import { useToday } from "@/hooks/useToday";
 import { daysBetween, formatDate } from "@/lib/dates";
 import type { AiTool, AiWorkflow, Prompt, ToolComparison } from "@/types";
-import { EditorialLabel } from "../craft/Craft";
+import { EditorialLabel, Why } from "../craft/Craft";
 import { Tag } from "../ui/Tag";
 import { ExternalLink } from "../ui/primitives";
 
@@ -209,12 +209,16 @@ export function ToolCard({ tool }: { tool: AiTool }) {
         From <ExternalLink href={tool.sourceUrl}>{tool.sourceLabel}</ExternalLink>
       </p>
 
-      <div className="mt-4 grid flex-1 gap-4 sm:grid-cols-2">
+      <div className="mt-4 flex-1">
         <Lines title="Good for" items={tool.goodFor} />
-        <Lines title="Less suitable for" items={tool.lessSuitableFor} />
       </div>
       <div className="mt-4">
-        <Para title="Try it for">{tool.workflowExample}</Para>
+        <Why label="Limits, and a first thing to try">
+          <div className="space-y-4 text-ink">
+            <Lines title="Less suitable for" items={tool.lessSuitableFor} />
+            <Para title="Try it for">{tool.workflowExample}</Para>
+          </div>
+        </Why>
       </div>
 
       <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-line pt-3 text-sm">

@@ -6,6 +6,7 @@ import { formatDate } from "@/lib/dates";
 import type { Guidance } from "@/types";
 import { AuthorityLabel, ContextTag, FreshnessStatus, SourceBadge, SourceMeta } from "../source/Source";
 import { Tag } from "../ui/Tag";
+import { Why } from "../craft/Craft";
 import { ExternalLink } from "../ui/primitives";
 
 function Row({ label, note, children }: { label: string; note?: string; children: React.ReactNode }) {
@@ -49,6 +50,14 @@ export function GuidanceCard({ guidance: g }: { guidance: Guidance }) {
           <p className="font-medium">{g.officialText}</p>
           {g.exceptions && <p className="mt-1.5 text-sm text-ink-2">Exception: {g.exceptions}</p>}
         </Row>
+        <Row label="Designer takeaway" note="Shortcut's reading">
+          <p className="border-l-2 border-mark pl-3">{g.designerTakeaway}</p>
+        </Row>
+      </dl>
+
+      <div className="mt-3">
+        <Why label="Plain-language summary, examples and the source's reasoning">
+      <dl className="divide-y divide-line text-ink">
         {g.officialRecommendation && (
           <Row label="Official recommendation" note={`${source.short}'s wording`}>
             <p className="text-ink-2">{g.officialRecommendation}</p>
@@ -56,9 +65,6 @@ export function GuidanceCard({ guidance: g }: { guidance: Guidance }) {
         )}
         <Row label="In plain language" note="Shortcut's reading">
           <p className="text-ink-2">{g.summary}</p>
-        </Row>
-        <Row label="Designer takeaway" note="Shortcut's reading">
-          <p className="border-l-2 border-mark pl-3">{g.designerTakeaway}</p>
         </Row>
         {g.accessibilityNotes && (
           <Row label="Accessibility" note="Shortcut's reading">
@@ -76,6 +82,8 @@ export function GuidanceCard({ guidance: g }: { guidance: Guidance }) {
           </Row>
         )}
       </dl>
+        </Why>
+      </div>
 
       <div className="mt-4 grid gap-x-8 gap-y-3 text-sm sm:grid-cols-[10rem_1fr]">
         <p className="font-semibold text-ink-3">Source</p>

@@ -6,6 +6,7 @@ import { formatDate } from "@/lib/dates";
 import type { Update } from "@/types";
 import { FreshnessStatus, SourceBadge, SourceMeta } from "../source/Source";
 import { Tag } from "../ui/Tag";
+import { Why } from "../craft/Craft";
 import { ExternalLink } from "../ui/primitives";
 
 const kindTones = {
@@ -77,8 +78,11 @@ export function UpdateCard({ update }: { update: Update }) {
         </Field>
       </dl>
 
+      {(update.ai || update.questions) && (
+        <div className="mt-4">
+          <Why label={update.ai ? "How to use it, and what to watch for" : "Questions for designers"}>
       {update.ai && (
-        <div className="mt-4 grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-5 text-ink sm:grid-cols-2">
           <div>
             <p className="text-sm font-semibold text-ok">Use it for</p>
             <ul className="mt-1.5 space-y-1">
@@ -107,7 +111,7 @@ export function UpdateCard({ update }: { update: Update }) {
       )}
 
       {update.questions && (
-        <div className="mt-5">
+        <div>
           <p className="text-sm font-semibold text-ink-3">Questions for designers</p>
           <ul className="mt-1.5 grid gap-x-8 gap-y-1 sm:grid-cols-2">
             {update.questions.map((question) => (
@@ -116,6 +120,9 @@ export function UpdateCard({ update }: { update: Update }) {
               </li>
             ))}
           </ul>
+        </div>
+      )}
+          </Why>
         </div>
       )}
 

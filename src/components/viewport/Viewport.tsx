@@ -4,7 +4,10 @@ import Link from "next/link";
 import {
   componentComparisons,
   continuityItems,
-  duoApple,
+  duoGuidance,
+  foldableDo,
+  foldableDont,
+  foldableThirty,
   duoQuestions,
   foldComparison,
   foldableDevices,
@@ -17,7 +20,10 @@ import {
 } from "@/data/viewports";
 import { useViewport } from "@/hooks/useViewport";
 import type { FoldState } from "@/types";
-import { EditorialLabel } from "../craft/Craft";
+import { Check, X } from "lucide-react";
+import { EditorialLabel, Why } from "../craft/Craft";
+import { DoDont } from "../practice/Practice";
+import { InThirty, KeyTakeaway } from "../ui/Scan";
 import { SourceMeta } from "../source/Source";
 import { FoldDemo, FoldSchematic } from "../visual/ViewportPreviews";
 
@@ -87,14 +93,20 @@ export function FoldableGuide() {
           </h2>
           <EditorialLabel kind="craft-guidance" />
         </div>
-        <dl className="mt-2 divide-y divide-line">
-          {foldableTopics.map((topic) => (
-            <div key={topic.title} className="grid gap-x-6 gap-y-0.5 py-3 sm:grid-cols-[12rem_1fr]">
-              <dt className="font-semibold">{topic.title}</dt>
-              <dd className="text-ink-2">{topic.text}</dd>
-            </div>
-          ))}
-        </dl>
+        <div className="space-y-5 pt-5">
+          <InThirty title="Designing for a foldable? In 30 seconds" items={foldableThirty} />
+          <DoDont dos={foldableDo} donts={foldableDont} />
+          <Why label={`All ${foldableTopics.length} topics, one line each`}>
+            <dl className="divide-y divide-line text-ink">
+              {foldableTopics.map((topic) => (
+                <div key={topic.title} className="grid gap-x-6 gap-y-0.5 py-2.5 sm:grid-cols-[12rem_1fr]">
+                  <dt className="font-semibold">{topic.title}</dt>
+                  <dd className="text-ink-2">{topic.text}</dd>
+                </div>
+              ))}
+            </dl>
+          </Why>
+        </div>
       </section>
 
       <section id="iphone-duo" aria-labelledby="iphone-duo-title" className="anchor-target">
@@ -104,20 +116,59 @@ export function FoldableGuide() {
         <div className="space-y-5 pt-5">
           <FoldDemo />
           <DisplayFacts />
-          <p className="max-w-read text-ink-2">{pixelsNote}</p>
-          <SourceMeta citations={[device.citation]} heading="Display specifications" />
+          <KeyTakeaway>Those are physical pixels, not a CSS width. Do not set a breakpoint at 1398 px.</KeyTakeaway>
+          <Why label="Why pixels are not the viewport">
+            <p>{pixelsNote}</p>
+          </Why>
           <div>
             <h3 className="text-lg font-semibold">What Apple says</h3>
-            <ul className="mt-2 space-y-1.5">
-              {duoApple.map((item) => (
-                <li key={item} className="border-l border-line-strong pl-3 text-ink-2">
-                  {item}
+            <p className="mt-1 max-w-read text-sm text-ink-2">
+              Each card restates Apple&rsquo;s guidance. Lines marked Shortcut takeaway are Shortcut&rsquo;s reading, not Apple&rsquo;s wording.
+            </p>
+            <ul className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              {duoGuidance.map((card) => (
+                <li key={card.title} className="flex flex-col rounded-md border border-line p-4">
+                  <h4 className="font-display text-lg font-semibold tracking-tight">{card.title}</h4>
+                  <p className="mt-1.5 text-ink-2">{card.apple}</p>
+                  {card.pairs && (
+                    <dl className="mt-3 grid grid-cols-2 gap-2">
+                      {card.pairs.map((pair) => (
+                        <div key={pair.label} className="rounded-sm bg-wash px-3 py-2">
+                          <dt className="text-sm text-ink-3">{pair.label}</dt>
+                          <dd className="font-semibold">{pair.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                  {(card.use || card.avoid) && (
+                    <div className="mt-3 grid grid-cols-2 gap-3 text-[0.9375rem]">
+                      <ul className="space-y-1">
+                        {card.use?.map((item) => (
+                          <li key={item} className="flex gap-1.5">
+                            <Check aria-hidden className="mt-1 size-3.5 shrink-0 text-ok" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <ul className="space-y-1">
+                        {card.avoid?.map((item) => (
+                          <li key={item} className="flex gap-1.5">
+                            <X aria-hidden className="mt-1 size-3.5 shrink-0 text-warn" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {card.takeaway && (
+                    <p className="mt-auto border-l-2 border-mark pl-3 pt-3 text-[0.9375rem]">
+                      <span className="block text-sm font-semibold text-ink-3">Shortcut takeaway</span>
+                      {card.takeaway}
+                    </p>
+                  )}
                 </li>
               ))}
             </ul>
-            <div className="mt-3">
-              <SourceMeta citations={[viewportCite.duoHig]} heading="Official source" />
-            </div>
           </div>
           <div className="flex flex-wrap items-center justify-between gap-2 border-t border-line pt-4">
             <p className="max-w-read text-sm text-ink-2">
@@ -178,6 +229,9 @@ export function FoldableGuide() {
               ))}
             </dl>
             <p className="mt-2 text-sm text-ink-3">Closed is the middle column and open the right, from tablet width up. The rows are Shortcut&rsquo;s reading; the Apple line restates Apple&rsquo;s page.</p>
+          </div>
+          <div className="border-t border-line pt-4">
+            <SourceMeta citations={[viewportCite.duoHig, device.citation]} heading="Official sources" />
           </div>
         </div>
       </section>

@@ -133,6 +133,8 @@ export interface SystemProfile {
   /** Its id in the Explorer, when it is one of the compared systems. */
   explorerSystem?: SourceId;
   explore?: { area: string; items: string; access: "Public" | "Staff login" | "Mixed" }[];
+  /** Three or four words or phrases for what Shortcut points to it for. Editorial. */
+  knownFor?: string[];
   interesting?: string[];
   learn?: string[];
   sections?: { title: string; body: string; points?: string[]; citation: Citation }[];
@@ -142,6 +144,7 @@ export interface SystemProfile {
 export const systems: SystemProfile[] = [
   {
     id: "uber-base",
+    knownFor: ["Multi-product scale", "Extensions", "AI-written design specs"],
     name: "Base",
     organisation: "Uber",
     type: "Public design system",
@@ -182,6 +185,7 @@ export const systems: SystemProfile[] = [
   },
   {
     id: "atlassian",
+    knownFor: ["Token naming", "Content design", "AI interaction guidelines", "Design context for AI agents"],
     name: "Atlassian Design System",
     organisation: "Atlassian",
     type: "Public design system",
