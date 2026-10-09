@@ -9,6 +9,7 @@ import { Tag } from "@/components/ui/Tag";
 import { ExternalLink, PageHeader } from "@/components/ui/primitives";
 import { UpdateCard } from "@/components/updates/UpdateCard";
 import { VERIFIED } from "@/data/citations";
+import { testFoldStates, testWidths } from "@/data/viewports";
 import {
   figmaAiCapabilities,
   figmaCite,
@@ -277,6 +278,71 @@ export default function FigmaPage() {
             Then check the design itself with Before You Send It
           </Link>
         </p>
+      </section>
+
+      <section aria-labelledby="responsive" className="pt-14">
+        <div className="flex flex-wrap items-end justify-between gap-2 border-b-2 border-ink pb-2">
+          <h2 id="responsive" className="text-2xl font-semibold md:text-3xl">
+            Testing responsive designs in Figma
+          </h2>
+          <EditorialLabel kind="craft-guidance" />
+        </div>
+        <p className="mt-4 max-w-read border-l-2 border-mark pl-3 font-medium">Do not design only for one static frame. A frame is one width; people will use all of them.</p>
+        <div className="grid gap-x-10 gap-y-8 pt-6 lg:grid-cols-2">
+          <div>
+            <h3 className="text-lg font-semibold">Build frames that resize</h3>
+            <ul className="mt-2 space-y-1.5">
+              <li className="border-l border-line-strong pl-3 text-ink-2">Use auto layout so content pushes and reflows instead of overlapping.</li>
+              <li className="border-l border-line-strong pl-3 text-ink-2">Hug for things sized by their content, Fill for things that share the space left.</li>
+              <li className="border-l border-line-strong pl-3 text-ink-2">Set minimum and maximum widths so a card or column cannot collapse or stretch too far.</li>
+              <li className="border-l border-line-strong pl-3 text-ink-2">Nest it: a page that resizes needs sections, and items inside them, that resize too.</li>
+              <li className="border-l border-line-strong pl-3 text-ink-2">Variable modes hold a different value per context. Light and dark is the common use; the same mechanism can hold values that differ by width or by density.</li>
+            </ul>
+            <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
+              <Link href="/cheat-sheets/figma-auto-layout#auto-layout-sizing" className={link}>
+                Hug, Fill or Fixed
+              </Link>
+              <Link href="/cheat-sheets/figma-variables#figma-modes" className={link}>
+                Collections and modes
+              </Link>
+            </p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold">Widths to drag a frame through</h3>
+            <ul className="mt-2 flex flex-wrap gap-1.5">
+              {testWidths.map((item) => (
+                <li key={item.width} title={item.note} className="rounded-sm border border-line px-2 py-0.5 font-display font-semibold tabular-nums tracking-tight">
+                  {item.width}
+                </li>
+              ))}
+              {testFoldStates.map((state) => (
+                <li key={state} className="rounded-sm border border-line px-2 py-0.5 text-sm">
+                  {state}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-ink-2">
+              Small, standard and large mobile; tablet and large tablet; laptop, desktop and large desktop. Figma&rsquo;s frame presets, like these widths, are
+              references, not required breakpoints. Resize the frame between them and watch where the layout breaks.
+            </p>
+            <p className="mt-3">
+              <Link href="/cheat-sheets/responsive-design#test-matrix" className={link}>
+                Responsive test matrix
+              </Link>
+            </p>
+          </div>
+        </div>
+        <div className="mt-8 rounded-md border border-line p-4 sm:p-5">
+          <h3 className="text-lg font-semibold">After Figma Make or any AI generates a screen</h3>
+          <p className="mt-1 max-w-read text-ink-2">Generated UI should not be assumed responsive just because it renders. Check:</p>
+          <ul className="mt-3 grid gap-x-8 gap-y-1.5 sm:grid-cols-2 lg:grid-cols-3">
+            {["Overflow at mobile widths", "The transition through tablet widths", "How cards stack", "How navigation collapses", "What the table does", "Modal sizing", "Touch targets", "Long text and translated text", "Content that changes length or count"].map((item) => (
+              <li key={item} className="border-l border-line-strong pl-3 text-ink-2">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       <section aria-labelledby="whats-new" className="pt-14">

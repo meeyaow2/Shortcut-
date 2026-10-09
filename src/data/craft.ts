@@ -307,7 +307,7 @@ export const e = {
       { text: "Default maximum page width is 1020 px; prefer a two-thirds column for readability.", citation: cite.govukLayout },
       { text: "Deliver at least 320, 768 and 1440 px layouts.", citation: cite.sgdsBreakpoint },
     ],
-    starter: { label: "Desktop content width", context: "Application layouts" },
+    starter: { label: "Content width", context: "Application layouts, desktop" },
   }),
   hierarchy: craft({
     id: "visual-hierarchy",
@@ -468,6 +468,7 @@ export const e = {
     ],
     whenToDeviate: "On mobile the large gap shrinks most, because vertical space is scarce. Keep the gap between tappable items large enough that a finger does not hit the neighbour.",
     commonMistakes: ["The same gap everywhere, so nothing reads as grouped.", "Gaps reduced on mobile until separate tap targets touch."],
+    starter: { label: "Gaps", context: "Between elements, desktop" },
   }),
   columns: entry({
     id: "columns",
@@ -480,6 +481,7 @@ export const e = {
     whenToDeviate: "Dense grids of small, uniform items, such as thumbnails, can go well past four. Long text should stay in one column at any width.",
     commonMistakes: ["A column added at every breakpoint until cards are too narrow for their titles.", "Columns that keep multiplying on a very wide screen instead of a maximum width."],
     mentorNote: "Decide the narrowest a card can be and still work. The column count follows from that.",
+    starter: { label: "Columns", context: "Content grids, desktop" },
     official: [
       { text: "On iPhone Duo a split view expands on the inner display and collapses to a single pane on the outer display. In a grid, prefer an even number of columns so content divides cleanly at the fold.", citation: viewportCite.duoHig, viewportApplicability: ["foldable"] },
       { text: "A large unfolded foldable in landscape is like a tablet, and a two-pane layout makes good use of the width. Folded, a single column is straightforward and effective.", citation: viewportCite.androidFoldables, viewportApplicability: ["foldable"] },
@@ -499,6 +501,7 @@ export const e = {
     whenToUse: ["Stacked or key and value rows when people look up one record.", "Column priority when a few columns carry most of the meaning.", "Sideways scrolling when the data is truly tabular and people compare across it."],
     whenNotToUse: ["Do not shrink every desktop column to fit a phone.", "Do not hide a column on mobile that people need to complete the task."],
     commonMistakes: ["Tiny text so that every column fits.", "Sideways scrolling with nothing showing that more is off screen.", "Bulk actions that only exist on desktop."],
+    starter: { label: "Table behaviour", context: "A pattern for each viewport" },
     official: [{ text: "Content must work at 320 CSS pixels without scrolling in two directions. Data tables that need two dimensions are exempt.", citation: wcag("1.4.10"), viewportApplicability: ["all"] }],
   }),
   modalWidth: entry({
@@ -556,6 +559,7 @@ export const e = {
     why: "A drawer earns its place by leaving the page visible. On a phone there is no page left to show beside it, so it takes the width and the page waits behind.",
     whenToDeviate: "A drawer holding a table or a preview can be wider on desktop. Past about half the viewport it stops reading as a drawer.",
     commonMistakes: ["A fixed desktop width on mobile, leaving a useless sliver of page.", "No visible way to close it once it covers the screen.", "Losing what was typed when the viewport changes and the drawer re-renders."],
+    starter: { label: "Drawer width", context: "Side panel, desktop" },
   }),
   navPatterns: entry({
     id: "navigation-by-viewport",
@@ -573,6 +577,7 @@ export const e = {
     whenToUse: ["Bottom navigation when there are three to five primary destinations that people switch between often.", "A menu button when there are many destinations, or they are visited rarely.", "Progressive disclosure for secondary items at any width."],
     whenNotToUse: ["A menu button is not always the right answer on mobile. It hides every destination equally.", "Do not use bottom navigation for more destinations than fit with readable labels."],
     commonMistakes: ["The desktop bar squeezed until labels wrap or truncate.", "A menu button on a wide screen that has room for the items.", "Different destination names on mobile and desktop."],
+    starter: { label: "Navigation", context: "What stays visible at each viewport" },
     official: [
       { text: "On iPhone Duo the system moves toolbars and tab bars to the side on the outer display, and on the inner display in landscape, to keep vertical space for content. In general, do not override this.", citation: viewportCite.duoHig, viewportApplicability: ["foldable"] },
       { text: "Folded, a single column layout with a bottom navigation bar is straightforward but effective. Unfolded in landscape, a two-pane layout with a navigation rail makes excellent use of the wide screen.", citation: viewportCite.androidFoldables, viewportApplicability: ["foldable"] },
@@ -604,6 +609,19 @@ export const e = {
     official: [
       { text: "Width classes: compact under 600 dp, medium 600 to 840, expanded 840 to 1200, large 1200 to 1600, extra large 1600 and up. Google calls them opinionated breakpoints.", citation: viewportCite.androidSizeClasses },
       { text: "Deliver at least 320, 768 and 1440 px layouts.", citation: cite.sgdsBreakpoint },
+    ],
+  }),
+  mobileFirst: craft({
+    id: "mobile-first",
+    title: "Start from the smallest viewport",
+    viewportApplicability: ["all"],
+    summary: "Design the narrowest layout first, then add as space allows. It forces the question of what matters most before there is room to avoid it.",
+    why: "It is easier to give content more room than to take room away. A layout designed wide and squeezed down usually keeps things that should have gone.",
+    whenToDeviate: "A tool used only at a desk can start from the desktop layout. It still has to work when the window is narrow.",
+    commonMistakes: ["Mobile treated as the desktop design with things removed.", "A mobile layout simply stretched for desktop, leaving a narrow column in a wide screen."],
+    official: [
+      { text: "Design for small screens first, with a single-column layout.", citation: cite.govukLayout, viewportApplicability: ["all"] },
+      { text: "Designers should deliver at least mobile (320 px), tablet (768 px) and desktop (1440 px).", citation: cite.sgdsBreakpoint, viewportApplicability: ["all"] },
     ],
   }),
   fluidLayout: craft({

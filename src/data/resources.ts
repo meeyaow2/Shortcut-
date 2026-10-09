@@ -17,11 +17,11 @@ export const intents: ResourceIntent[] = [
 export const resources: Resource[] = [
   { id: "lucide", name: "Lucide", description: "Clean open-source icon library with consistent stroke weights.", intentId: "icons", category: "Icons", url: "https://lucide.dev/" },
   { id: "phosphor", name: "Phosphor", description: "Flexible icon family with multiple weights.", intentId: "icons", category: "Icons", url: "https://phosphoricons.com/" },
-  { id: "material-symbols", name: "Material Symbols", description: "Google's icon library, adjustable by weight, fill and grade.", intentId: "icons", category: "Icons", url: "https://fonts.google.com/icons" },
+  { id: "material-symbols", name: "Material Symbols", description: "Google's icon library, adjustable by weight, fill and grade.", intentId: "icons", category: "Icons", url: "https://fonts.google.com/icons", tags: ["Web", "Native"] },
 
-  { id: "axe", name: "axe DevTools", description: "Browser extension that runs automated accessibility checks on a page.", intentId: "a11y-testing", category: "Accessibility", url: "https://www.deque.com/axe/devtools/" },
-  { id: "wave", name: "WAVE", description: "Overlays accessibility errors and structure directly on the page.", intentId: "a11y-testing", category: "Accessibility", url: "https://wave.webaim.org/" },
-  { id: "accessibility-insights", name: "Accessibility Insights", description: "Microsoft's guided manual and automated tests, including tab-stop visualisation.", intentId: "a11y-testing", category: "Accessibility", url: "https://accessibilityinsights.io/" },
+  { id: "axe", name: "axe DevTools", description: "Browser extension that runs automated accessibility checks on a page.", intentId: "a11y-testing", category: "Accessibility", url: "https://www.deque.com/axe/devtools/", tags: ["Accessibility", "Web"] },
+  { id: "wave", name: "WAVE", description: "Overlays accessibility errors and structure directly on the page.", intentId: "a11y-testing", category: "Accessibility", url: "https://wave.webaim.org/", tags: ["Accessibility", "Web"] },
+  { id: "accessibility-insights", name: "Accessibility Insights", description: "Microsoft's guided manual and automated tests, including tab-stop visualisation.", intentId: "a11y-testing", category: "Accessibility", url: "https://accessibilityinsights.io/", tags: ["Accessibility", "Web"] },
 
   { id: "webaim-contrast", name: "WebAIM Contrast Checker", description: "Type two colours, get the contrast ratio and the WCAG pass or fail.", intentId: "colour", category: "Colour", url: "https://webaim.org/resources/contrastchecker/" },
   { id: "leonardo", name: "Leonardo", description: "Adobe's tool for generating colour scales from target contrast ratios.", intentId: "colour", category: "Colour", url: "https://leonardocolor.io/" },
@@ -31,7 +31,7 @@ export const resources: Resource[] = [
   { id: "baymard-blog", name: "Baymard Blog", description: "Large-scale usability research, strongest on e-commerce.", intentId: "research", category: "Research", url: "https://baymard.com/blog" },
   { id: "govuk-user-research", name: "GOV.UK Service Manual: User research", description: "Practical guides to planning, running and analysing research.", intentId: "research", category: "Research", url: "https://www.gov.uk/service-manual/user-research" },
 
-  { id: "mobbin", name: "Mobbin", description: "Searchable library of real app screens and flows.", intentId: "inspiration", category: "Inspiration", url: "https://mobbin.com/" },
+  { id: "mobbin", name: "Mobbin", description: "Searchable library of real app screens and flows.", intentId: "inspiration", category: "Inspiration", url: "https://mobbin.com/", tags: ["Mobile", "Web"] },
   { id: "page-flows", name: "Page Flows", description: "Recorded user flows from shipping products.", intentId: "inspiration", category: "Inspiration", url: "https://pageflows.com/" },
   { id: "refero", name: "Refero", description: "Web and app screenshots organised by page type and pattern.", intentId: "inspiration", category: "Inspiration", url: "https://refero.design/" },
 
@@ -39,14 +39,14 @@ export const resources: Resource[] = [
   { id: "lookback", name: "Lookback", description: "Moderated and unmoderated sessions with recording and notes.", intentId: "usability-testing", category: "Testing", url: "https://www.lookback.com/" },
   { id: "usertesting", name: "UserTesting", description: "Participant panel and recorded think-aloud sessions.", intentId: "usability-testing", category: "Testing", url: "https://www.usertesting.com/" },
 
-  { id: "figma", name: "Figma", description: "Design and prototype in the same file your team already uses.", intentId: "prototyping", category: "Prototyping", url: "https://www.figma.com/" },
-  { id: "framer", name: "Framer", description: "Prototypes that are real, publishable websites.", intentId: "prototyping", category: "Prototyping", url: "https://www.framer.com/" },
-  { id: "protopie", name: "ProtoPie", description: "High-fidelity interactions with sensors, variables and logic.", intentId: "prototyping", category: "Prototyping", url: "https://www.protopie.io/" },
+  { id: "figma", name: "Figma", description: "Design and prototype in the same file your team already uses.", intentId: "prototyping", category: "Prototyping", url: "https://www.figma.com/", tags: ["Figma", "Responsive"] },
+  { id: "framer", name: "Framer", description: "Prototypes that are real, publishable websites.", intentId: "prototyping", category: "Prototyping", url: "https://www.framer.com/", tags: ["Web", "Responsive"] },
+  { id: "protopie", name: "ProtoPie", description: "High-fidelity interactions with sensors, variables and logic.", intentId: "prototyping", category: "Prototyping", url: "https://www.protopie.io/", tags: ["Mobile", "Native"] },
 
-  { id: "govuk-ds", name: "GOV.UK Design System", description: "Components and patterns with the research behind each one.", intentId: "design-systems", category: "Design systems", url: "https://design-system.service.gov.uk/" },
-  { id: "sgds", name: "Singapore Government Design System", description: "Foundations, components, templates and blocks for Singapore government products.", intentId: "design-systems", category: "Design systems", url: "https://www.designsystem.tech.gov.sg/", context: "sg" },
-  { id: "sg-dss", name: "Singapore Digital Service Standards", description: "The official control catalogue for Singapore government digital services.", intentId: "design-systems", category: "Standards", url: "https://info.standards.tech.gov.sg/control-catalog/dss/", context: "sg" },
-  { id: "material-3", name: "Material Design 3", description: "Google's design system for Android and the web.", intentId: "design-systems", category: "Design systems", url: "https://m3.material.io/" },
-  { id: "apple-hig", name: "Apple Human Interface Guidelines", description: "Platform conventions for iOS, iPadOS, macOS, watchOS and visionOS.", intentId: "design-systems", category: "Design systems", url: "https://developer.apple.com/design/human-interface-guidelines/" },
-  { id: "fluent-2", name: "Fluent 2", description: "Microsoft's design system for Windows, web and Microsoft 365.", intentId: "design-systems", category: "Design systems", url: "https://fluent2.microsoft.design/" },
+  { id: "govuk-ds", name: "GOV.UK Design System", description: "Components and patterns with the research behind each one.", intentId: "design-systems", category: "Design systems", url: "https://design-system.service.gov.uk/", tags: ["Design systems", "Web", "Responsive"] },
+  { id: "sgds", name: "Singapore Government Design System", description: "Foundations, components, templates and blocks for Singapore government products.", intentId: "design-systems", category: "Design systems", url: "https://www.designsystem.tech.gov.sg/", context: "sg", tags: ["Design systems", "Web", "Responsive"] },
+  { id: "sg-dss", name: "Singapore Digital Service Standards", description: "The official control catalogue for Singapore government digital services.", intentId: "design-systems", category: "Standards", url: "https://info.standards.tech.gov.sg/control-catalog/dss/", context: "sg", tags: ["Web", "Responsive", "Accessibility"] },
+  { id: "material-3", name: "Material Design 3", description: "Google's design system for Android and the web.", intentId: "design-systems", category: "Design systems", url: "https://m3.material.io/", tags: ["Design systems", "Native", "Web", "Mobile"] },
+  { id: "apple-hig", name: "Apple Human Interface Guidelines", description: "Platform conventions for iOS, iPadOS, macOS, watchOS and visionOS.", intentId: "design-systems", category: "Design systems", url: "https://developer.apple.com/design/human-interface-guidelines/", tags: ["Design systems", "Native", "Mobile", "Tablet", "Foldable"] },
+  { id: "fluent-2", name: "Fluent 2", description: "Microsoft's design system for Windows, web and Microsoft 365.", intentId: "design-systems", category: "Design systems", url: "https://fluent2.microsoft.design/", tags: ["Design systems", "Web", "Native"] },
 ];

@@ -235,6 +235,8 @@ const baseUpdates: Update[] = [
     designerAction:
       "List which of your screens depend on a fixed bottom tab bar or toolbar, and check them against the new page.",
     sourceUrl: APPLE,
+    relevantTo: ["Foldable", "Mobile"],
+    links: [{ label: "Designing for iPhone Duo", href: "/cheat-sheets/responsive-design#iphone-duo" }],
   },
   {
     id: "apple-layout",
@@ -249,6 +251,7 @@ const baseUpdates: Update[] = [
       "Layout is the page most other HIG guidance leans on, so changes here can affect margins, safe areas and adaptivity across your app.",
     designerAction: "Skim the page for changes before starting new iOS layout work.",
     sourceUrl: APPLE,
+    relevantTo: ["All Apple platforms"],
   },
   {
     id: "govuk-frontend-6-5",

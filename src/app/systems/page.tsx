@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { EditorialLabel } from "@/components/craft/Craft";
 import { FreshnessStatus } from "@/components/source/Source";
-import { CaseStudyCard } from "@/components/systems/Systems";
+import { CaseStudyCard, ResponsiveBlock } from "@/components/systems/Systems";
 import { Tag } from "@/components/ui/Tag";
 import { ExternalLink, PageHeader } from "@/components/ui/primitives";
 import { referenceCaseStudies } from "@/data/references";
-import { caseStudies, learnFrom, systems, type SystemProfile } from "@/data/systems";
+import { caseStudies, learnFrom, responsiveGuidance, systems, type SystemProfile } from "@/data/systems";
 
 export const metadata: Metadata = { title: "Design System Library" };
 
@@ -25,6 +25,13 @@ function SystemCard({ system }: { system: SystemProfile }) {
       </div>
       <p className="mt-2 flex-1 text-ink-2">{system.summary}</p>
       {system.caveat && <p className="mt-2 text-sm text-warn">{system.caveat}</p>}
+      {responsiveGuidance[system.id] && (
+        <p className="mt-2 text-sm text-ink-3">
+          <a href="#responsive" className="underline decoration-line-strong underline-offset-4 hover:text-ink">
+            {responsiveGuidance[system.id].label}
+          </a>
+        </p>
+      )}
       <div className="mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-line pt-3 text-sm">
         {system.dateVerified ? <FreshnessStatus dateVerified={system.dateVerified} /> : <span className="text-ink-3">Not yet read by Shortcut</span>}
         {system.status === "profiled" && (
@@ -124,6 +131,26 @@ export default function SystemsPage() {
         note="Companies whose published design material is worth studying. Shortcut found no public design system for either, so neither is described as having one."
         list={references}
       />
+
+      <section aria-labelledby="responsive" className="pt-12">
+        <h2 id="responsive" className="border-b-2 border-ink pb-2 text-2xl font-semibold md:text-3xl">
+          Responsive and device guidance
+        </h2>
+        <p className="mt-3 max-w-read text-ink-2">
+          What each system itself says about viewports, touch and devices, on the pages Shortcut has read. No values are filled in for a system that does not
+          publish them.{" "}
+          <Link href="/explorer#kind-Viewport" className={accent}>
+            Compare by viewport and platform
+          </Link>
+        </p>
+        <div className="max-w-3xl space-y-8 pt-6">
+          {systems
+            .filter((system) => responsiveGuidance[system.id])
+            .map((system) => (
+              <ResponsiveBlock key={system.id} name={system.name} guidance={responsiveGuidance[system.id]} />
+            ))}
+        </div>
+      </section>
 
       <section aria-labelledby="cases" className="pt-12">
         <h2 id="cases" className="border-b-2 border-ink pb-2 text-2xl font-semibold md:text-3xl">

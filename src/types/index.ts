@@ -89,6 +89,8 @@ export interface Update {
   questions?: string[];
   /** Where to go next inside Shortcut. */
   links?: { label: string; href: string }[];
+  /** Viewports, devices or contexts the change bears on. Only set when it helps. */
+  relevantTo?: string[];
 }
 
 export interface ComparisonRow {
@@ -158,6 +160,8 @@ export interface Resource {
   category: string;
   url: string;
   context?: Context;
+  /** Platform or context tags, for search and scanning. */
+  tags?: string[];
 }
 
 export interface Answer {
@@ -261,7 +265,7 @@ export interface ExplorerCell {
 export interface ExplorerTopic {
   id: string;
   title: string;
-  kind: "Foundation" | "Component";
+  kind: "Foundation" | "Component" | "Viewport";
   status: "verified" | "planned";
   summary?: string;
   cells?: Partial<Record<SourceId, ExplorerCell>>;
@@ -298,7 +302,10 @@ export type ViewportFilter = "all" | Viewport | "foldable";
 export type FoldState = "closed" | "open";
 
 /** Kept apart from viewport: a phone is not always touch, a desktop not always a mouse. */
-export type InputMethod = "touch" | "pointer" | "keyboard";
+export type InputMethod = "touch" | "pointer" | "keyboard" | "mixed";
+
+/** Where guidance comes from or is meant for. Held in the data; not every page shows it. */
+export type Platform = "web" | "responsive-web" | "ios" | "android" | "native";
 
 /**
  * Where a piece of guidance applies. Both fields are optional, and guidance
@@ -307,6 +314,7 @@ export type InputMethod = "touch" | "pointer" | "keyboard";
 export interface ViewportScope {
   viewportApplicability?: ("all" | Viewport | "foldable")[];
   input?: InputMethod[];
+  platform?: Platform[];
 }
 
 /** A note about one real device in one state. */

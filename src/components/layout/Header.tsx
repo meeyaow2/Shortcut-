@@ -23,6 +23,7 @@ const nav: NavItem[] = [
     children: [
       { href: "/cheat-sheets", label: "Cheat Sheets" },
       { href: "/starting-points", label: "Safe Starting Points" },
+      { href: "/cheat-sheets/responsive-design", label: "Responsive & Viewports" },
       { href: "/systems", label: "Design System Library" },
       { href: "/explorer", label: "Compare Design Systems" },
       { href: "/figma", label: "Figma Guide" },

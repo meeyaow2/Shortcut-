@@ -81,6 +81,7 @@ In updates, `summary` restates the source. `whyItMatters` and `designerAction` a
 - An entry's `viewportValues` are Shortcut's starting points by available width. A missing laptop or large value falls back to desktop; a missing fold state falls back to mobile (closed) or tablet (open), and the UI says so. Never attribute these to a design system; what a system says goes in `official`.
 - `viewportApplicability` and `input` are separate fields, so input method can become its own control later.
 - `src/data/viewports.ts` holds the reference ranges, the folding devices, the foldable guide, the component comparisons and the test matrix. Device facts restate the maker's specifications page. Physical pixels are never presented as a CSS width.
+- Viewport context is used where it changes the guidance, not everywhere. A visible control: individual cheat sheets and Safe Starting Points. Content only: the Design System Library (`responsiveGuidance` in `systems.ts`, official notes only), Compare Design Systems (the "Viewport and platform" topics), the Figma Guide and Singapore UX. Tags only: Resources (`tags`) and Updates (`relevantTo`). There is no control in the site header.
 - The selection is saved in the browser and written to the address (`?viewport=mobile`, `?viewport=foldable&device=iphone-duo&state=open`). The address wins when both exist.
 
 ## AI + Design

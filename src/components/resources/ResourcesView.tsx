@@ -24,6 +24,7 @@ export function ResourceCard({ resource }: { resource: Resource }) {
           {resource.context && <ContextTag context={resource.context} />}
           <span>{new URL(resource.url).hostname.replace(/^www\./, "")}</span>
         </div>
+        {resource.tags && <p className="mt-2 text-sm text-ink-3">{resource.tags.join(" · ")}</p>}
       </div>
     </article>
   );

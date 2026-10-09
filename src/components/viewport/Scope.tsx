@@ -4,7 +4,7 @@ import { resolveViewportValue, valueDependsOn, viewportKeyLabels, viewportKeyOrd
 import type { InputMethod, ViewportFilter, ViewportKey, ViewportScope } from "@/types";
 
 const scopeLabels: Record<string, string> = { all: "All viewports", mobile: "Mobile", tablet: "Tablet", laptop: "Laptop", desktop: "Desktop", large: "Large desktop", foldable: "Foldable" };
-const inputLabels: Record<InputMethod, string> = { touch: "Touch", pointer: "Pointer", keyboard: "Keyboard" };
+const inputLabels: Record<InputMethod, string> = { touch: "Touch", pointer: "Pointer", keyboard: "Keyboard", mixed: "Mixed" };
 
 /** Where a piece of guidance applies, in words. Guidance with no scope applies everywhere. */
 export function appliesTo(scope: ViewportScope, values?: Partial<Record<ViewportKey, string>>): string {

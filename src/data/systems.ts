@@ -1,5 +1,7 @@
 import { referenceCaseStudies, referenceProfiles } from "./references";
-import type { Citation, SourceId, Update } from "@/types";
+import { cite } from "./citations";
+import { getExplorerTopic } from "./explorer";
+import type { Citation, OfficialNote, SourceId, Update } from "@/types";
 
 /**
  * The Design System Library, and what generative UI means for it.
@@ -49,6 +51,7 @@ export const systemUpdates: Update[] = [
       "OpenAI says GPT-6 in ChatGPT can answer with interactive interfaces, composing text, graphics, tappable buttons, forms, charts and interactive elements according to the question. A comparison may appear side by side, an explanation as an interactive diagram, and a simple question still gets text. OpenAI says it built a library of native components and a compiler that renders the interface as the model generates it.",
     whyItMatters:
       "The interface is composed around what the person asked, not laid out in advance. OpenAI's own description is that a component library gives each response a familiar foundation while the model decides how the pieces fit together. That is a design system doing the job of keeping generated screens coherent.",
+    relevantTo: ["Adaptive interfaces", "Generative UI", "All devices"],
     designerAction:
       "Nothing in your product has to change. Try it: ask ChatGPT the same comparison question twice and note what stays the same between the two interfaces and what does not. Then ask what your own component library would need to tell a model for it to do this well.",
     sourceUrl: "https://openai.com/index/gpt-6-for-everyone/",
@@ -248,6 +251,67 @@ export const systems: SystemProfile[] = [
   // Companies with useful design material and no verified public design system.
   ...referenceProfiles,
 ];
+
+// --- Responsive and device guidance ----------------------------------------------
+
+export interface ResponsiveGuidance {
+  /** "read": notes below restate the system's own pages. Otherwise there is nothing to show yet, and why. */
+  status: "read" | "not-read" | "login";
+  /** A few words for the system's card. */
+  label: string;
+  topics?: string;
+  notes: OfficialNote[];
+}
+
+/** A system's column from the comparison, as notes. */
+const fromCell = (topic: string, system: SourceId): OfficialNote[] => {
+  const cell = getExplorerTopic(topic)?.cells?.[system];
+  return cell ? cell.points.map((text) => ({ text, citation: cell.citation })) : [];
+};
+
+const unread: ResponsiveGuidance = { status: "not-read", label: "Responsive guidance not yet read", notes: [] };
+
+/**
+ * What each system says about viewports and devices, on pages Shortcut has
+ * read. Nothing here is inferred: a system with no notes has not been read on
+ * the subject, which is not the same as having nothing to say.
+ */
+export const responsiveGuidance: Record<string, ResponsiveGuidance> = {
+  sgds: {
+    status: "read",
+    label: "Responsive guidance read",
+    topics: "Breakpoints, modal sizes",
+    notes: [...fromCell("breakpoints", "sgds"), { text: "Modals come in five sizes: small, medium (default), large, extra large and fullscreen.", citation: getExplorerTopic("modal")!.cells!.sgds!.citation }],
+  },
+  govuk: {
+    status: "read",
+    label: "Responsive guidance read",
+    topics: "Breakpoints, page width, responsive spacing",
+    notes: [...fromCell("breakpoints", "govuk"), { text: "The responsive spacing scale uses smaller values on small screens for its larger steps.", citation: cite.govukSpacing }],
+  },
+  material: {
+    status: "read",
+    label: "Responsive guidance read",
+    topics: "Window size classes, touch targets, foldables",
+    notes: [...fromCell("breakpoints", "material"), { text: "Touch targets of at least 48 × 48 dp.", citation: cite.androidTargets, input: ["touch"] }, ...fromCell("foldables", "material").slice(0, 2)],
+  },
+  apple: {
+    status: "read",
+    label: "Device and platform guidance read",
+    topics: "Size classes, touch targets, iPhone Duo",
+    notes: [...fromCell("breakpoints", "apple"), { text: "A button needs a hit region of at least 44 × 44 pt.", citation: cite.appleButtons, input: ["touch"] }, ...fromCell("foldables", "apple").slice(0, 2)],
+  },
+  carbon: {
+    status: "read",
+    label: "One responsive detail read",
+    topics: "Modal sizes",
+    notes: [{ text: "Modals come in four responsive sizes: extra small, small, medium and large.", citation: getExplorerTopic("modal")!.cells!.carbon!.citation }],
+  },
+  atlassian: unread,
+  primer: unread,
+  uswds: unread,
+  "uber-base": { status: "login", label: "Responsive guidance behind staff login", notes: [] },
+};
 
 export function getSystem(id: string): SystemProfile | undefined {
   return systems.find((s) => s.id === id);

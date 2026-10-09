@@ -24,6 +24,7 @@ function Labels({ update }: { update: Update }) {
       {update.ai && <Tag tone="outline">{update.ai.updateType}</Tag>}
       {/* A research piece in the Research category would otherwise say so twice. */}
       {kindLabels[update.kind] !== update.category && <Tag tone={kindTones[update.kind]}>{kindLabels[update.kind]}</Tag>}
+      {update.relevantTo && <span className="text-sm text-ink-3">Relevant to {update.relevantTo.join(", ").toLowerCase()}</span>}
     </div>
   );
 }

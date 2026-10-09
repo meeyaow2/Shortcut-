@@ -358,7 +358,7 @@ const index: Doc[] = [
   ...resources.map((r) =>
     doc(
       { type: "resource", id: r.id, title: r.name, detail: r.description, href: r.url, external: true, context: r.context ?? "global" },
-      `${r.category} ${r.context === "sg" ? SG_WORDS : ""}`,
+      `${r.category} ${(r.tags ?? []).join(" ")} ${r.context === "sg" ? SG_WORDS : ""}`,
     ),
   ),
 ];

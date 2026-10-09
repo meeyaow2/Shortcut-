@@ -13,8 +13,14 @@ function TopicList({ kind }: { kind: ExplorerTopic["kind"] }) {
   return (
     <section aria-labelledby={`kind-${kind}`}>
       <h2 id={`kind-${kind}`} className="border-b-2 border-ink pb-2 text-2xl font-semibold">
-        {kind}s
+        {kind === "Viewport" ? "Viewport and platform" : `${kind}s`}
       </h2>
+      {kind === "Viewport" && (
+        <p className="mt-3 max-w-read text-ink-2">
+          Where systems speak about screen size, touch or folding directly. Other topics have no viewport filter, because few systems publish per-viewport
+          values: where one says nothing, the comparison says so and does not fill the gap.
+        </p>
+      )}
       <ul className="divide-y divide-line">
         {topics.map((topic) => {
           const ready = topic.status === "verified";
@@ -56,6 +62,14 @@ export default function ExplorerPage() {
             <SourceBadge key={id} id={id} />
           ))}
         </p>
+        <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+          <span className="font-semibold text-ink-3">Compare by</span>
+          {(["Foundation", "Component", "Viewport"] as const).map((kind) => (
+            <a key={kind} href={`#kind-${kind}`} className="font-medium text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">
+              {kind === "Viewport" ? "Viewport and platform" : kind}
+            </a>
+          ))}
+        </p>
         <p className="mt-3 text-sm">
           <span className="font-semibold text-ink-3">AI and design systems </span>
           <Link href="/ai/learn#ai-design-systems" className="font-medium text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">
@@ -66,6 +80,7 @@ export default function ExplorerPage() {
       <div className="space-y-12 pt-8">
         <TopicList kind="Foundation" />
         <TopicList kind="Component" />
+        <TopicList kind="Viewport" />
       </div>
     </div>
   );

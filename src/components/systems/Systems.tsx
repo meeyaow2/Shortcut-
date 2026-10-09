@@ -1,9 +1,11 @@
+"use client";
+
 import { ArrowDown } from "lucide-react";
-import { EditorialLabel } from "@/components/craft/Craft";
+import { EditorialLabel, OfficialGuidance } from "@/components/craft/Craft";
 import { SourceMeta } from "@/components/source/Source";
 import { Tag } from "@/components/ui/Tag";
 import type { UxBreakdown } from "@/data/references";
-import type { CaseStudy } from "@/data/systems";
+import type { CaseStudy, ResponsiveGuidance } from "@/data/systems";
 import { formatDate } from "@/lib/dates";
 import type { Citation } from "@/types";
 
@@ -139,6 +141,27 @@ export function PolishList({ items, organisation, citation }: { items: { date: s
       <div className="mt-5 border-t border-line pt-3">
         <SourceMeta citations={[citation]} heading="Official source" />
       </div>
+    </div>
+  );
+}
+
+/** What a system says about viewports and devices, or a plain statement that Shortcut has not read it yet. */
+export function ResponsiveBlock({ name, guidance }: { name: string; guidance: ResponsiveGuidance }) {
+  return (
+    <div>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <h3 className="text-lg font-semibold">{name}</h3>
+        <span className="text-sm text-ink-3">{guidance.topics ?? guidance.label}</span>
+      </div>
+      {guidance.status === "read" ? (
+        <OfficialGuidance notes={guidance.notes} />
+      ) : (
+        <p className="mt-1 text-ink-2">
+          {guidance.status === "login"
+            ? "The pages that would cover this need a staff login, so Shortcut cannot say what the system publishes."
+            : "Shortcut has not yet read this system's pages on responsive behaviour. That is a gap in Shortcut, not a statement about the system."}
+        </p>
+      )}
     </div>
   );
 }

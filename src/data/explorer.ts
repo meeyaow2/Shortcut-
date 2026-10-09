@@ -1,5 +1,6 @@
 import type { Citation, ExplorerTopic, SourceId } from "@/types";
 import { VERIFIED, cite } from "./citations";
+import { viewportCite } from "./viewports";
 
 /** Systems compared in the Explorer, in column order. */
 export const explorerSystems: SourceId[] = ["sgds", "material", "apple", "govuk", "atlassian", "carbon", "primer", "uswds"];
@@ -109,7 +110,7 @@ export const explorerTopics: ExplorerTopic[] = [
   {
     id: "breakpoints",
     title: "Breakpoints",
-    kind: "Foundation",
+    kind: "Viewport",
     status: "verified",
     summary: "Where each system says a layout should change, and in what unit.",
     cells: {
@@ -1077,6 +1078,68 @@ export const explorerTopics: ExplorerTopic[] = [
     },
     takeaway:
       "The same word means different things: Apple's alert blocks the screen, while SGDS's alert and GOV.UK's banner sit in the page and Material's snackbar disappears on its own. Choose by how much interruption the message deserves, and use every kind sparingly.",
+  },
+  {
+    id: "touch-targets",
+    title: "Touch targets",
+    kind: "Viewport",
+    status: "verified",
+    summary: "The smallest area each system says a finger should have to hit.",
+    cells: {
+      sgds: {
+        headline: "48 px default button height",
+        points: ["The Button page lists a 48 px height token for the default size."],
+        citation: cite.sgdsButton,
+      },
+      material: {
+        headline: "48 by 48 dp",
+        points: ["Touch targets of at least 48 × 48 dp."],
+        citation: cite.androidTargets,
+      },
+      apple: {
+        headline: "44 by 44 pt",
+        points: ["A button needs a hit region of at least 44 × 44 pt.", "Prominence comes from style, not size."],
+        citation: cite.appleButtons,
+      },
+    },
+    takeaway:
+      "Apple and Android give touch sizes in their own units, and they are not the same number. On the web, WCAG's 24 by 24 CSS pixel minimum sits beneath both as a floor, and applies to a mouse as well as a finger. Design to the platform you ship on.",
+    themes: ["Both platforms give one minimum for anything tappable, not a size per component.", "The visible control can be smaller than the area that responds to touch."],
+    differences: ["Units: Apple uses points, Android density-independent pixels. Neither is a CSS pixel.", "SGDS gives a default button height; the page read gives no separate touch target figure.", "Not read on this topic: GOV.UK, Atlassian, Carbon, Primer and USWDS."],
+  },
+  {
+    id: "foldables",
+    title: "Folding screens",
+    kind: "Viewport",
+    status: "verified",
+    summary: "What Apple and Google each say about designing for a device with two displays.",
+    cells: {
+      apple: {
+        headline: "Compact outside, regular inside",
+        points: [
+          "A compact width layout for the outer display and a regular width layout for the inner display cover every pose.",
+          "Do not reinvent the app when it resizes; let the existing layout expand.",
+          "Keep functionality and state the same between displays, with an additional level of hierarchy on the inner display if it suits.",
+          "The system moves toolbars and tab bars to the side. In general, do not override this.",
+          "Avoid extreme layout changes as people fold the device.",
+        ],
+        citation: viewportCite.duoHig,
+      },
+      material: {
+        headline: "Alternative layouts for folded and unfolded",
+        points: [
+          "Differences in size and aspect ratio between folded and unfolded can be substantial, requiring alternative layouts.",
+          "Unfolded in landscape is like a tablet: a two-pane layout with a navigation rail. Folded is like a phone: a single column with a bottom navigation bar.",
+          "Keep dialogs and menus off the fold, and split content into two areas when half opened.",
+          "The app must preserve and restore its state as the device folds and unfolds.",
+        ],
+        citation: viewportCite.androidFoldables,
+      },
+    },
+    takeaway:
+      "Both treat a folding device as two layouts of one app, joined by kept state, and both keep content off the fold. They differ on navigation: Apple's system puts bars on the side even when closed, while Google describes a bottom bar folded and a rail unfolded. Follow the platform you are designing for.",
+    themes: ["Two layouts, one app: a narrow one closed and a wider one open.", "State survives the fold.", "Nothing important sits on the fold line."],
+    differences: ["Navigation placement: at the side on iPhone Duo; bottom bar when folded on Android.", "Apple stresses expanding the existing layout. Google speaks of alternative layouts optimised for each.", "Not read on this topic: SGDS, GOV.UK, Atlassian, Carbon, Primer and USWDS."],
   },
 ];
 

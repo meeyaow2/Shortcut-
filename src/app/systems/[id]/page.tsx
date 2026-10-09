@@ -5,11 +5,11 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { EditorialLabel } from "@/components/craft/Craft";
 import { FreshnessStatus, SourceBadge, SourceMeta } from "@/components/source/Source";
-import { Breakdown, CaseStudyCard, Flow, PolishList } from "@/components/systems/Systems";
+import { Breakdown, CaseStudyCard, Flow, PolishList, ResponsiveBlock } from "@/components/systems/Systems";
 import { Tag } from "@/components/ui/Tag";
 import { ExternalLink } from "@/components/ui/primitives";
 import { polishExamples, refCite, uxBreakdowns } from "@/data/references";
-import { getCaseStudy, getSystem, systemToAiFlow, systems } from "@/data/systems";
+import { getCaseStudy, getSystem, responsiveGuidance, systemToAiFlow, systems } from "@/data/systems";
 import type { SourceId } from "@/types";
 
 type Props = { params: Promise<{ id: string }> };
@@ -177,6 +177,17 @@ async function Profile({ params }: Props) {
             </div>
           </section>
         ))}
+
+        {responsiveGuidance[system.id] && (
+          <section aria-labelledby="responsive" className="max-w-3xl">
+            <h2 id="responsive" className="border-b-2 border-ink pb-2 text-2xl font-semibold">
+              Responsive and device guidance
+            </h2>
+            <div className="pt-4">
+              <ResponsiveBlock name={system.name} guidance={responsiveGuidance[system.id]} />
+            </div>
+          </section>
+        )}
 
         {studies.length > 0 && (
           <section aria-labelledby="ai">

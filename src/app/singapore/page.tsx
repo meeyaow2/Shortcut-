@@ -40,6 +40,35 @@ export default function SingaporePage() {
         </div>
       </PageHeader>
 
+      <aside aria-labelledby="sg-responsive" className="mt-8 rounded-md border border-line p-4 sm:p-5">
+        <h2 id="sg-responsive" className="font-sans text-base font-semibold tracking-normal">
+          Responsive and device guidance from Singapore sources
+        </h2>
+        <ul className="mt-2 flex flex-wrap gap-x-6 gap-y-1">
+          {[
+            { href: "#bd-1", label: "BD-1 Responsive Web Design" },
+            { href: "#sgds-breakpoints", label: "SGDS breakpoints" },
+            { href: "#sgds-button", label: "SGDS button sizes" },
+            { href: "#sgds-input", label: "SGDS form inputs" },
+            { href: "#topic-navigation", label: "Navigation controls" },
+            { href: "#topic-accessibility", label: "Accessibility" },
+          ].map((item) => (
+            <li key={item.href}>
+              <a href={item.href} className="font-medium text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3 max-w-3xl text-sm text-ink-2">
+          Only what the Singapore sources themselves state is shown on this page. The per-viewport ranges elsewhere in Shortcut are industry convention, not
+          a Singapore Government requirement.{" "}
+          <Link href="/cheat-sheets/responsive-design" className="font-medium text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">
+            Responsive &amp; Viewports
+          </Link>
+        </p>
+      </aside>
+
       <div className="grid gap-10 pt-8 lg:grid-cols-[14rem_1fr]">
         <nav aria-label="Topics" className="hidden lg:sticky lg:top-24 lg:block lg:self-start">
           <p className="text-sm font-semibold">Topics</p>

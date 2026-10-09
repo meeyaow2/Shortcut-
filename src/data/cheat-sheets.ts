@@ -643,7 +643,7 @@ const sourcedSheets: CheatSheet[] = [
     viewportSensitivity: "high",
     sections: [
       { id: "viewports", title: "Viewports and breakpoints", rules: [], entries: [e.viewportVsPixels, e.breakpoints] },
-      { id: "fluid", title: "Fluid layout and priority", rules: [], entries: [e.fluidLayout, e.contentPriority] },
+      { id: "fluid", title: "Fluid layout and priority", rules: [], entries: [e.mobileFirst, e.fluidLayout, e.contentPriority] },
       { id: "input", title: "Touch and pointer", rules: [], entries: [e.touchVsPointer] },
       { id: "foldables", title: "Foldables", rules: [], entries: [e.foldables] },
       { id: "reflow", title: "Reflow and zoom", rules: [r.reflow, r.resize, r.textSpacing] },
