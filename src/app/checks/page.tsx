@@ -84,7 +84,7 @@ export default function ChecksPage() {
           </ul>
         </nav>
 
-        <div className="max-w-3xl space-y-12">
+        <div className="max-w-3xl stack-sections">
           {checkCategories.map((category) => (
             <section key={category} id={slug(category)} aria-labelledby={`${slug(category)}-title`}>
               <h2 id={`${slug(category)}-title`} className="border-b-2 border-ink pb-2 text-2xl font-semibold">

@@ -56,7 +56,7 @@ export function CheatSheetView({ sheet }: { sheet: CheatSheet }) {
   return (
     <div className="page">
       <header className="border-b border-line pb-8 pt-8 md:pt-10">
-        <Link href="/cheat-sheets" className="inline-flex items-center gap-1.5 text-sm text-ink-2 hover:text-ink">
+        <Link href="/cheat-sheets" className="-my-2 inline-flex items-center gap-1.5 py-2 text-sm text-ink-2 hover:text-ink">
           <ArrowLeft aria-hidden className="size-4" />
           All cheat sheets
         </Link>
@@ -108,7 +108,7 @@ export function CheatSheetView({ sheet }: { sheet: CheatSheet }) {
           </ul>
         </nav>
 
-        <div className="space-y-12">
+        <div className="stack-sections">
           <div className="-mb-6 empty:hidden">
             <ContextNotice>
               {context === "global"

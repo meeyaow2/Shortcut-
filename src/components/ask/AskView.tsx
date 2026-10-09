@@ -147,7 +147,7 @@ function AnswerCard({ question, result }: { question: string; result: AskResult 
 function NoAnswer({ question }: { question: string }) {
   const related = search(question.replace(/[?.!,]/g, " ").split(/\s+/).filter((w) => w.length > 4).slice(0, 1).join(" "), 4);
   return (
-    <div className="pop-in rounded-md border border-dashed border-line-strong p-5 md:p-6">
+    <div className="pop-in rounded-md border border-dashed border-line-strong p-4 sm:p-5 md:p-6">
       <h2 className="text-xl font-semibold">No sourced answer for that yet</h2>
       <p className="mt-2 max-w-read text-ink-2">
         Shortcut only answers when it can point to guidance it has checked, so it will not guess at “{question}”. Try
@@ -165,7 +165,7 @@ function NoAnswer({ question }: { question: string }) {
 
 function AnswerSkeleton() {
   return (
-    <div role="status" className="rounded-md border border-line p-5 md:p-6">
+    <div role="status" className="rounded-md border border-line p-4 sm:p-5 md:p-6">
       <span className="sr-only">Looking for a sourced answer</span>
       <Skeleton className="h-4 w-24" />
       <Skeleton className="mt-3 h-9 w-2/3" />
@@ -264,7 +264,7 @@ export function AskView() {
               type="button"
               aria-pressed={option === context}
               onClick={() => go(asked, option)}
-              className={`min-h-7 rounded-[3px] px-2.5 text-sm transition-colors ${
+              className={`min-h-9 md:min-h-7 rounded-[3px] px-2.5 text-sm transition-colors ${
                 option === context ? "bg-ink font-medium text-paper" : "text-ink-2 hover:text-ink"
               }`}
             >
@@ -294,7 +294,7 @@ export function AskView() {
                 type="button"
                 aria-pressed={mode === value}
                 onClick={() => setMode(value)}
-                className={`min-h-7 rounded-[3px] px-2.5 text-sm transition-colors ${
+                className={`min-h-9 md:min-h-7 rounded-[3px] px-2.5 text-sm transition-colors ${
                   mode === value ? "bg-ink font-medium text-paper" : "text-ink-2 hover:text-ink"
                 }`}
               >
@@ -309,7 +309,7 @@ export function AskView() {
               <button
                 type="button"
                 onClick={() => ask(question)}
-                className="min-h-9 rounded-sm border border-line bg-paper px-3 py-1.5 text-left text-[0.9375rem] text-ink-2 transition-colors hover:border-ink hover:text-ink"
+                className="min-h-11 md:min-h-9 rounded-sm border border-line bg-paper px-3 py-1.5 text-left text-[0.9375rem] text-ink-2 transition-colors hover:border-ink hover:text-ink"
               >
                 {question}
               </button>

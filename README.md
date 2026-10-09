@@ -84,6 +84,14 @@ In updates, `summary` restates the source. `whyItMatters` and `designerAction` a
 - Viewport context is used where it changes the guidance, not everywhere. A visible control: individual cheat sheets and Safe Starting Points. Content only: the Design System Library (`responsiveGuidance` in `systems.ts`, official notes only), Compare Design Systems (the "Viewport and platform" topics), the Figma Guide and Singapore UX. Tags only: Resources (`tags`) and Updates (`relevantTo`). There is no control in the site header.
 - The selection is saved in the browser and written to the address (`?viewport=mobile`, `?viewport=foldable&device=iphone-duo&state=open`). The address wins when both exist.
 
+## Spacing
+
+- Spacing comes from Tailwind's 4 px scale. Use 4, 8, 12, 16, 20, 24 and 32 inside a section; do not add arbitrary pixel values.
+- Gaps between major sections use one responsive value, `--section-gap` in `globals.css` (40, 48, then 56 px), through `.section-gap`, `.section-space` or `.stack-sections`. Do not give a section its own top padding.
+- Cards are `p-4 sm:p-5`; large content cards `p-4 sm:p-6`; compact tiles `p-3`.
+- Controls are 44 px tall below tablet width and their compact height above it: write `min-h-11 md:min-h-9`, not a bare `min-h-9`.
+- The navigation collapses at `--breakpoint-nav` (64rem).
+
 ## Visuals and motion
 
 - `src/components/visual` holds the illustration language: thin ink lines, flat fills, and the highlighter yellow for the thing being measured. Everything is HTML, CSS and inline SVG; there is no animation library and no image files.

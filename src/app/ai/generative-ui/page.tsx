@@ -56,7 +56,7 @@ export default function GenerativeUiPage() {
         </p>
       </section>
 
-      <section aria-labelledby="concepts" className="pt-14">
+      <section aria-labelledby="concepts" className="section-gap">
         <H2 id="concepts">Four working concepts</H2>
         <dl className="grid gap-4 pt-5 sm:grid-cols-2">
           {uiConcepts.map((concept) => (
@@ -76,7 +76,7 @@ export default function GenerativeUiPage() {
         </p>
       </section>
 
-      <section aria-labelledby="shipping" className="pt-14">
+      <section aria-labelledby="shipping" className="section-gap">
         <H2 id="shipping">What has shipped</H2>
         <div className="max-w-3xl pt-5">
           {systemUpdates.map((update) => (
@@ -101,7 +101,7 @@ export default function GenerativeUiPage() {
         </div>
       </section>
 
-      <section aria-labelledby="system" className="pt-14">
+      <section aria-labelledby="system" className="section-gap">
         <H2 id="system">Why the design system matters more</H2>
         <div className="grid gap-8 pt-5 lg:grid-cols-[14rem_1fr]">
           <Flow steps={systemToAiFlow} emphasise={5} />
@@ -131,7 +131,7 @@ export default function GenerativeUiPage() {
         </div>
       </section>
 
-      <section aria-labelledby="questions" className="pt-14">
+      <section aria-labelledby="questions" className="section-gap">
         <H2 id="questions">What designers now have to decide</H2>
         <dl className="max-w-3xl divide-y divide-line">
           {generativeDesignQuestions.map((item) => (

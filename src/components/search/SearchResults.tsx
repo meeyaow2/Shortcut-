@@ -90,7 +90,7 @@ export function SearchResults({ results, onNavigate }: { results: Results; onNav
     <div className="space-y-6">
       {regions.map((context) => (
         <section key={context} aria-label={`${contextLabels[context]} results`}>
-          <h2 className="mx-3 mb-3 border-b-2 border-ink pb-1 font-display text-lg font-semibold">
+          <h2 className="mx-3 mb-3 border-b-2 border-ink pb-2 font-display text-lg font-semibold">
             {contextLabels[context]} <span className="font-sans text-sm font-normal text-ink-3">({countHits(split[context])})</span>
           </h2>
           <Groups results={split[context]} onNavigate={onNavigate} />

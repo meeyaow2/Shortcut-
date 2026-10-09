@@ -17,7 +17,7 @@ export function ExternalLink({ href, children, className = "" }: { href: string;
       href={href}
       target="_blank"
       rel="noreferrer"
-      className={`inline-flex items-baseline gap-1 font-medium text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent ${className}`}
+      className={`inline-flex items-baseline gap-1 py-0.5 font-medium text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent ${className}`}
     >
       <span>{children}</span>
       <ArrowUpRight aria-hidden className="size-3.5 shrink-0 self-center" />
@@ -84,7 +84,7 @@ export function FilterGroup<T extends string>({ legend, options, value, onChange
               type="button"
               aria-pressed={selected}
               onClick={() => onChange(option.value)}
-              className={`min-h-8 rounded-sm border px-2.5 text-sm transition-colors ${
+              className={`min-h-11 rounded-sm border px-3 text-sm transition-colors md:min-h-8 md:px-2.5 ${
                 selected
                   ? "border-ink bg-ink font-medium text-paper"
                   : "border-line bg-paper text-ink-2 hover:border-line-strong hover:text-ink"

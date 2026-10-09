@@ -63,7 +63,7 @@ export default function FigmaPage() {
             <a
               key={id}
               href={`#${id}`}
-              className="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-sm border border-line px-3 text-[0.9375rem] text-ink-2 hover:border-ink hover:text-ink"
+              className="inline-flex min-h-11 md:min-h-9 shrink-0 items-center whitespace-nowrap rounded-sm border border-line px-3 text-[0.9375rem] text-ink-2 hover:border-ink hover:text-ink"
             >
               {label}
             </a>
@@ -78,7 +78,7 @@ export default function FigmaPage() {
         </div>
       </section>
 
-      <section aria-labelledby="tools" className="pt-14">
+      <section aria-labelledby="tools" className="section-gap">
         <H2 id="tools">Products and capabilities</H2>
         {(["Product", "Capability"] as const).map((kind) => (
           <div key={kind} className="pt-6">
@@ -99,7 +99,7 @@ export default function FigmaPage() {
         ))}
       </section>
 
-      <section aria-labelledby="compare" className="pt-14">
+      <section aria-labelledby="compare" className="section-gap">
         <div className="flex flex-wrap items-end justify-between gap-2">
           <H2 id="compare">This or that?</H2>
         </div>
@@ -139,7 +139,7 @@ export default function FigmaPage() {
         </div>
       </section>
 
-      <section aria-labelledby="recipes" className="pt-14">
+      <section aria-labelledby="recipes" className="section-gap">
         <div className="flex flex-wrap items-end justify-between gap-2 border-b-2 border-ink pb-2">
           <h2 id="recipes" className="text-2xl font-semibold md:text-3xl">
             Workflow recipes
@@ -170,7 +170,7 @@ export default function FigmaPage() {
         </div>
       </section>
 
-      <section aria-labelledby="ai" className="pt-14">
+      <section aria-labelledby="ai" className="section-gap">
         <div className="flex flex-wrap items-end justify-between gap-2 border-b-2 border-ink pb-2">
           <h2 id="ai" className="text-2xl font-semibold md:text-3xl">
             AI in Figma
@@ -211,7 +211,7 @@ export default function FigmaPage() {
         </ul>
       </section>
 
-      <section aria-labelledby="system" className="pt-14">
+      <section aria-labelledby="system" className="section-gap">
         <div className="flex flex-wrap items-end justify-between gap-2 border-b-2 border-ink pb-2">
           <h2 id="system" className="text-2xl font-semibold md:text-3xl">
             Building a design system in Figma
@@ -252,7 +252,7 @@ export default function FigmaPage() {
         </div>
       </section>
 
-      <section aria-labelledby="handover" className="pt-14">
+      <section aria-labelledby="handover" className="section-gap">
         <div className="flex flex-wrap items-end justify-between gap-2 border-b-2 border-ink pb-2">
           <h2 id="handover" className="text-2xl font-semibold md:text-3xl">
             Before you hand your Figma file over
@@ -280,7 +280,7 @@ export default function FigmaPage() {
         </p>
       </section>
 
-      <section aria-labelledby="responsive" className="pt-14">
+      <section aria-labelledby="responsive" className="section-gap">
         <div className="flex flex-wrap items-end justify-between gap-2 border-b-2 border-ink pb-2">
           <h2 id="responsive" className="text-2xl font-semibold md:text-3xl">
             Testing responsive designs in Figma
@@ -345,7 +345,7 @@ export default function FigmaPage() {
         </div>
       </section>
 
-      <section aria-labelledby="whats-new" className="pt-14">
+      <section aria-labelledby="whats-new" className="section-gap">
         <div className="flex flex-wrap items-end justify-between gap-2 border-b-2 border-ink pb-2">
           <h2 id="whats-new" className="text-2xl font-semibold md:text-3xl">
             What&rsquo;s new in Figma

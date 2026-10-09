@@ -74,7 +74,7 @@ function Segmented<T extends string>({ legend, options, value, onChange, wrap = 
               className={
                 wrap
                   ? `min-h-11 rounded-sm border px-2 text-sm transition-colors ${selected ? "border-ink bg-ink font-medium text-paper" : "border-line-strong text-ink-2"}`
-                  : `min-h-7 rounded-[3px] px-2.5 text-sm transition-colors ${selected ? "bg-ink font-medium text-paper" : "text-ink-2 hover:text-ink"}`
+                  : `min-h-9 md:min-h-7 rounded-[3px] px-2.5 text-sm transition-colors ${selected ? "bg-ink font-medium text-paper" : "text-ink-2 hover:text-ink"}`
               }
             >
               {option.label}

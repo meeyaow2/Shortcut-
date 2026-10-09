@@ -29,7 +29,7 @@ function Row({ label, note, children }: { label: string; note?: string; children
 export function GuidanceCard({ guidance: g }: { guidance: Guidance }) {
   const source = getSource(g.sourceId);
   return (
-    <article id={g.id} className="anchor-target rounded-md border border-line p-5 md:p-6">
+    <article id={g.id} className="anchor-target rounded-md border border-line p-4 sm:p-5 md:p-6">
       <div className="flex flex-wrap items-center gap-1.5">
         <SourceBadge id={g.sourceId} />
         <ContextTag context={g.context} />

@@ -36,7 +36,7 @@
   /* The width at which the full navigation fits beside the logo and search.
      Below it the navigation becomes a drawer. Chosen by measuring the bar,
      not borrowed from a device size. */
-  --breakpoint-nav: 60rem;
+  --breakpoint-nav: 64rem;
 
   /* Motion. Three durations and one curve, used everywhere.
      Fast: hover and press. Normal: panels and content arriving.
@@ -133,6 +133,37 @@
 }
 
 @layer components {
+  /* Vertical rhythm between major sections. One value per width band, used
+     everywhere, so pages do not each pick their own. Smaller gaps inside a
+     section come from the spacing scale: 4, 8, 12, 16, 20, 24, 32. */
+  :root {
+    --section-gap: 2.5rem;
+  }
+
+  @media (min-width: 40rem) {
+    :root {
+      --section-gap: 3rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    :root {
+      --section-gap: 3.5rem;
+    }
+  }
+
+  .section-gap {
+    padding-top: var(--section-gap);
+  }
+
+  .section-space {
+    margin-top: var(--section-gap);
+  }
+
+  .stack-sections > * + * {
+    margin-top: var(--section-gap);
+  }
+
   .page {
     width: 100%;
     max-width: var(--container-page);

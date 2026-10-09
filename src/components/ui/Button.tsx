@@ -15,7 +15,7 @@ const variants: Record<Variant, string> = {
 
 // Both sizes clear the 24 px WCAG minimum; md is the default touch size.
 const sizes: Record<Size, string> = {
-  sm: "min-h-8 px-3 text-sm",
+  sm: "min-h-11 px-3 text-sm md:min-h-8",
   md: "min-h-11 px-4 text-[0.9375rem]",
 };
 

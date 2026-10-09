@@ -36,7 +36,7 @@ async function Topic({ params }: Props) {
   return (
     <div className="page">
       <header className="border-b border-line pb-8 pt-8 md:pt-10">
-        <Link href="/explorer" className="inline-flex items-center gap-1.5 text-sm text-ink-2 hover:text-ink">
+        <Link href="/explorer" className="-my-2 inline-flex items-center gap-1.5 py-2 text-sm text-ink-2 hover:text-ink">
           <ArrowLeft aria-hidden className="size-4" />
           Design System Explorer
         </Link>
@@ -52,7 +52,7 @@ async function Topic({ params }: Props) {
               key={t.id}
               href={`/explorer/${t.id}`}
               aria-current={t.id === topic.id ? "page" : undefined}
-              className="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-sm border border-line px-2.5 text-sm text-ink-2 hover:border-ink hover:text-ink aria-[current]:border-ink aria-[current]:bg-ink aria-[current]:font-medium aria-[current]:text-paper"
+              className="inline-flex min-h-11 md:min-h-9 shrink-0 items-center whitespace-nowrap rounded-sm border border-line px-2.5 text-sm text-ink-2 hover:border-ink hover:text-ink aria-[current]:border-ink aria-[current]:bg-ink aria-[current]:font-medium aria-[current]:text-paper"
             >
               {t.title}
             </Link>

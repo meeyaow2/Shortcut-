@@ -27,7 +27,7 @@ function TopicList({ kind }: { kind: ExplorerTopic["kind"] }) {
           return (
             <li key={topic.id} className="grid items-center gap-x-6 gap-y-1 py-3.5 sm:grid-cols-[12rem_1fr_auto]">
               {ready ? (
-                <Link href={`/explorer/${topic.id}`} className="font-display text-lg font-semibold tracking-tight hover:text-accent">
+                <Link href={`/explorer/${topic.id}`} className="-my-2 py-2 font-display text-lg font-semibold tracking-tight hover:text-accent">
                   {topic.title}
                 </Link>
               ) : (
@@ -65,7 +65,7 @@ export default function ExplorerPage() {
         <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
           <span className="font-semibold text-ink-3">Compare by</span>
           {(["Foundation", "Component", "Viewport"] as const).map((kind) => (
-            <a key={kind} href={`#kind-${kind}`} className="font-medium text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">
+            <a key={kind} href={`#kind-${kind}`} className="py-1 font-medium text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">
               {kind === "Viewport" ? "Viewport and platform" : kind}
             </a>
           ))}
@@ -77,7 +77,7 @@ export default function ExplorerPage() {
           </Link>
         </p>
       </PageHeader>
-      <div className="space-y-12 pt-8">
+      <div className="stack-sections pt-8">
         <TopicList kind="Foundation" />
         <TopicList kind="Component" />
         <TopicList kind="Viewport" />

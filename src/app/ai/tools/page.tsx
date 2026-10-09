@@ -39,7 +39,7 @@ export default function AiToolsPage() {
         </div>
       </section>
 
-      <section aria-labelledby="all-tools" className="pt-14">
+      <section aria-labelledby="all-tools" className="section-gap">
         <h2 id="all-tools" className="border-b-2 border-ink pb-2 text-2xl font-semibold md:text-3xl">
           Tools by job
         </h2>

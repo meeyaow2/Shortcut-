@@ -40,7 +40,7 @@ export default function LibraryPage() {
           </ul>
         </nav>
 
-        <div className="min-w-0 space-y-12">
+        <div className="min-w-0 stack-sections">
           {openCategories.map((category) => (
             <section key={category} id={slug(category)} aria-labelledby={`${slug(category)}-title`} className="anchor-target">
               <h2 id={`${slug(category)}-title`} className="border-b-2 border-ink pb-2 text-2xl font-semibold">

@@ -31,7 +31,7 @@ export default function AiPage() {
           <h2 id="week" className="text-2xl font-semibold md:text-3xl">
             What changed this week
           </h2>
-          <Link href="/ai/updates" className="inline-flex items-center gap-1 whitespace-nowrap text-sm font-medium text-ink-2 hover:text-accent">
+          <Link href="/ai/updates" className="-my-2 inline-flex items-center gap-1 whitespace-nowrap py-2 text-sm font-medium text-ink-2 hover:text-accent">
             All AI updates
             <ArrowRight aria-hidden className="size-4" />
           </Link>
@@ -39,7 +39,7 @@ export default function AiPage() {
         <WeekList />
       </section>
 
-      <section aria-labelledby="use" className="mt-14">
+      <section aria-labelledby="use" className="section-space">
         <h2 id="use" className="border-b-2 border-ink pb-2 text-2xl font-semibold md:text-3xl">
           Use AI better
         </h2>
@@ -55,7 +55,7 @@ export default function AiPage() {
         </ul>
       </section>
 
-      <section aria-labelledby="owns" className="mt-14 max-w-3xl border-l-2 border-ink pl-4 sm:pl-5">
+      <section aria-labelledby="owns" className="section-space max-w-3xl border-l-2 border-ink pl-4 sm:pl-5">
         <h2 id="owns" className="text-xl font-semibold">
           The designer still owns
         </h2>

@@ -92,7 +92,7 @@ export function PromptBlock({ text, label = "Prompt" }: { text: string; label?: 
         <button
           type="button"
           onClick={copy}
-          className="inline-flex min-h-9 items-center gap-1.5 rounded-sm px-2.5 text-sm font-medium text-ink-2 hover:bg-paper hover:text-ink"
+          className="inline-flex min-h-11 md:min-h-9 items-center gap-1.5 rounded-sm px-2.5 text-sm font-medium text-ink-2 hover:bg-paper hover:text-ink"
         >
           {copied ? <Check aria-hidden className="size-4 text-ok" /> : <Copy aria-hidden className="size-4" />}
           <span role="status">{copied ? "Copied" : "Copy"}</span>
@@ -273,7 +273,7 @@ export function ComparisonBlock({ comparison }: { comparison: ToolComparison }) 
 }
 
 const chip = (selected: boolean) =>
-  `min-h-9 rounded-sm border px-3 text-[0.9375rem] transition-colors ${
+  `min-h-11 md:min-h-9 rounded-sm border px-3 text-[0.9375rem] transition-colors ${
     selected ? "border-ink bg-ink font-medium text-paper" : "border-line bg-paper text-ink-2 hover:border-line-strong hover:text-ink"
   }`;
 

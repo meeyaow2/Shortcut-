@@ -90,7 +90,7 @@ export default function SingaporePage() {
           </p>
         </nav>
 
-        <div className="space-y-14">
+        <div className="stack-sections">
           {sgTopics.map((topic) => {
             const entries = guidance.filter((g) => g.category === topic.id);
             const sheet = topic.sheet ? getCheatSheet(topic.sheet) : undefined;
@@ -126,14 +126,14 @@ export default function SingaporePage() {
                 )}
 
                 {topic.id === "sgds" && (
-                  <div className="mt-5 rounded-md border border-line p-5">
+                  <div className="mt-5 rounded-md border border-line p-4 sm:p-5">
                     <h3 className="text-lg font-semibold">See SGDS beside other design systems</h3>
                     <ul className="mt-3 flex flex-wrap gap-2">
                       {verifiedTopics.map((t) => (
                         <li key={t.id}>
                           <Link
                             href={`/explorer/${t.id}`}
-                            className="inline-flex min-h-9 items-center rounded-sm border border-line px-3 text-[0.9375rem] text-ink-2 hover:border-ink hover:text-ink"
+                            className="inline-flex min-h-11 md:min-h-9 items-center rounded-sm border border-line px-3 text-[0.9375rem] text-ink-2 hover:border-ink hover:text-ink"
                           >
                             {t.title}
                           </Link>

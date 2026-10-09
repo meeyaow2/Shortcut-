@@ -41,7 +41,7 @@ export default function PromptsPage() {
             ))}
           </ul>
         </nav>
-        <div className="min-w-0 max-w-3xl space-y-12">
+        <div className="min-w-0 max-w-3xl stack-sections">
           {promptCategories.map((category) => (
             <section key={category} id={slug(category)} aria-labelledby={`${slug(category)}-title`}>
               <h2 id={`${slug(category)}-title`} className="border-b-2 border-ink pb-2 text-2xl font-semibold">

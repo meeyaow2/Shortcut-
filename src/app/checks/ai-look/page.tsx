@@ -29,7 +29,7 @@ export default function AiLookPage() {
         </div>
       </PageHeader>
 
-      <div className="max-w-4xl space-y-12 pt-8">
+      <div className="max-w-4xl stack-sections pt-8">
         {aiSignalGroups.map((group) => (
           <section key={group} aria-labelledby={`signals-${group}`}>
             <h2 id={`signals-${group}`} className="border-b-2 border-ink pb-2 text-2xl font-semibold">

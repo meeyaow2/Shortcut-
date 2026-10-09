@@ -44,7 +44,7 @@ async function Profile({ params }: Props) {
   return (
     <div className="page">
       <header className="border-b border-line pb-8 pt-8 md:pt-10">
-        <Link href="/systems" className="inline-flex items-center gap-1.5 text-sm text-ink-2 hover:text-ink">
+        <Link href="/systems" className="-my-2 inline-flex items-center gap-1.5 py-2 text-sm text-ink-2 hover:text-ink">
           <ArrowLeft aria-hidden className="size-4" />
           Design System Library
         </Link>
@@ -84,7 +84,7 @@ async function Profile({ params }: Props) {
         )}
       </header>
 
-      <div className="space-y-12 pt-8">
+      <div className="stack-sections pt-8">
         <div className="grid gap-10 lg:grid-cols-2">
           <section aria-labelledby="interesting">
             <div className="flex flex-wrap items-end justify-between gap-2 border-b-2 border-ink pb-2">

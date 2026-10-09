@@ -9,7 +9,7 @@ import { Tag } from "../ui/Tag";
 
 export function ResourceCard({ resource }: { resource: Resource }) {
   return (
-    <article className="lift group relative flex items-start gap-4 rounded-md border border-line p-5 hover:border-ink">
+    <article className="lift group relative flex items-start gap-4 rounded-md border border-line p-4 sm:p-5 hover:border-ink">
       <div className="min-w-0 flex-1">
         <h3 className="text-lg font-semibold">
           <a href={resource.url} target="_blank" rel="noreferrer" className="after:absolute after:inset-0 after:rounded-md">
@@ -50,7 +50,7 @@ export function ResourcesView() {
                 type="button"
                 aria-pressed={current}
                 onClick={() => router.replace(`${pathname}?need=${intent.id}`, { scroll: false })}
-                className={`min-h-10 rounded-sm px-3 text-left transition-colors ${
+                className={`min-h-11 md:min-h-10 rounded-sm px-3 text-left transition-colors ${
                   current ? "bg-ink font-medium text-paper" : "border border-line text-ink-2 hover:border-ink hover:text-ink lg:border-transparent"
                 }`}
               >

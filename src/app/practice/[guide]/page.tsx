@@ -64,7 +64,7 @@ async function Guide({ params }: Props) {
   return (
     <div className="page">
       <header className="border-b border-line pb-8 pt-8 md:pt-10">
-        <Link href="/practice" className="inline-flex items-center gap-1.5 text-sm text-ink-2 hover:text-ink">
+        <Link href="/practice" className="-my-2 inline-flex items-center gap-1.5 py-2 text-sm text-ink-2 hover:text-ink">
           <ArrowLeft aria-hidden className="size-4" />
           UX Practice
         </Link>
@@ -92,7 +92,7 @@ async function Guide({ params }: Props) {
             <a
               key={id}
               href={`#${id}`}
-              className="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-sm border border-line px-3 text-[0.9375rem] text-ink-2 hover:border-ink hover:text-ink"
+              className="inline-flex min-h-11 md:min-h-9 shrink-0 items-center whitespace-nowrap rounded-sm border border-line px-3 text-[0.9375rem] text-ink-2 hover:border-ink hover:text-ink"
             >
               {label}
             </a>
@@ -101,7 +101,7 @@ async function Guide({ params }: Props) {
       </header>
 
       <div className="grid gap-10 pt-8 lg:grid-cols-[1fr_18rem]">
-        <div className="min-w-0 max-w-3xl space-y-12">
+        <div className="min-w-0 max-w-3xl stack-sections">
           <div className="grid gap-6 sm:grid-cols-2">
             <div>
               <h2 className="font-sans text-sm font-semibold tracking-normal text-ok">Use this when</h2>

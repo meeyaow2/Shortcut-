@@ -25,7 +25,7 @@ export default function PracticePage() {
               <li key={guide.id}>
                 <Link
                   href={`/practice/${guide.id}`}
-                  className="inline-flex min-h-10 items-center rounded-sm border border-line px-3 text-[0.9375rem] text-ink-2 transition-colors hover:border-ink hover:text-ink"
+                  className="inline-flex min-h-11 md:min-h-10 items-center rounded-sm border border-line px-3 text-[0.9375rem] text-ink-2 transition-colors hover:border-ink hover:text-ink"
                 >
                   {guide.action}
                 </Link>
@@ -61,7 +61,7 @@ export default function PracticePage() {
         </p>
       </section>
 
-      <section aria-labelledby="before" className="pt-14">
+      <section aria-labelledby="before" className="section-gap">
         <h2 id="before" className="border-b-2 border-ink pb-2 text-2xl font-semibold md:text-3xl">
           Before your next session
         </h2>
@@ -85,7 +85,7 @@ export default function PracticePage() {
         </div>
       </section>
 
-      <section aria-labelledby="templates" className="pt-14">
+      <section aria-labelledby="templates" className="section-gap">
         <div className="flex items-end justify-between gap-4 border-b-2 border-ink pb-2">
           <h2 id="templates" className="text-2xl font-semibold md:text-3xl">
             Templates
@@ -109,7 +109,7 @@ export default function PracticePage() {
         </ul>
       </section>
 
-      <section aria-labelledby="library" className="pt-14">
+      <section aria-labelledby="library" className="section-gap">
         <div className="flex items-end justify-between gap-4 border-b-2 border-ink pb-2">
           <h2 id="library" className="text-2xl font-semibold md:text-3xl">
             Open Design Library
@@ -125,7 +125,7 @@ export default function PracticePage() {
         </p>
       </section>
 
-      <section aria-labelledby="notes" className="pt-14">
+      <section aria-labelledby="notes" className="section-gap">
         <h2 id="notes" className="border-b-2 border-ink pb-2 text-2xl font-semibold md:text-3xl">
           What senior colleagues tell you
         </h2>

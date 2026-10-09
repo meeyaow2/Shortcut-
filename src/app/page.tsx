@@ -35,7 +35,7 @@ function SectionHeading({ id, title, href, linkLabel }: { id: string; title: str
       <h2 id={id} className="text-2xl font-semibold md:text-3xl">
         {title}
       </h2>
-      <Link href={href} className="inline-flex items-center gap-1 whitespace-nowrap text-sm font-medium text-ink-2 hover:text-accent">
+      <Link href={href} className="-my-2 inline-flex items-center gap-1 whitespace-nowrap py-2 text-sm font-medium text-ink-2 hover:text-accent">
         {linkLabel}
         <ArrowRight aria-hidden className="size-4" />
       </Link>
@@ -47,7 +47,7 @@ export default function HomePage() {
   return (
     <div className="page">
       {/* The headline steps down with the viewport so it never dominates a small screen. */}
-      <section className="pb-12 pt-10 sm:pt-14 md:pb-20 md:pt-24">
+      <section className="pb-12 pt-10 sm:section-gap md:pb-20 md:pt-24">
         <h1 className="max-w-4xl text-4xl font-semibold leading-[1.05] tracking-[-0.03em] sm:text-5xl lg:text-7xl">
           Everything UI/UX, without the rabbit hole.
         </h1>
@@ -72,7 +72,7 @@ export default function HomePage() {
               <li key={entry.href}>
                 <Link
                   href={entry.href}
-                  className="inline-flex min-h-9 items-center rounded-sm border border-line px-3 text-[0.9375rem] text-ink-2 transition-colors hover:border-ink hover:text-ink"
+                  className="inline-flex min-h-11 md:min-h-9 items-center rounded-sm border border-line px-3 text-[0.9375rem] text-ink-2 transition-colors hover:border-ink hover:text-ink"
                 >
                   {entry.label}
                 </Link>
@@ -114,7 +114,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section aria-labelledby="ai" className="mt-16">
+      <section aria-labelledby="ai" className="section-space">
         <SectionHeading id="ai" title="AI + Design: what changed this week" href="/ai/updates" linkLabel="All AI updates" />
         <WeekList />
         <ul className="mt-4 flex flex-wrap gap-1.5">
@@ -125,7 +125,7 @@ export default function HomePage() {
             { href: "/ai/review", label: "AI design review" },
           ].map((item) => (
             <li key={item.href}>
-              <Link href={item.href} className="inline-flex min-h-9 items-center rounded-sm border border-line px-3 text-[0.9375rem] text-ink-2 transition-colors hover:border-ink hover:text-ink">
+              <Link href={item.href} className="inline-flex min-h-11 md:min-h-9 items-center rounded-sm border border-line px-3 text-[0.9375rem] text-ink-2 transition-colors hover:border-ink hover:text-ink">
                 {item.label}
               </Link>
             </li>
@@ -133,7 +133,7 @@ export default function HomePage() {
         </ul>
       </section>
 
-      <section aria-labelledby="singapore" className="mt-16">
+      <section aria-labelledby="singapore" className="section-space">
         <SectionHeading id="singapore" title="Designing for Singapore" href="/singapore" linkLabel="Singapore UX" />
         <p className="mt-3 max-w-read text-ink-2">
           Singapore government standards and SGDS, shown beside the global guidance they build on, with the weight
@@ -155,7 +155,7 @@ export default function HomePage() {
         </ul>
       </section>
 
-      <section aria-labelledby="popular" className="mt-16">
+      <section aria-labelledby="popular" className="section-space">
         <SectionHeading id="popular" title="Popular cheat sheets" href="/cheat-sheets" linkLabel="All cheat sheets" />
         <ul className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
           {popularSheets.map((slug) => {
@@ -175,7 +175,7 @@ export default function HomePage() {
         </ul>
       </section>
 
-      <section aria-labelledby="recent" className="mt-16">
+      <section aria-labelledby="recent" className="section-space">
         <SectionHeading id="recent" title="Recently updated" href="/cheat-sheets" linkLabel="All cheat sheets" />
         <p className="mt-3 max-w-read text-ink-2">
           Every rule is re-checked against its source. You should never have to wonder whether the advice is five

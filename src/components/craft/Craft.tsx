@@ -53,7 +53,7 @@ export function MentorNote({ children }: { children: ReactNode }) {
 export function Why({ label = "Why?", children }: { label?: string; children: ReactNode }) {
   return (
     <details className="group rounded-sm border border-line">
-      <summary className="flex min-h-10 cursor-pointer list-none items-center justify-between gap-2 px-3 text-[0.9375rem] font-medium hover:bg-wash [&::-webkit-details-marker]:hidden">
+      <summary className="flex min-h-11 md:min-h-10 cursor-pointer list-none items-center justify-between gap-2 px-3 text-[0.9375rem] font-medium hover:bg-wash [&::-webkit-details-marker]:hidden">
         {label}
         <ChevronDown aria-hidden className="size-4 text-ink-3 transition-transform group-open:rotate-180" />
       </summary>
@@ -179,7 +179,7 @@ export function CraftBlock({ entry }: { entry: CraftEntry }) {
           {entry.viewportValues &&
             (key ? (
               <details className="group rounded-sm border border-line">
-                <summary className="flex min-h-10 cursor-pointer list-none items-center justify-between gap-2 px-3 text-[0.9375rem] font-medium hover:bg-wash [&::-webkit-details-marker]:hidden">
+                <summary className="flex min-h-11 md:min-h-10 cursor-pointer list-none items-center justify-between gap-2 px-3 text-[0.9375rem] font-medium hover:bg-wash [&::-webkit-details-marker]:hidden">
                   Compare all viewports
                   <ChevronDown aria-hidden className="size-4 text-ink-3 transition-transform group-open:rotate-180" />
                 </summary>
@@ -256,7 +256,7 @@ function QAList({ title, items, ordered = false }: { title: string; items: strin
 /** The at-a-glance QA block at the top of a component cheat sheet. */
 export function ComponentQABlock({ qa }: { qa: ComponentQA }) {
   return (
-    <section aria-labelledby="component-qa" className="rounded-md border border-line p-5">
+    <section aria-labelledby="component-qa" className="rounded-md border border-line p-4 sm:p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 id="component-qa" className="text-xl font-semibold">
           Component QA

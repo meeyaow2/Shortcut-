@@ -13,7 +13,7 @@ export function CheatSheetCard({ sheet }: { sheet: CheatSheet }) {
   const updatedSinceViewed = Boolean(viewed) && sheet.dateUpdated > viewed;
 
   return (
-    <article className="lift group relative flex flex-col rounded-md border border-line p-5 hover:border-ink">
+    <article className="lift group relative flex flex-col rounded-md border border-line p-4 sm:p-5 hover:border-ink">
       <div className="flex items-start justify-between gap-2">
         <h2 className="text-xl font-semibold">
           {/* The link stretches over the card; the save control sits above it. */}

@@ -65,7 +65,7 @@ function Field({ label, children, emphasis = false }: { label: string; children:
 /** Full form for the Updates feed: a structured record, not a blog post. */
 export function UpdateCard({ update }: { update: Update }) {
   return (
-    <article id={update.id} className="anchor-target rounded-md border border-line p-5 md:p-6">
+    <article id={update.id} className="anchor-target rounded-md border border-line p-4 sm:p-5 md:p-6">
       <Labels update={update} />
       <h2 className="mt-3 text-2xl font-semibold">{update.title}</h2>
 

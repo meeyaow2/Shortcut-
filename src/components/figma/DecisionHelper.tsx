@@ -25,7 +25,7 @@ export function DecisionHelper() {
                 type="button"
                 aria-pressed={selected}
                 onClick={() => setId(option.id)}
-                className={`min-h-10 rounded-sm px-3 text-left text-[0.9375rem] transition-colors ${
+                className={`min-h-11 md:min-h-10 rounded-sm px-3 text-left text-[0.9375rem] transition-colors ${
                   selected ? "bg-ink font-medium text-paper" : "border border-line text-ink-2 hover:border-ink hover:text-ink lg:border-transparent"
                 }`}
               >

@@ -14,7 +14,7 @@ export function CheatSheetLibrary() {
   const sheets = context === "sg" ? cheatSheets.filter(hasRegional) : cheatSheets;
 
   return (
-    <div className="space-y-12 pt-8">
+    <div className="stack-sections pt-8">
       <div className="-mb-6 empty:hidden">
         <ContextNotice>
           {context === "sg"

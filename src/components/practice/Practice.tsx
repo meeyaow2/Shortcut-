@@ -4,7 +4,7 @@ import { Check, Copy, Download, X } from "lucide-react";
 import { useState } from "react";
 import type { PracticeTemplate } from "@/data/practice";
 
-const action = "inline-flex min-h-9 items-center gap-1.5 rounded-sm px-2.5 text-sm font-medium text-ink-2 hover:bg-paper hover:text-ink";
+const action = "inline-flex min-h-11 md:min-h-9 items-center gap-1.5 rounded-sm px-2.5 text-sm font-medium text-ink-2 hover:bg-paper hover:text-ink";
 
 /** A template's blank structure, with copy and download. Wraps instead of scrolling sideways. */
 export function TemplateBlock({ template }: { template: PracticeTemplate }) {

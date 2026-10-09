@@ -112,7 +112,7 @@ export function Header() {
           Skip to content
         </a>
         <div className="page flex h-14 items-center gap-6">
-          <Link href="/" className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight">
+          <Link href="/" className="flex min-h-11 items-center gap-2 font-display text-lg font-semibold tracking-tight">
             <span
               aria-hidden
               className="inline-flex size-7 items-center justify-center rounded-sm border border-b-[3px] border-ink bg-mark text-sm"
@@ -230,7 +230,7 @@ function NavMenu({ item, pathname }: { item: NavItem; pathname: string }) {
                 href={child.href}
                 onClick={() => setOpen(false)}
                 aria-current={isCurrent(pathname, child.href) ? "page" : undefined}
-                className="flex min-h-10 items-center rounded-sm px-2.5 text-[0.9375rem] text-ink-2 hover:bg-wash hover:text-ink aria-[current]:font-semibold aria-[current]:text-ink"
+                className="flex min-h-11 md:min-h-10 items-center rounded-sm px-2.5 text-[0.9375rem] text-ink-2 hover:bg-wash hover:text-ink aria-[current]:font-semibold aria-[current]:text-ink"
               >
                 {child.label}
               </Link>

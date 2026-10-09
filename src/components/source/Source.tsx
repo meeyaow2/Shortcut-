@@ -45,7 +45,7 @@ export function AuthorityLabel({ authority }: { authority: Authority }) {
 export function AuthorityLegend() {
   return (
     <details className="text-sm text-ink-2">
-      <summary className="cursor-pointer font-medium text-ink">These sources do not carry equal weight</summary>
+      <summary className="cursor-pointer py-2.5 font-medium text-ink">These sources do not carry equal weight</summary>
       <dl className="mt-2 space-y-1.5">
         {authorityLegend.map((authority) => (
           <div key={authority.label}>

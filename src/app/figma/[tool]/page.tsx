@@ -60,7 +60,7 @@ async function Tool({ params }: Props) {
   return (
     <div className="page">
       <header className="border-b border-line pb-8 pt-8 md:pt-10">
-        <Link href="/figma" className="inline-flex items-center gap-1.5 text-sm text-ink-2 hover:text-ink">
+        <Link href="/figma" className="-my-2 inline-flex items-center gap-1.5 py-2 text-sm text-ink-2 hover:text-ink">
           <ArrowLeft aria-hidden className="size-4" />
           Figma Guide
         </Link>

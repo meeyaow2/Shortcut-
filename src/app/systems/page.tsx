@@ -35,13 +35,13 @@ function SystemCard({ system }: { system: SystemProfile }) {
       <div className="mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-line pt-3 text-sm">
         {system.dateVerified ? <FreshnessStatus dateVerified={system.dateVerified} /> : <span className="text-ink-3">Not yet read by Shortcut</span>}
         {system.status === "profiled" && (
-          <Link href={`/systems/${system.id}`} className={`inline-flex items-center gap-1 ${accent}`}>
+          <Link href={`/systems/${system.id}`} className={`-my-2 inline-flex items-center gap-1 py-2 ${accent}`}>
             Open profile
             <ArrowRight aria-hidden className="size-4" />
           </Link>
         )}
         {system.status === "listed" && (
-          <Link href="/explorer" className={accent}>
+          <Link href="/explorer" className={`-my-2 py-2 ${accent}`}>
             See it compared
           </Link>
         )}
@@ -53,7 +53,7 @@ function SystemCard({ system }: { system: SystemProfile }) {
 
 function Group({ id, title, note, list }: { id: string; title: string; note: string; list: SystemProfile[] }) {
   return (
-    <section aria-labelledby={id} className="pt-12">
+    <section aria-labelledby={id} className="section-gap">
       <h2 id={id} className="border-b-2 border-ink pb-2 text-2xl font-semibold md:text-3xl">
         {title}
       </h2>
@@ -132,7 +132,7 @@ export default function SystemsPage() {
         list={references}
       />
 
-      <section aria-labelledby="responsive" className="pt-12">
+      <section aria-labelledby="responsive" className="section-gap">
         <h2 id="responsive" className="border-b-2 border-ink pb-2 text-2xl font-semibold md:text-3xl">
           Responsive and device guidance
         </h2>
@@ -152,7 +152,7 @@ export default function SystemsPage() {
         </div>
       </section>
 
-      <section aria-labelledby="cases" className="pt-12">
+      <section aria-labelledby="cases" className="section-gap">
         <h2 id="cases" className="border-b-2 border-ink pb-2 text-2xl font-semibold md:text-3xl">
           Design and AI: case studies
         </h2>
