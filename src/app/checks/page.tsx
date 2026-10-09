@@ -4,6 +4,7 @@ import Link from "next/link";
 import { EditorialLabel, Why } from "@/components/craft/Craft";
 import { SourceMeta } from "@/components/source/Source";
 import { PageHeader } from "@/components/ui/primitives";
+import { BeforeAfter } from "@/components/visual/BeforeAfter";
 import { getCheatSheet } from "@/data/cheat-sheets";
 import { checkCategories, designChecks } from "@/data/checks";
 import type { DesignCheck } from "@/types";
@@ -31,6 +32,7 @@ function CheckCard({ check }: { check: DesignCheck }) {
         <Field label="Common failure">{check.failure}</Field>
         <Field label="Quick fix">{check.fix}</Field>
       </dl>
+      <BeforeAfter id={check.id} />
       <div className="mt-3 space-y-3">
         <Why label="Deeper explanation">
           <p>{check.deeper}</p>

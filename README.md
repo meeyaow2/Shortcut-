@@ -84,6 +84,13 @@ In updates, `summary` restates the source. `whyItMatters` and `designerAction` a
 - Viewport context is used where it changes the guidance, not everywhere. A visible control: individual cheat sheets and Safe Starting Points. Content only: the Design System Library (`responsiveGuidance` in `systems.ts`, official notes only), Compare Design Systems (the "Viewport and platform" topics), the Figma Guide and Singapore UX. Tags only: Resources (`tags`) and Updates (`relevantTo`). There is no control in the site header.
 - The selection is saved in the browser and written to the address (`?viewport=mobile`, `?viewport=foldable&device=iphone-duo&state=open`). The address wins when both exist.
 
+## Visuals and motion
+
+- `src/components/visual` holds the illustration language: thin ink lines, flat fills, and the highlighter yellow for the thing being measured. Everything is HTML, CSS and inline SVG; there is no animation library and no image files.
+- `Specimens.tsx` draws values at their real size. `ViewportPreviews.tsx` draws schematic wireframes that follow the selected viewport. `BeforeAfter.tsx` holds paired wireframes keyed by check or signal id. `EntryVisual.tsx` maps a cheat sheet entry to its drawing; entries about judgement have none.
+- Motion uses three durations and one curve, defined in `globals.css`: fast (hover, press), normal (panels, content arriving), slow (layout demonstrations). Do not add other timings. Reduced-motion preferences switch all of it off.
+- A drawing must explain something. Do not add one for decoration, and do not redraw another design system's components or logo.
+
 ## AI + Design
 
 - `src/data/ai.ts` holds AI updates, workflows, tools, comparisons and lessons. `src/data/prompts.ts` holds the prompt library and the Prompt Builder's assembly function.

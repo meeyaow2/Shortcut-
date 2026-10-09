@@ -37,6 +37,14 @@
      Below it the navigation becomes a drawer. Chosen by measuring the bar,
      not borrowed from a device size. */
   --breakpoint-nav: 60rem;
+
+  /* Motion. Three durations and one curve, used everywhere.
+     Fast: hover and press. Normal: panels and content arriving.
+     Slow: layout demonstrations, used sparingly. */
+  --duration-fast: 120ms;
+  --duration-normal: 200ms;
+  --duration-slow: 320ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
 }
 
 @layer base {
@@ -75,6 +83,36 @@
     scroll-margin-top: 6.5rem;
   }
 
+  /* Interactive things change state over the fast duration, never instantly and never slowly. */
+  a,
+  button,
+  summary,
+  select {
+    transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-standard);
+  }
+
+  /* Expandable panels open over the normal duration where the browser supports it. */
+  :root {
+    interpolate-size: allow-keywords;
+  }
+
+  details::details-content {
+    block-size: 0;
+    opacity: 0;
+    overflow: clip;
+    transition:
+      block-size var(--duration-normal) var(--ease-standard),
+      opacity var(--duration-normal) var(--ease-standard),
+      content-visibility var(--duration-normal) allow-discrete;
+  }
+
+  details[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
+
   ::selection {
     background: var(--color-mark);
     color: var(--color-ink);
@@ -100,6 +138,8 @@
     max-width: var(--container-page);
     margin-inline: auto;
     padding-inline: 1rem;
+    /* Content arrives with a short fade and a 4 px rise, so navigation still feels immediate. */
+    animation: page-in var(--duration-normal) var(--ease-standard);
   }
 
   /* Page margins step up with the space available. */
@@ -128,13 +168,63 @@
   }
 
   .pop-in {
-    animation: pop-in 140ms ease-out;
+    animation: pop-in var(--duration-fast) var(--ease-standard);
+  }
+
+  /* Cards that are links: a firmer border and a 1 px lift on hover. */
+  .lift {
+    transition-property: border-color, box-shadow, transform;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-standard);
+  }
+
+  .lift:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgb(20 23 31 / 0.06);
+  }
+
+  /* Layout demonstrations: widths and positions move over the slow duration. */
+  .demo-motion {
+    transition-property: width, height, flex-basis, padding, opacity, transform, grid-template-columns;
+    transition-duration: var(--duration-slow);
+    transition-timing-function: var(--ease-standard);
+  }
+
+  /* Home hero tiles settle into place once. */
+  .settle {
+    animation: settle var(--duration-slow) var(--ease-standard) backwards;
+    animation-delay: calc(var(--i, 0) * 60ms + 120ms);
+  }
+
+  .draw-in {
+    animation: draw-in 480ms var(--ease-standard) 520ms backwards;
   }
 }
 
 @keyframes skeleton-pulse {
   50% {
     opacity: 0.5;
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translate(var(--dx, 0), var(--dy, 0)) rotate(var(--r, 0deg));
+  }
+}
+
+@keyframes draw-in {
+  from {
+    opacity: 0;
+    stroke-dashoffset: var(--len, 200);
   }
 }
 

@@ -19,6 +19,7 @@ import { useViewport } from "@/hooks/useViewport";
 import type { FoldState } from "@/types";
 import { EditorialLabel } from "../craft/Craft";
 import { SourceMeta } from "../source/Source";
+import { FoldDemo, FoldSchematic } from "../visual/ViewportPreviews";
 
 const sectionTitle = "border-b-2 border-ink pb-2 text-2xl font-semibold";
 
@@ -56,7 +57,12 @@ export function FoldableNote() {
   const device = foldableDevices[0];
   return (
     <aside aria-label={`${device.name}, ${foldState}`} className="space-y-3 rounded-md bg-wash p-4">
-      <DisplayFacts mode={foldState} />
+      <div className="flex flex-wrap items-start gap-x-6 gap-y-4">
+        <FoldSchematic state={foldState} />
+        <div className="min-w-[14rem] flex-1">
+          <DisplayFacts mode={foldState} />
+        </div>
+      </div>
       <p className="text-sm text-ink-2">{pixelsNote}</p>
       <p className="text-sm text-ink-2">
         Where an entry has no value of its own for a folding screen, it shows the {foldState === "closed" ? "mobile" : "tablet"} one and says so.{" "}
@@ -96,6 +102,7 @@ export function FoldableGuide() {
           Designing for {device.name}
         </h2>
         <div className="space-y-5 pt-5">
+          <FoldDemo />
           <DisplayFacts />
           <p className="max-w-read text-ink-2">{pixelsNote}</p>
           <SourceMeta citations={[device.citation]} heading="Display specifications" />

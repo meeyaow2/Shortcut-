@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { EditorialLabel } from "@/components/craft/Craft";
 import { PageHeader } from "@/components/ui/primitives";
+import { BeforeAfter } from "@/components/visual/BeforeAfter";
 import { aiSignalGroups, aiSignals } from "@/data/checks";
 
 export const metadata: Metadata = { title: "AI-Look Signals" };
@@ -54,6 +55,7 @@ export default function AiLookPage() {
                         <dd className="mt-0.5">{signal.instead}</dd>
                       </div>
                     </dl>
+                    <BeforeAfter id={signal.id} />
                   </li>
                 ))}
             </ul>

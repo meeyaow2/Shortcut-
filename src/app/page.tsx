@@ -4,6 +4,7 @@ import { WeekList } from "@/components/ai/WeekList";
 import { SearchBox } from "@/components/search/SearchBox";
 import { FreshnessStatus, SourceBadge } from "@/components/source/Source";
 import { UpdateRow } from "@/components/updates/UpdateCard";
+import { HomePreviews, KnowledgeBlocks } from "@/components/visual/HomeVisual";
 import { cheatSheets, getCheatSheet, popularSheets } from "@/data/cheat-sheets";
 import { sources } from "@/data/sources";
 import { updates } from "@/data/updates";
@@ -50,12 +51,20 @@ export default function HomePage() {
         <h1 className="max-w-4xl text-4xl font-semibold leading-[1.05] tracking-[-0.03em] sm:text-5xl lg:text-7xl">
           Everything UI/UX, without the rabbit hole.
         </h1>
-        <p className="mt-4 max-w-read text-lg text-ink-2 sm:mt-5 sm:text-xl">
-          Standards, patterns, practical guidance and design checks for product designers. The things your design
-          lead tells you in review, before they have to tell you.
-        </p>
-        <div className="mt-8 max-w-3xl">
-          <SearchBox variant="hero" placeholder="Search spacing, accessibility, components, guidelines…" />
+        {/* The visual sits beside the lede and search only where there is spare width; below that it is left out. */}
+        <div className="lg:grid lg:grid-cols-[minmax(0,48rem)_auto] lg:items-center lg:justify-between lg:gap-10">
+          <div>
+            <p className="mt-4 max-w-read text-lg text-ink-2 sm:mt-5 sm:text-xl">
+              Standards, patterns, practical guidance and design checks for product designers. The things your design
+              lead tells you in review, before they have to tell you.
+            </p>
+            <div className="mt-8 max-w-3xl">
+              <SearchBox variant="hero" placeholder="Search spacing, accessibility, components, guidelines…" />
+            </div>
+          </div>
+          <div className="hidden lg:block">
+            <KnowledgeBlocks />
+          </div>
         </div>
         <nav aria-label="Quick entry points" className="mt-5 max-w-3xl">
           <ul className="flex flex-wrap gap-1.5">
@@ -90,6 +99,10 @@ export default function HomePage() {
             <SourceBadge key={source.id} id={source.id} />
           ))}
         </p>
+      </section>
+
+      <section aria-label="Sections" className="mb-16">
+        <HomePreviews />
       </section>
 
       <section aria-labelledby="latest">

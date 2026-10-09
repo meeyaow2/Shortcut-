@@ -9,7 +9,7 @@ import { Tag } from "../ui/Tag";
 
 export function ResourceCard({ resource }: { resource: Resource }) {
   return (
-    <article className="group relative flex items-start gap-4 rounded-md border border-line p-5 transition-colors hover:border-ink">
+    <article className="lift group relative flex items-start gap-4 rounded-md border border-line p-5 hover:border-ink">
       <div className="min-w-0 flex-1">
         <h3 className="text-lg font-semibold">
           <a href={resource.url} target="_blank" rel="noreferrer" className="after:absolute after:inset-0 after:rounded-md">

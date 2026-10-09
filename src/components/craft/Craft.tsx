@@ -9,6 +9,7 @@ import { formatDate } from "@/lib/dates";
 import type { ComponentQA, CraftEntry, EditorialKind, OfficialNote, ScaleStep } from "@/types";
 import { AuthorityLabel, SourceBadge } from "../source/Source";
 import { ExternalLink } from "../ui/primitives";
+import { EntryVisual } from "../visual/EntryVisual";
 import { AppliesTo, DependsOn, ViewportTable, appliesTo } from "../viewport/Scope";
 
 const editorial: Record<EditorialKind, { label: string; meaning: string }> = {
@@ -174,6 +175,7 @@ export function CraftBlock({ entry }: { entry: CraftEntry }) {
             {reference && <span className="font-semibold text-ink">General guidance. </span>}
             {entry.summary}
           </p>
+          <EntryVisual entry={entry} />
           {entry.viewportValues &&
             (key ? (
               <details className="group rounded-sm border border-line">
