@@ -4,7 +4,6 @@ import { cheatSheets, plannedSheets, sheetGroups } from "@/data/cheat-sheets";
 import { useContentContext } from "@/hooks/useLibrary";
 import type { CheatSheet } from "@/types";
 import { ContextNotice } from "../layout/ContextSwitch";
-import { ViewportBar } from "../viewport/ViewportBar";
 import { CheatSheetCard } from "./CheatSheetCard";
 
 const hasRegional = (sheet: CheatSheet) => sheet.sections.some((section) => section.rules.some((rule) => rule.context === "sg"));
@@ -16,9 +15,6 @@ export function CheatSheetLibrary() {
 
   return (
     <div className="space-y-12 pt-8">
-      <div className="-mb-6">
-        <ViewportBar />
-      </div>
       <div className="-mb-6 empty:hidden">
         <ContextNotice>
           {context === "sg"

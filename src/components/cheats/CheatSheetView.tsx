@@ -87,7 +87,7 @@ export function CheatSheetView({ sheet }: { sheet: CheatSheet }) {
         )}
       </header>
 
-      <div className="pt-6">
+      <div className="pt-8">
         <ViewportBar />
       </div>
 
