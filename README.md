@@ -1,13 +1,47 @@
 # Shortcut
 
-Everything UI/UX, without the rabbit hole. A UI/UX knowledge platform prototype: updates, cheat sheets, design checks, sourced answers and resources.
+Everything UI/UX, without the rabbit hole. A UI/UX reference for designers: cheat sheets, design system comparisons, design checks, UX practice guides, AI and Figma guidance, and sourced answers. Every claim links to its source and shows when it was last verified.
 
 Next.js (App Router), TypeScript, Tailwind CSS v4, Lucide. No backend. A few reader preferences (context, checklist ticks) live in `localStorage`.
+
+## Running locally
+
+Needs Node.js 20.9 or newer.
 
 ```bash
 npm install
 npm run dev
 ```
+
+Then open http://localhost:3000.
+
+## Building
+
+```bash
+npm run build
+```
+
+`npm run lint` and `npx tsc --noEmit` check the code without building. `npm start` serves the production build.
+
+## Deployment
+
+The project deploys through Vercel, connected to this GitHub repository. A push to `main` updates the live site. A push to any other branch, or a pull request, gets its own preview URL. No Vercel configuration file is needed.
+
+## Environment variables
+
+None.
+
+## Development workflow
+
+```bash
+git pull
+# make changes
+git add -A
+git commit -m "Describe the change"
+git push
+```
+
+On a new computer, run `git clone https://github.com/meeyaow2/Shortcut-.git`, then `npm install` inside the folder.
 
 ## Where things live
 
