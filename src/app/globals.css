@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+/* Design tokens. Components use these names only, never raw hex values. */
+@theme {
+  /* Neutrals carry most of the interface. */
+  --color-paper: #ffffff;
+  --color-wash: #f4f5f7;
+  --color-line: #e3e5ea;
+  --color-line-strong: #c5c9d3;
+  --color-ink: #14171f;
+  --color-ink-2: #454c5a;
+  --color-ink-3: #636a79;
+
+  /* Colour is reserved for interaction, status and source identity. */
+  --color-accent: #2b44e6;
+  --color-accent-strong: #1e32b8;
+  --color-accent-wash: #eef1ff;
+  --color-mark: #ffe566;
+  --color-ok: #177245;
+  --color-ok-wash: #e5f4ec;
+  --color-warn: #8a5200;
+  --color-warn-wash: #fdf1dc;
+
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-face), var(--font-body), ui-sans-serif, system-ui, sans-serif;
+
+  /* Three radii: controls and tags, cards, overlays. */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Layout widths: full page and comfortable reading measure. */
+  --container-page: 70rem;
+  --container-read: 42rem;
+
+  /* The width at which the full navigation fits beside the logo and search.
+     Below it the navigation becomes a drawer. Chosen by measuring the bar,
+     not borrowed from a device size. */
+  --breakpoint-nav: 60rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  /* One focus style everywhere, visible against paper and wash. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Anchored content lands below the sticky header, so focus is never hidden. */
+  [id] {
+    scroll-margin-top: 6.5rem;
+  }
+
+  ::selection {
+    background: var(--color-mark);
+    color: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .page {
+    width: 100%;
+    max-width: var(--container-page);
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  /* Page margins step up with the space available. */
+  @media (min-width: 40rem) {
+    .page {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .page {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* The item a search result pointed at gets a highlighter stripe. */
+  .anchor-target:target {
+    box-shadow: inset 4px 0 0 var(--color-mark);
+    background: linear-gradient(to right, #fffbe0, transparent 60%);
+  }
+
+  .skeleton {
+    background: var(--color-wash);
+    border-radius: var(--radius-sm);
+    animation: skeleton-pulse 1.2s ease-in-out infinite;
+  }
+
+  .pop-in {
+    animation: pop-in 140ms ease-out;
+  }
+}
+
+@keyframes skeleton-pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+dialog::backdrop {
+  background: rgb(20 23 31 / 0.35);
+}
