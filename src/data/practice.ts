@@ -1,5 +1,6 @@
 import type { Citation } from "@/types";
 import { VERIFIED, cite } from "./citations";
+import { moreGuides } from "./practice-more";
 
 /**
  * UX Practice: practical guides for doing the work.
@@ -387,6 +388,7 @@ export const practiceGuides: PracticeGuide[] = [
     references: [ref.critique],
     related: ["usability-test", "synthesis", "workshop"],
   },
+  ...moreGuides,
 ];
 
 export function getPracticeGuide(id: string): PracticeGuide | undefined {
@@ -394,7 +396,7 @@ export function getPracticeGuide(id: string): PracticeGuide | undefined {
 }
 
 /** Topics from the brief that are not written yet. */
-export const plannedGuides = ["Recruiting participants", "Note taking", "Journey mapping", "Prioritisation", "Presenting findings", "Research repositories", "Ideation workshops", "Retrospectives", "Remote workshops in depth"];
+export const plannedGuides = ["Remote workshops in depth"];
 
 // --- Quick-reference cards -------------------------------------------------------
 

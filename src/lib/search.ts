@@ -86,6 +86,14 @@ const guideKeywords: Record<string, string> = {
   discovery: "research plan stakeholder interviews problem framing",
   synthesis: "synthesise interview notes affinity mapping themes present presenting research findings insight report",
   "design-critique": "feedback review crit",
+  recruiting: "recruit participants screener incentive find users sample",
+  "note-taking": "notes note taker recording observation quotes",
+  "journey-mapping": "journey map customer journey service blueprint experience map",
+  prioritisation: "prioritise prioritize priority backlog roadmap impact effort rice moscow kano",
+  "presenting-findings": "present share readout report research findings stakeholders",
+  "research-repository": "repository researchops store insights library",
+  retrospective: "retro retrospective team process improve",
+  "ideation-workshop": "ideation brainstorm ideas how might we hmw sketching",
 };
 
 const seenRules = new Set<string>();
