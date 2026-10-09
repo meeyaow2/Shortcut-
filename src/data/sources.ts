@@ -20,6 +20,7 @@ export const sources: Source[] = [
   { id: "carbon", name: "Carbon Design System", short: "Carbon", url: "https://carbondesignsystem.com/", color: "#0043CE", tint: "#E5EDFF", context: "global", organisation: "IBM", sourceType: "design-system", requirementLevel: "design-system-guidance" },
   { id: "primer", name: "Primer", short: "Primer", url: "https://primer.style/", color: "#24292F", tint: "#EAEEF2", context: "global", organisation: "GitHub", sourceType: "design-system", requirementLevel: "design-system-guidance" },
   { id: "uswds", name: "U.S. Web Design System", short: "USWDS", url: "https://designsystem.digital.gov/", color: "#1A4480", tint: "#E1EBF7", context: "global", organisation: "U.S. General Services Administration", sourceType: "design-system", requirementLevel: "design-system-guidance" },
+  { id: "fluent", name: "Fluent 2 Design System", short: "Fluent", url: "https://fluent2.microsoft.design/", color: "#0F548C", tint: "#E3F0FA", context: "global", organisation: "Microsoft", sourceType: "design-system", requirementLevel: "design-system-guidance" },
   { id: "grab", name: "Grab", short: "Grab", url: "https://engineering.grab.com/categories/design/", color: "#00632B", tint: "#E2F4E8", context: "global", organisation: "Grab", sourceType: "article", requirementLevel: "best-practice" },
   { id: "granola", name: "Granola", short: "Granola", url: "https://www.granola.ai/updates", color: "#4A5A1E", tint: "#EEF2DD", context: "global", organisation: "Granola", sourceType: "tool-documentation", requirementLevel: "recommendation" },
 ];

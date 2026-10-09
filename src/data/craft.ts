@@ -2,6 +2,7 @@ import type { CheatSheet, CraftEntry } from "@/types";
 import { VERIFIED, cite, wcag } from "./citations";
 import { getExplorerTopic } from "./explorer";
 import { getGuidance, guidanceCitation } from "./guidance";
+import { refCite } from "./references";
 import { viewportCite } from "./viewports";
 
 /**
@@ -21,6 +22,10 @@ type Input = Omit<CraftEntry, "dateReviewed" | "kind"> & { kind?: CraftEntry["ki
 
 const entry = (input: Input): CraftEntry => ({ kind: "industry-convention", dateReviewed: REVIEWED, ...input });
 const craft = (input: Input): CraftEntry => entry({ kind: "craft-guidance", ...input });
+
+/** The first point each system makes on a topic in the comparison, as official notes. */
+const cellNotes = (topic: string) =>
+  Object.values(getExplorerTopic(topic)?.cells ?? {}).map((item) => ({ text: item!.points[0], citation: item!.citation }));
 
 /** A cell from the design system comparison, reused as an official note. */
 const cell = (topic: string, system: "sgds" | "carbon" | "uswds" | "atlassian") => getExplorerTopic(topic)!.cells![system]!.citation;
@@ -694,6 +699,136 @@ export const e = {
     ],
   }),
 
+  // --- Tabs, dropdowns, loading, icons -------------------------------------
+  tabsWhen: craft({
+    id: "tabs-when",
+    title: "When tabs are the right pattern",
+    viewportApplicability: ["all"],
+    summary: "Tabs switch between views of the same thing, in the same place. People should be able to guess what is behind each one without opening it.",
+    why: "A tab hides everything behind the others. That is only acceptable when people need one view at a time and know which one they want.",
+    whenToUse: ["Two to six parallel views of one object, such as Overview, Activity and Settings.", "People rarely need to compare what is behind two tabs.", "Each label is one or two words."],
+    whenNotToUse: ["Steps that happen in order: use a stepper.", "Content people need to compare: show it together.", "Navigation between unrelated pages: use the navigation."],
+    commonMistakes: ["Tabs used as filters, so the count changes but the view does not.", "A tab row that scrolls with nothing showing there is more.", "Tabs nested inside tabs.", "A different selected tab when the page is reloaded."],
+    mentorNote: "If people click through every tab to find something, the labels are not doing their job.",
+    official: cellNotes("tabs"),
+  }),
+  tabsViewport: entry({
+    id: "tabs-by-viewport",
+    title: "Tabs across viewports",
+    safeStartingPoint: "2–6 tabs",
+    viewportValues: {
+      mobile: "A scrolling row, or a select when there are many",
+      tablet: "A row, scrolling if it overflows",
+      desktop: "All tabs visible in one row",
+    },
+    dependsOn: ["How many tabs there are", "How long the labels are", "Touch or pointer"],
+    summary: "The tab row is the part that breaks. Decide what it does when the labels no longer fit.",
+    why: "A row of six tabs fits a desktop and not a phone. Wrapping to two rows loses the sense of a single set, so the row scrolls or changes into another control.",
+    whenToDeviate: "With two or three short tabs, the same row works at every width and needs no change.",
+    commonMistakes: ["Labels truncated until they mean nothing.", "A scrolling row with no cue that it scrolls.", "The selected tab scrolled out of view."],
+  }),
+  dropdownChoice: craft({
+    id: "dropdown-choice",
+    title: "Select, radio buttons or something else",
+    viewportApplicability: ["all"],
+    summary: "A select hides its options. That is a cost, and worth paying only when there are too many options to show.",
+    why: "People choose faster and with fewer mistakes when they can see every option. A closed select shows none.",
+    scale: [
+      { value: "2–5", label: "Radio buttons, or a segmented control", use: "Every option visible. One tap to choose." },
+      { value: "6–15", label: "A select", use: "A familiar list that fits on screen without searching." },
+      { value: "15+", label: "A searchable list", use: "Countries, people, products. Let people type to narrow it." },
+      { value: "Actions", label: "A menu, not a select", use: "A list of things to do is not a form value. It needs a menu button." },
+    ],
+    commonMistakes: ["A select for two options.", "A select used to navigate, so choosing an option leaves the page.", "A long list with no search and no sensible order.", "Placeholder text used as the label."],
+    mentorNote: "Before reaching for a select, ask whether the options would fit on the screen if you just showed them.",
+    official: cellNotes("select"),
+  }),
+  dropdownViewport: entry({
+    id: "dropdown-by-viewport",
+    title: "Dropdowns across viewports",
+    viewportValues: {
+      mobile: "The platform's own picker, or a full-width sheet from the bottom",
+      tablet: "A list anchored to the control, sized to its options",
+      desktop: "A list anchored to the control, sized to its options",
+    },
+    dependsOn: ["Touch or pointer", "How many options there are", "Whether options need a description"],
+    summary: "On a phone a small anchored list is hard to hit and easily cut off by the keyboard or the screen edge. The native picker, or a sheet, gives each option a full-width row.",
+    why: "The list has to fit between the control and the edge of the screen. On a phone there is rarely room, and each option needs a touch-sized row.",
+    commonMistakes: ["A custom desktop dropdown shipped unchanged to mobile.", "A list taller than the space below the control, with no scrolling.", "Options too short to tap."],
+    official: [{ text: "The pointer target must be at least 24 by 24 CSS pixels.", citation: wcag("2.5.8"), viewportApplicability: ["all"], input: ["touch", "pointer"] }],
+  }),
+  loadingDuration: entry({
+    id: "loading-by-duration",
+    title: "Match the feedback to the wait",
+    safeStartingPoint: "None under 1 s",
+    commonRange: "No indicator under about 1 s, an indicator from 1 to 10 s, progress beyond 10 s",
+    viewportApplicability: ["all"],
+    summary: "What to show depends on how long people wait, not on what is loading. The thresholds below are NN/g's; the choice of indicator for each is Shortcut's.",
+    why: "Feedback that appears and vanishes inside a moment reads as a flicker. Feedback that never changes during a long wait reads as a crash.",
+    scale: [
+      { value: "Under 0.1 s", label: "Show the result", use: "It feels instant. No feedback is needed." },
+      { value: "0.1–1 s", label: "Usually nothing", use: "People notice the delay but keep their train of thought. A spinner here mostly adds flicker." },
+      { value: "1–10 s", label: "A spinner or skeleton", use: "Show that something is happening, in the place the content will appear." },
+      { value: "Over 10 s", label: "Progress, and a way out", use: "Say how far along it is, and let people leave and come back." },
+    ],
+    whenToDeviate: "On slow or unreliable connections, show the layout straight away and fill it in, even for short waits. People on those connections expect to wait and need to know it is working.",
+    commonMistakes: ["A full-page spinner for one small panel.", "A spinner that flashes for a fraction of a second.", "No indication at all on a wait of several seconds.", "A progress bar that sticks at 99 percent."],
+    official: [
+      { text: "0.1 second is about the limit for feeling instantaneous. 1 second is about the limit for an uninterrupted flow of thought. 10 seconds is about the limit for keeping attention on the task.", citation: viewportCite.nngResponse },
+      { text: "As a rule of thumb, use percent-done progress indicators for operations taking more than about 10 seconds.", citation: viewportCite.nngResponse },
+      { text: "Status messages must be available to assistive technology without receiving focus.", citation: wcag("4.1.3"), viewportApplicability: ["all"] },
+    ],
+    starter: { label: "Loading feedback", context: "Chosen by how long the wait is" },
+  }),
+  loadingKinds: craft({
+    id: "loading-kinds",
+    title: "Skeleton, spinner or progress bar",
+    viewportApplicability: ["all"],
+    summary: "Three ways to say the same thing. Choose by whether you know the shape of what is coming and how long it will take.",
+    why: "A skeleton promises a layout, a spinner promises only that work is happening, and a progress bar promises an end. Each is a lie when the promise is not kept.",
+    scale: [
+      { value: "Skeleton", label: "You know the layout", use: "Lists, cards and pages loading their content. It should match what arrives." },
+      { value: "Spinner", label: "You do not", use: "A button working, a small panel, an action with no visible result yet." },
+      { value: "Progress", label: "You know how far along it is", use: "Uploads, exports, multi-step processing." },
+      { value: "Optimistic", label: "It will almost certainly succeed", use: "Show the result at once and undo it if it fails. Likes, toggles, reordering." },
+    ],
+    commonMistakes: ["A skeleton that looks nothing like the content that replaces it.", "Layout that jumps when the real content arrives.", "A button that shows a spinner and changes width.", "Loading states designed but error and empty states forgotten."],
+    official: [{ text: "Grab shows loading skeletons when its app opens and designs blank, loading, partial and error states alongside the happy path, because its users' networks are unreliable.", citation: refCite.grabSea }],
+  }),
+  iconSize: entry({
+    id: "icon-size",
+    title: "Icon size",
+    safeStartingPoint: "16–24 px",
+    commonRange: "16 inline with text, 20 in controls, 24 in navigation and on touch",
+    viewportValues: { mobile: "20–24 px", tablet: "20–24 px", desktop: "16–20 px" },
+    dependsOn: ["Touch or pointer", "The text size beside it", "Density"],
+    summary: "The size of the drawing, not of the tappable area. A 20 px icon in a 44 px button is normal: the icon is what people see and the button is what they hit.",
+    why: "An icon should sit comfortably beside its label, so it follows the text size. The target around it follows the input method.",
+    scale: [
+      { value: "16", label: "Inline", use: "Beside body text, in tables, in dense toolbars." },
+      { value: "20", label: "Controls", use: "Inside buttons and inputs. A good default." },
+      { value: "24", label: "Navigation and touch", use: "Tab bars, app bars and icon-only buttons on touch screens." },
+    ],
+    commonMistakes: ["Icons from two sets with different stroke weights.", "An icon scaled to an odd size so its strokes blur.", "The icon and the tappable area treated as the same size."],
+    official: [
+      { text: "Graphics needed to understand content, and the visual parts of controls, need at least 3:1 contrast against adjacent colours.", citation: wcag("1.4.11"), viewportApplicability: ["all"] },
+      { text: "The pointer target must be at least 24 by 24 CSS pixels.", citation: wcag("2.5.8"), viewportApplicability: ["all"], input: ["touch", "pointer"] },
+      { text: "Button icons must pass 3:1 contrast against their background in all interactive states.", citation: viewportCite.fluentButton },
+    ],
+    starter: { label: "Icon size", context: "Inside controls, desktop" },
+  }),
+  iconLabel: craft({
+    id: "icon-and-label",
+    title: "Icon alone, or icon with a label",
+    viewportApplicability: ["all"],
+    summary: "Very few icons are understood by everyone without a word beside them. When in doubt, add the word.",
+    why: "An icon people have to work out is slower than a label they can read. The space saved is rarely worth it outside dense toolbars.",
+    whenToUse: ["Icon alone for the handful almost everyone knows: search, close, menu, back.", "Icon with label for everything else, especially primary navigation.", "Label alone when the icon adds nothing."],
+    commonMistakes: ["An icon beside every heading, for rhythm.", "The same icon meaning two things in one product.", "Icon-only buttons with no accessible name.", "A tooltip as the only way to learn what an icon does, which touch users never see."],
+    mentorNote: "Cover the label. If you could not say what the icon does, neither can your users.",
+    official: [{ text: "Grab pairs icons with text, because some of its users are not fully comfortable reading the interface language.", citation: refCite.grabSea }],
+  }),
+
   // --- Tokens ------------------------------------------------------------
   tokenBasics: entry({
     id: "basic-token-set",
@@ -836,6 +971,65 @@ export const craftSheets: CheatSheet[] = [
       checklist: ["Each card is one independent object", "No card inside a card", "Padding and radius match across cards", "If the whole card is clickable, it has one clear target", "Shadow only where the card overlaps something"],
     },
     sections: [{ id: "need", title: "Before adding one", rules: [], entries: [e.needACard, e.padding, e.radius] }],
+  },
+  {
+    slug: "tabs",
+    title: "Tabs",
+    description: "When tabs fit, when they do not, and what the tab row does when it runs out of room.",
+    group: "Components",
+    viewportSensitivity: "partial",
+    dateUpdated: "2026-10-09",
+    component: {
+      anatomy: ["Tab list", "Tab", "Selected indicator", "Panel"],
+      states: ["Default", "Hover", "Focus", "Selected", "Disabled"],
+      edgeCases: ["One very long label", "More tabs than fit", "A tab with a count or badge", "An empty panel", "A panel that is still loading"],
+      checklist: ["Each label says what is behind it", "The selected tab is obvious without relying on colour", "Arrow keys move between tabs", "The selection survives a reload", "The row has a plan for narrow screens"],
+    },
+    sections: [
+      { id: "when", title: "When to use them", rules: [], entries: [e.tabsWhen] },
+      { id: "viewports", title: "Across viewports", rules: [], entries: [e.tabsViewport] },
+    ],
+  },
+  {
+    slug: "dropdowns",
+    title: "Dropdowns",
+    description: "Select, radio buttons, searchable list or menu: which one, and how each behaves on a phone.",
+    group: "Components",
+    viewportSensitivity: "partial",
+    dateUpdated: "2026-10-09",
+    component: {
+      anatomy: ["Label", "Trigger", "Current value", "Option list", "Option"],
+      states: ["Closed", "Open", "Focus", "Option hover", "Option selected", "Disabled", "Error"],
+      edgeCases: ["One option", "Hundreds of options", "A very long option", "Opened at the bottom of the screen", "Opened with the on-screen keyboard showing"],
+      checklist: ["It has a visible label, not only a placeholder", "It could not simply be radio buttons", "It opens and closes by keyboard", "The list fits on screen or scrolls", "Options are in an order people would expect"],
+    },
+    sections: [
+      { id: "choice", title: "Choosing the control", rules: [], entries: [e.dropdownChoice] },
+      { id: "viewports", title: "Across viewports", rules: [], entries: [e.dropdownViewport] },
+    ],
+  },
+  {
+    slug: "loading-states",
+    title: "Loading States",
+    description: "What to show while people wait, chosen by how long the wait is.",
+    group: "Components",
+    dateUpdated: "2026-10-09",
+    sections: [
+      { id: "duration", title: "By length of wait", rules: [], entries: [e.loadingDuration] },
+      { id: "kinds", title: "Which indicator", rules: [], entries: [e.loadingKinds] },
+    ],
+  },
+  {
+    slug: "icons",
+    title: "Icons",
+    description: "Size, touch area, contrast, and when an icon needs a label.",
+    group: "Components",
+    viewportSensitivity: "partial",
+    dateUpdated: "2026-10-09",
+    sections: [
+      { id: "size", title: "Size", rules: [], entries: [e.iconSize] },
+      { id: "labels", title: "Labels", rules: [], entries: [e.iconLabel] },
+    ],
   },
   {
     slug: "drawers",

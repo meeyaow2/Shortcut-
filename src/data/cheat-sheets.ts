@@ -669,7 +669,7 @@ export const cheatSheets: CheatSheet[] = [
 export const sheetGroups: SheetGroup[] = ["Foundations", "Components", "Patterns and standards", "Figma"];
 
 /** Topics from the brief that are not written yet. Listed so the gap is visible. */
-export const plannedSheets = ["Dropdowns", "Tabs", "Loading states", "Icons"];
+export const plannedSheets: string[] = [];
 
 export function getCheatSheet(slug: string): CheatSheet | undefined {
   return cheatSheets.find((s) => s.slug === slug);

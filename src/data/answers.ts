@@ -1,6 +1,7 @@
 import type { Answer } from "@/types";
 import { cite, wcag } from "./citations";
 import { getGuidance, guidanceCitation } from "./guidance";
+import { viewportCite } from "./viewports";
 
 /**
  * The local answer set behind Ask UX. Each answer is written by hand from the
@@ -364,6 +365,106 @@ export const answers: Answer[] = [
     citations: [wcag("1.4.3")],
   },
 ];
+
+// Viewport questions. Editorial ranges, with what official sources say cited beneath.
+answers.push(
+  {
+    id: "vp-mobile-padding",
+    question: "How much padding should I use on mobile?",
+    triggers: ["padding", "mobile", "phone", "much", "card"],
+    shortAnswer: "12–16 px inside a card, 16–20 px at the page edge.",
+    explanation:
+      "On a phone every pixel of padding comes out of the content, so both values sit at the low end of their desktop ranges. These are starting points, not rules: a card holding one thing people read can take more, a dense list less.",
+    director: {
+      commonPractice: "Card padding 12–16 px on mobile, 16–20 on tablet, 16–24 on desktop. Page margins 16–20 px on mobile, 24–32 on tablet, 32–64 on desktop.",
+      whenToBreak: "Go tighter in dense lists. Keep the gap between tappable things large enough that a finger does not hit the neighbour.",
+      readNext: { label: "Padding and page margins on the Spacing cheat sheet", href: "/cheat-sheets/spacing?viewport=mobile#padding" },
+    },
+    checklist: ["Is the value on your spacing scale?", "Does desktop padding shrink on the phone layout, not carry over?", "Do tappable items still have room between them?"],
+    citations: [viewportCite.atlassianGrid, cite.govukSpacing],
+    relatedSheet: "spacing",
+  },
+  {
+    id: "vp-page-margin",
+    question: "How much page margin is normal on desktop?",
+    triggers: ["margin", "page", "desktop", "gutter", "edge"],
+    shortAnswer: "32–64 px, until the content reaches its maximum width.",
+    explanation:
+      "On a wide screen the margin stops being a number you choose. Once content reaches its maximum width, the margin is whatever space is left. Atlassian's grid, for example, uses 32 px margins from 1024 px and caps a fixed-wide layout at 1296 px.",
+    director: {
+      commonPractice: "16–20 px on mobile, 24–32 on tablet, 32–64 on desktop, 48–80 on large desktop depending on the container.",
+      whenToBreak: "Full-bleed media, maps and data canvases can run to the edge. Text and controls should not.",
+      readNext: { label: "Page margins on the Spacing cheat sheet", href: "/cheat-sheets/spacing?viewport=desktop#page-margins" },
+    },
+    checklist: ["Does content have a maximum width?", "Do margins shrink on a phone?", "Is reading text narrower than the page?"],
+    citations: [viewportCite.atlassianGrid, cite.govukLayout],
+    relatedSheet: "spacing",
+  },
+  {
+    id: "vp-modal-tablet",
+    question: "How wide should this modal be on tablet?",
+    triggers: ["modal", "dialog", "tablet", "wide", "width"],
+    shortAnswer: "As wide as its content needs, inside the page margins.",
+    explanation:
+      "No source Shortcut tracks gives a tablet modal width. A common desktop range is 400–480 px for a confirmation, 560–720 for a short form and 800–960 for anything larger. On a tablet those still fit, so size it to the content and keep it inside the margins. On a phone, anything beyond a confirmation works better full width or full screen.",
+    director: {
+      commonPractice: "Small 400–480 px, medium 560–720, large 800–960 on desktop. Sized to content on tablet. Full width or full screen on mobile.",
+      whenToBreak: "If it needs the large size, or scrolls, ask whether it should be a page or a full-screen step.",
+      readNext: { label: "Modal width on the Modals cheat sheet", href: "/cheat-sheets/modals?viewport=tablet#modal-width" },
+    },
+    checklist: ["Does it still work at 320 CSS px wide?", "Is there an obvious way to close it?", "Would a page do the job better?"],
+    citations: [wcag("1.4.10")],
+    relatedSheet: "modals",
+  },
+  {
+    id: "vp-button-touch",
+    question: "How tall should buttons be on touch devices?",
+    triggers: ["button", "tall", "height", "touch", "tap", "mobile"],
+    shortAnswer: "40–48 px visible, with a touch area of at least 44 or 48.",
+    explanation:
+      "Two different measurements. The visible button is commonly 40–48 px tall. The area that responds to touch is set by the platform: Apple asks for at least 44 by 44 pt and Android for 48 by 48 dp, and WCAG sets a 24 by 24 CSS pixel floor on the web. A button can look 40 px tall and still meet the larger target through the space around it.",
+    director: {
+      commonPractice: "40–48 px visible height on any viewport. On touch, make sure the tappable area reaches the platform minimum.",
+      whenToBreak: "Dense desktop toolbars use 28–32 px with a pointer. That is a density choice, not a lower accessibility bar.",
+      readNext: { label: "Button height on the Buttons cheat sheet", href: "/cheat-sheets/buttons?viewport=mobile#button-height" },
+    },
+    checklist: ["Is the touch area at least the platform minimum?", "Do neighbouring targets have space between them?", "Does the button match the input height beside it?"],
+    citations: [wcag("2.5.8"), cite.appleButtons, cite.androidTargets],
+    relatedSheet: "buttons",
+  },
+  {
+    id: "vp-desktop-to-mobile",
+    question: "What should change when moving from desktop to tablet to mobile?",
+    triggers: ["desktop", "tablet", "mobile", "change", "responsive", "moving", "smaller"],
+    shortAnswer: "Layout and large spacing change most. Body text barely changes.",
+    explanation:
+      "Columns reduce, navigation collapses to what matters most, tables and side panels swap to patterns that suit a narrow screen, and the large gaps shrink first. Body text stays about the same size, and nothing people need to finish the task should disappear. Add a breakpoint where the layout actually breaks, not at a device's width.",
+    director: {
+      commonPractice: "One column on mobile, one or two on tablet, two to four on desktop. Page margins and section spacing step down; small gaps and body text stay.",
+      whenToBreak: "A tool used only at a desk can start from desktop, but it still has to work in a narrow window.",
+      readNext: { label: "Responsive & Viewports", href: "/cheat-sheets/responsive-design" },
+    },
+    checklist: ["Is every task still possible on the smallest screen?", "Have you dragged through the widths between your breakpoints?", "Do touch targets stay large enough?"],
+    citations: [viewportCite.androidSizeClasses, viewportCite.primerLayout, cite.sgdsBreakpoint],
+    relatedSheet: "responsive-design",
+  },
+  {
+    id: "vp-foldable",
+    question: "How should I design for a foldable like iPhone Duo?",
+    triggers: ["foldable", "fold", "folding", "duo", "iphone", "open", "closed"],
+    shortAnswer: "A compact layout closed, the same layout expanded when open.",
+    explanation:
+      "Apple's guidance gives the outer display a compact width layout and the inner display a regular width one, and says not to reinvent the app when it resizes: let the existing layout expand, and show an additional level of hierarchy if it suits. State should be the same on both displays. On iPhone Duo the system also moves toolbars and tab bars to the side.",
+    director: {
+      commonPractice: "Design the closed state as a complete compact experience. When open, add a second pane beside the first instead of scaling everything up.",
+      whenToBreak: "Follow the platform. Google's guidance for Android foldables describes a bottom bar folded and a navigation rail unfolded, which differs from Apple's.",
+      readNext: { label: "Designing for iPhone Duo", href: "/cheat-sheets/responsive-design#iphone-duo" },
+    },
+    checklist: ["Does opening the device keep the task, the selection and anything typed?", "Is anything important sitting on the fold?", "Are physical pixels being mistaken for the CSS viewport?"],
+    citations: [viewportCite.duoHig, viewportCite.androidFoldables],
+    relatedSheet: "responsive-design",
+  },
+);
 
 export const suggestedQuestions = answers.filter((a) => !a.context && !a.director).slice(0, 5).map((a) => a.question);
 export const suggestedDirectorQuestions = answers.filter((a) => a.director).map((a) => a.question);

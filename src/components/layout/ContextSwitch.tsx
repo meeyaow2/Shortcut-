@@ -29,7 +29,7 @@ export function ContextSwitch() {
               type="button"
               aria-pressed={selected}
               onClick={() => library.setContext(option)}
-              className={`min-h-9 md:min-h-7 rounded-[3px] px-2.5 text-sm transition-colors ${
+              className={`min-h-10 rounded-[3px] px-3 text-sm md:min-h-7 md:px-2.5 transition-colors ${
                 selected ? "bg-ink font-medium text-paper" : "text-ink-2 hover:text-ink"
               }`}
             >

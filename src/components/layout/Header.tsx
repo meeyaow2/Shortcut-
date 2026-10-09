@@ -170,7 +170,7 @@ export function Header() {
 
       {/* Scrolls away with the page; the choice it sets is remembered. */}
       <div className="border-b border-line">
-        <div className="page flex h-11 items-center justify-start nav:justify-end">
+        <div className="page flex h-14 items-center justify-start md:h-11 nav:justify-end">
           <ContextSwitch />
         </div>
       </div>

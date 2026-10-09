@@ -3,7 +3,7 @@ import { VERIFIED, cite } from "./citations";
 import { viewportCite } from "./viewports";
 
 /** Systems compared in the Explorer, in column order. */
-export const explorerSystems: SourceId[] = ["sgds", "material", "apple", "govuk", "atlassian", "carbon", "primer", "uswds"];
+export const explorerSystems: SourceId[] = ["sgds", "material", "apple", "govuk", "atlassian", "carbon", "primer", "uswds", "fluent"];
 
 /** How many systems are shown side by side at once. */
 export const MAX_COMPARED = 4;
@@ -104,7 +104,7 @@ export const explorerTopics: ExplorerTopic[] = [
       "Layers: SGDS documents five. Carbon splits colour tokens into core and component. Atlassian describes the parts of a name instead of layers.",
       "Vocabulary: the Material, Apple and GOV.UK pages checked do not use the word token.",
       "Framing: USWDS presents tokens as a way to limit choice. The others present them as a way to name decisions.",
-      "Not read on this topic: Primer.",
+      "Not read on this topic: Primer and Fluent.",
     ],
   },
   {
@@ -158,6 +158,26 @@ export const explorerTopics: ExplorerTopic[] = [
           "Design for at least two device sizes, and always include mobile.",
         ],
         citation: viewportCite.atlassianGrid,
+      },
+      primer: {
+        headline: "Three viewport ranges, then breakpoints",
+        points: [
+          "Narrow, under 768 px: a single column. Regular, from 768 px: up to two. Wide, from 1400 px: up to three.",
+          "Viewport ranges set the layout; breakpoints are for fine-tuning.",
+          "Breakpoint sizes include 320, 544, 768, 1012 and 1280 px.",
+          "Pages should adapt to smaller screens without loss of functionality.",
+        ],
+        citation: viewportCite.primerLayout,
+      },
+      uswds: {
+        headline: "Minimum-width breakpoints, 12 columns",
+        points: [
+          "The grid container is centred with a default maximum width of 1024 px.",
+          "Side padding is 2 units at narrow widths and 4 units at desktop and wider.",
+          "Grid breakpoints are minimum-width media queries: a tablet rule also applies at every wider size.",
+          "A row has 12 possible columns.",
+        ],
+        citation: viewportCite.uswdsGrid,
       },
     },
     takeaway:
@@ -250,11 +270,21 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: read("uswds", "USWDS, Button", "https://designsystem.digital.gov/components/button/"),
       },
+      fluent: {
+        headline: "One primary button in a layout",
+        points: [
+          "Only use one primary button in a layout, for the most important action.",
+          "If more than two buttons have equal priority, give them all neutral backgrounds.",
+          "Use buttons for important actions. For navigating to another place, use a link.",
+          "Button text must pass 4.5:1 contrast and icons 3:1, in all interactive states.",
+        ],
+        citation: viewportCite.fluentButton,
+      },
     },
     takeaway:
       "Most of these systems limit how many high-emphasis buttons share a view: one for GOV.UK, Atlassian, Carbon and Primer, one or two for Apple. Decide the single most likely action per screen and give only that the strongest style. Keep destructive actions out of the default position.",
     themes: [
-      "A cap on the strongest button. GOV.UK, Atlassian, Carbon and Primer say one per page or area. Apple says one or two per view. USWDS says to avoid too many, without a number.",
+      "A cap on the strongest button. GOV.UK, Atlassian, Carbon, Primer and Fluent say one per page, area or layout. Apple says one or two per view. USWDS says to avoid too many, without a number.",
       "Doubt about disabled buttons. GOV.UK and Atlassian advise against them, Primer offers an inactive button instead, and USWDS says to explain why an action is unavailable.",
       "Buttons act, links navigate. SGDS and Atlassian both say so.",
     ],
@@ -448,19 +478,29 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: read("carbon", "Carbon, Spacing", "https://carbondesignsystem.com/elements/spacing/overview/"),
       },
+      fluent: {
+        headline: "A 4 px base, across platforms",
+        points: [
+          "The ramp: 0, 2, 4, 6, 8, 10, 12, 16, 20, 24, 28, 32, 36, 40, 48, 52 and 56.",
+          "The base unit is four pixels. 2, 6 and 10 exist to align icons.",
+          "The same ramp is measured in points on iOS, dp on Android and pixels on the web.",
+          "In responsive scenarios, consider changing spacing within components, patterns and layouts to fit the device.",
+        ],
+        citation: viewportCite.fluentLayout,
+      },
     },
     takeaway:
       "Base units differ: 4, 5 and 8 px all ship in large systems, and all work. Staying on one scale matters more than which one. GOV.UK shrinking large gaps on small screens is worth copying whatever your scale.",
     themes: [
-      "A short, fixed list of values. All four publish between 9 and 14 steps, not a formula.",
+      "A short, fixed list of values. All five publish between 9 and 17 steps, not a formula.",
       "Steps widen as values grow: small steps at the bottom of each scale, large jumps at the top.",
       "16, 24, 32, 48 and 64 px appear in the SGDS, Atlassian and Carbon scales.",
     ],
     differences: [
-      "Base unit: SGDS calls its scale a 4-point system. GOV.UK's is based on 5 px. Atlassian's base unit is 8 px.",
+      "Base unit: SGDS and Fluent use 4 px. GOV.UK's scale is based on 5 px. Atlassian's base unit is 8 px.",
       "Naming: Atlassian's names track the value, so space.100 is 8 px and space.200 is 16 px. Carbon numbers its steps in order.",
       "Only GOV.UK's page describes a scale that changes with screen size.",
-      "Atlassian is the only one of the four that says which part of the scale suits which size of UI.",
+      "Atlassian is the only one that says which part of the scale suits which size of UI. Fluent is the only one that gives the same ramp for iOS, Android and the web.",
       "Not read on this topic: Material, Apple, Primer and USWDS.",
     ],
   },
@@ -754,6 +794,16 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: read("uswds", "USWDS, Modal", "https://designsystem.digital.gov/components/modal/"),
       },
+      fluent: {
+        headline: "Modal, non-modal and alert",
+        points: [
+          "Dialogs are often interruptions, so use them for important actions. For an update that needs no action, use a toast.",
+          "A modal dialog closes on a click outside, on Esc or with a footer button.",
+          "A non-modal dialog leaves the page usable and cannot be dismissed by clicking outside.",
+          "An alert dialog can only be dismissed with its footer buttons. Use it only where something could be lost.",
+        ],
+        citation: viewportCite.fluentDialog,
+      },
     },
     takeaway:
       "Every system that has a modal restricts it to short, focused tasks. GOV.UK ships without one at all, which is its own answer: a separate page can do the job. No page checked states a single required width.",
@@ -764,7 +814,7 @@ export const explorerTopics: ExplorerTopic[] = [
     ],
     differences: [
       "Sizes: SGDS has five, Carbon four, USWDS two. Atlassian's usage page gives no widths.",
-      "Clicking outside: closes an Atlassian modal, a Carbon passive modal, and a Primer dialog unless a form has unsaved changes.",
+      "Clicking outside: closes an Atlassian modal, a Carbon passive modal, a Fluent modal dialog, and a Primer dialog unless a form has unsaved changes. It never closes a Fluent alert dialog.",
       "Stacking: SGDS says do not open a second modal from the first. Apple says dismiss one before presenting another. Primer allows two levels.",
       "GOV.UK has no modal component at all.",
     ],
@@ -1111,6 +1161,11 @@ export const explorerTopics: ExplorerTopic[] = [
         points: ["A button needs a hit region of at least 44 × 44 pt.", "Prominence comes from style, not size."],
         citation: cite.appleButtons,
       },
+      fluent: {
+        headline: "44 on iOS and web, 48 on Android",
+        points: ["Spacing should leave room for minimum touch targets on mobile: 44 by 44 on iOS and the web, 48 by 48 on Android."],
+        citation: viewportCite.fluentLayout,
+      },
     },
     takeaway:
       "Apple and Android give touch sizes in their own units, and they are not the same number. On the web, WCAG's 24 by 24 CSS pixel minimum sits beneath both as a floor, and applies to a mouse as well as a finger. Design to the platform you ship on.",
@@ -1149,7 +1204,7 @@ export const explorerTopics: ExplorerTopic[] = [
     takeaway:
       "Both treat a folding device as two layouts of one app, joined by kept state, and both keep content off the fold. They differ on navigation: Apple's system puts bars on the side even when closed, while Google describes a bottom bar folded and a rail unfolded. Follow the platform you are designing for.",
     themes: ["Two layouts, one app: a narrow one closed and a wider one open.", "State survives the fold.", "Nothing important sits on the fold line."],
-    differences: ["Navigation placement: at the side on iPhone Duo; bottom bar when folded on Android.", "Apple stresses expanding the existing layout. Google speaks of alternative layouts optimised for each.", "Not read on this topic: SGDS, GOV.UK, Atlassian, Carbon, Primer and USWDS."],
+    differences: ["Navigation placement: at the side on iPhone Duo; bottom bar when folded on Android.", "Apple stresses expanding the existing layout. Google speaks of alternative layouts optimised for each.", "Not read on this topic: SGDS, GOV.UK, Atlassian, Carbon, Primer, USWDS and Fluent."],
   },
 ];
 

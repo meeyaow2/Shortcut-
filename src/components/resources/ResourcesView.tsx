@@ -30,12 +30,16 @@ export function ResourceCard({ resource }: { resource: Resource }) {
   );
 }
 
+const allTags = [...new Set(resources.flatMap((resource) => resource.tags ?? []))].sort();
+
 export function ResourcesView() {
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
   const selected = intents.find((intent) => intent.id === params.get("need")) ?? intents[0];
-  const list = resources.filter((resource) => resource.intentId === selected.id);
+  // A tag cuts across the needs: "Mobile" finds icons, systems and tools alike.
+  const tag = allTags.find((item) => item === params.get("tag"));
+  const list = tag ? resources.filter((resource) => resource.tags?.includes(tag)) : resources.filter((resource) => resource.intentId === selected.id);
 
   return (
     <div className="grid gap-10 pt-8 lg:grid-cols-[18rem_1fr]">
@@ -43,7 +47,7 @@ export function ResourcesView() {
         <legend className="mb-3 font-display text-2xl font-semibold tracking-tight">What do you need?</legend>
         <div className="flex flex-wrap gap-1.5 lg:flex-col lg:gap-0.5">
           {intents.map((intent) => {
-            const current = intent.id === selected.id;
+            const current = !tag && intent.id === selected.id;
             return (
               <button
                 key={intent.id}
@@ -63,11 +67,27 @@ export function ResourcesView() {
 
       <section aria-labelledby="resource-heading">
         <h2 id="resource-heading" className="text-2xl font-semibold">
-          I need {selected.need}
+          {tag ? `Tagged ${tag}` : `I need ${selected.need}`}
         </h2>
         <p className="mt-1 text-ink-2" role="status">
           {list.length} picks. A short list on purpose.
         </p>
+        <fieldset className="mt-4">
+          <legend className="text-sm font-semibold text-ink-3">Or by platform and context</legend>
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {allTags.map((item) => (
+              <button
+                key={item}
+                type="button"
+                aria-pressed={item === tag}
+                onClick={() => router.replace(item === tag ? `${pathname}?need=${selected.id}` : `${pathname}?tag=${encodeURIComponent(item)}`, { scroll: false })}
+                className={`min-h-11 rounded-sm border px-3 text-sm md:min-h-8 md:px-2.5 ${item === tag ? "border-ink bg-ink font-medium text-paper" : "border-line-strong text-ink-2 hover:border-ink hover:text-ink"}`}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        </fieldset>
         <div className="mt-5 space-y-3">
           {list.map((resource) => (
             <ResourceCard key={resource.id} resource={resource} />

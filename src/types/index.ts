@@ -22,6 +22,7 @@ export type SourceId =
   | "carbon"
   | "primer"
   | "uswds"
+  | "fluent"
   | "grab"
   | "granola";
 

@@ -40,9 +40,14 @@ export function CheatSheetLibrary() {
       })}
       {context !== "sg" && (
         <p className="text-ink-2">
-          <span className="font-semibold text-ink">Not written yet: </span>
-          {plannedSheets.join(", ")}. Margins and gaps are covered under Spacing, grid under Layout, elevation under
-          Shadows and Borders, and neutrals under Colour.
+          {plannedSheets.length > 0 && (
+            <>
+              <span className="font-semibold text-ink">Not written yet: </span>
+              {plannedSheets.join(", ")}.{" "}
+            </>
+          )}
+          Margins and gaps are covered under Spacing, grid under Layout, elevation under Shadows and Borders, and
+          neutrals under Colour.
         </p>
       )}
     </div>

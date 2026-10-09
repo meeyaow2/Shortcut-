@@ -13,6 +13,12 @@ const READ = "2026-10-09";
 export const viewportCite = {
   duoHig: { sourceId: "apple", label: "Apple HIG, Designing for iPhone Duo", url: "https://developer.apple.com/design/human-interface-guidelines/designing-for-iphone-duo", datePublished: "2026-09-09", dateVerified: READ } as Citation,
   atlassianGrid: { sourceId: "atlassian", label: "Atlassian Design System, Grid", url: "https://atlassian.design/foundations/grid", dateVerified: READ } as Citation,
+  fluentLayout: { sourceId: "fluent", label: "Fluent 2, Layout", url: "https://fluent2.microsoft.design/layout", dateVerified: READ } as Citation,
+  fluentButton: { sourceId: "fluent", label: "Fluent 2, Button usage", url: "https://fluent2.microsoft.design/components/web/react/core/button/usage", dateVerified: READ } as Citation,
+  fluentDialog: { sourceId: "fluent", label: "Fluent 2, Dialog usage", url: "https://fluent2.microsoft.design/components/web/react/core/dialog/usage", dateVerified: READ } as Citation,
+  primerLayout: { sourceId: "primer", label: "Primer, Layout", url: "https://primer.style/product/getting-started/foundations/layout/", dateVerified: READ } as Citation,
+  uswdsGrid: { sourceId: "uswds", label: "USWDS, Layout grid", url: "https://designsystem.digital.gov/utilities/layout-grid/", dateVerified: READ } as Citation,
+  nngResponse: { sourceId: "nng", label: "NN/g, Response Times: The 3 Important Limits", url: "https://www.nngroup.com/articles/response-times-3-important-limits/", datePublished: "1993-01-01", dateVerified: READ } as Citation,
   duoSpecs: { sourceId: "apple", label: "Apple, iPhone Duo technical specifications", url: "https://www.apple.com/iphone-duo/specs/", dateVerified: READ } as Citation,
   androidSizeClasses: { sourceId: "material", label: "Android Developers, Use window size classes", url: "https://developer.android.com/develop/ui/compose/layouts/adaptive/use-window-size-classes", dateVerified: READ } as Citation,
   androidFoldables: { sourceId: "material", label: "Android Developers, Learn about foldables", url: "https://developer.android.com/develop/ui/compose/layouts/adaptive/foldables/learn-about-foldables", dateVerified: READ } as Citation,

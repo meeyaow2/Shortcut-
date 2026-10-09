@@ -244,9 +244,9 @@ export const systems: SystemProfile[] = [
   { id: "material", name: "Material Design", organisation: "Google", type: "Public design system", usedFor: "Android and Google products", summary: "Google's design system. Shortcut cites Google's Android developer documentation for it.", status: "listed", officialUrl: "https://m3.material.io/", dateVerified: "2026-10-07", explorerSystem: "material" },
   { id: "apple", name: "Human Interface Guidelines", organisation: "Apple", type: "Public design system", usedFor: "Apple platforms", summary: "Platform conventions for iOS, iPadOS, macOS, watchOS and visionOS.", status: "listed", officialUrl: "https://developer.apple.com/design/human-interface-guidelines/", dateVerified: "2026-10-07", explorerSystem: "apple" },
   // Named in the brief; profiles not written yet. Listed so the gap is visible.
-  { id: "fluent", name: "Fluent", organisation: "Microsoft", type: "Public design system", usedFor: "Windows and Microsoft 365", summary: "Microsoft's design system.", status: "planned", officialUrl: "https://fluent2.microsoft.design/", dateVerified: null },
+  { id: "fluent", name: "Fluent", organisation: "Microsoft", type: "Public design system", usedFor: "Windows and Microsoft 365", summary: "Microsoft's design system. Shortcut has read its layout, button and dialog pages.", status: "listed", officialUrl: "https://fluent2.microsoft.design/", dateVerified: "2026-10-09", explorerSystem: "fluent" },
   { id: "carbon", name: "Carbon", organisation: "IBM", type: "Public design system", usedFor: "IBM products", summary: "IBM's design system. Shortcut has read its button, spacing, colour token and modal pages.", status: "listed", officialUrl: "https://carbondesignsystem.com/", dateVerified: CHECKED, explorerSystem: "carbon" },
-  { id: "polaris", name: "Polaris", organisation: "Shopify", type: "Public design system", usedFor: "Shopify admin and apps", summary: "Shopify's design system.", status: "planned", officialUrl: "https://polaris.shopify.com/", dateVerified: null },
+  { id: "polaris", name: "Polaris", organisation: "Shopify", type: "Public design system", usedFor: "Shopify admin and apps", summary: "Shopify's UI framework for apps on its platform.", status: "planned", officialUrl: "https://shopify.dev/docs/api/polaris", dateVerified: "2026-10-09", caveat: "The old Polaris site now redirects to a developer reference for web components. Shortcut found no design guidance pages there, so Polaris is not compared." },
   { id: "primer", name: "Primer", organisation: "GitHub", type: "Public design system", usedFor: "GitHub", summary: "GitHub's design system. Shortcut has read its button and dialog guidelines.", status: "listed", officialUrl: "https://primer.style/", dateVerified: CHECKED, explorerSystem: "primer" },
   { id: "uswds", name: "U.S. Web Design System", organisation: "U.S. General Services Administration", type: "Public design system", usedFor: "United States federal websites", summary: "The design system for federal websites. Shortcut has read its button, design token and modal pages.", status: "listed", officialUrl: "https://designsystem.digital.gov/", dateVerified: CHECKED, explorerSystem: "uswds" },
   // Companies with useful design material and no verified public design system.
@@ -269,8 +269,6 @@ const fromCell = (topic: string, system: SourceId): OfficialNote[] => {
   const cell = getExplorerTopic(topic)?.cells?.[system];
   return cell ? cell.points.map((text) => ({ text, citation: cell.citation })) : [];
 };
-
-const unread: ResponsiveGuidance = { status: "not-read", label: "Responsive guidance not yet read", notes: [] };
 
 /**
  * What each system says about viewports and devices, on pages Shortcut has
@@ -318,8 +316,14 @@ export const responsiveGuidance: Record<string, ResponsiveGuidance> = {
       { text: "Fixed-wide grids have a maximum width of 1296 px and are the default. Fixed-narrow grids, at 864 px, are for long-form reading. Fluid grids have no maximum and should be used sparingly.", citation: viewportCite.atlassianGrid },
     ],
   },
-  primer: unread,
-  uswds: unread,
+  primer: { status: "read", label: "Responsive guidance read", topics: "Viewport ranges, breakpoints", notes: fromCell("breakpoints", "primer") },
+  uswds: { status: "read", label: "Responsive guidance read", topics: "Layout grid", notes: fromCell("breakpoints", "uswds") },
+  fluent: {
+    status: "read",
+    label: "Responsive guidance read",
+    topics: "Spacing ramp, touch targets",
+    notes: [...fromCell("spacing", "fluent").slice(2), ...fromCell("touch-targets", "fluent").map((note) => ({ ...note, input: ["touch" as const] }))],
+  },
   "uber-base": { status: "login", label: "Responsive guidance behind staff login", notes: [] },
 };
 
