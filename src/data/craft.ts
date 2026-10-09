@@ -20,7 +20,10 @@ const REVIEWED = VERIFIED;
 
 type Input = Omit<CraftEntry, "dateReviewed" | "kind"> & { kind?: CraftEntry["kind"] };
 
-const entry = (input: Input): CraftEntry => ({ kind: "industry-convention", dateReviewed: REVIEWED, ...input });
+/** Entries written after the first review pass, with the day each was written. */
+const WRITTEN_LATER = new Set(["breakpoints", "columns", "content-priority", "drawer-width", "dropdown-by-viewport", "dropdown-choice", "fluid-layout", "foldables", "gaps", "icon-and-label", "icon-size", "loading-by-duration", "loading-kinds", "mobile-first", "modal-drawer-fullscreen", "modal-width", "navigation-by-viewport", "page-margins", "table-by-viewport", "tabs-by-viewport", "tabs-when", "touch-vs-pointer", "viewport-vs-resolution"]);
+
+const entry = (input: Input): CraftEntry => ({ kind: "industry-convention", dateReviewed: WRITTEN_LATER.has(input.id) ? "2026-10-09" : REVIEWED, ...input });
 const craft = (input: Input): CraftEntry => entry({ kind: "craft-guidance", ...input });
 
 /** The first point each system makes on a topic in the comparison, as official notes. */

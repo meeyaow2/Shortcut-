@@ -339,9 +339,27 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: cite.govukErrorMessage,
       },
+      atlassian: {
+        headline: "No dead ends",
+        points: [
+          "For warning and error messages, avoid dead ends and say how to proceed.",
+          "Do not rely on colour alone to convey severity; the text should say it is a warning or an error.",
+          "Include error messages for required or invalid checkbox and radio fields.",
+        ],
+        citation: read9("atlassian", "Atlassian Design System, Section message usage", "https://atlassian.design/components/section-message/usage"),
+      },
+      uswds: {
+        headline: "Inline as well as at the top",
+        points: [
+          "On long forms, always include in-line validation in addition to any error message at the top of the form.",
+          "When people must do something in response, say what, and make it as easy as possible.",
+          "Keep the alert title to one line.",
+        ],
+        citation: read9("uswds", "USWDS, Alert", "https://designsystem.digital.gov/components/alert/"),
+      },
     },
     takeaway:
-      "All four put the message at the field. They differ on timing: the Android example validates while typing, Apple varies it by field, and GOV.UK's pattern assumes validation on submit with a summary. Choose timing per field type, always say how to fix the problem, and keep what the user typed.",
+      "The first four put the message at the field, and USWDS says to do so even when there is also a message at the top of the form. They differ on timing: the Android example validates while typing, Apple varies it by field, and GOV.UK's pattern assumes validation on submit with a summary. Choose timing per field type, always say how to fix the problem, and keep what the user typed.",
   },
   {
     id: "colour",
@@ -386,9 +404,49 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: cite.govukColour,
       },
+      atlassian: {
+        headline: "Roles, emphasis and state in the token name",
+        points: [
+          "Colours are applied with design tokens: you choose a token, not a shade.",
+          "Token names start with color, then the property, such as background, border or icon.",
+          "Modifiers carry the colour role, emphasis level and interaction state.",
+          "Neutral colours apply to most backgrounds, text and shapes.",
+        ],
+        citation: read9("atlassian", "Atlassian Design System, Color", "https://atlassian.design/foundations/color"),
+      },
+      carbon: {
+        headline: "Grey dominant, blue for action",
+        points: [
+          "The neutral grey family is dominant, using subtle shifts in value to organise content into zones.",
+          "The core blue family is the primary action colour. Additional colours are used sparingly and purposefully.",
+          "Tokens are role-based, and themes specify the values that serve those roles.",
+          "In light themes, layers alternate between White and Gray 10. In dark themes each layer is one step lighter.",
+        ],
+        citation: read9("carbon", "Carbon, Color", "https://www.carbondesignsystem.com/building-blocks/foundations/color/overview"),
+      },
+      uswds: {
+        headline: "A grade scale from 0 to 100",
+        points: [
+          "Colour tokens are organised into theme tokens, state tokens and system tokens.",
+          "Grade expresses how light or dark a colour is, from 0 for pure white to 100 for pure black.",
+          "Grades are regularised: grade 50 in one family is as light as grade 50 in another.",
+          "Use USWDS colour tokens and avoid custom colours whenever possible.",
+        ],
+        citation: read9("uswds", "USWDS, Using color", "https://designsystem.digital.gov/design-tokens/color/overview/"),
+      },
+      fluent: {
+        headline: "Neutral, shared and brand palettes",
+        points: [
+          "Three palettes: neutral, shared and brand.",
+          "Neutrals ground the interface: surfaces, text and layout elements.",
+          "Use shared colours sparingly, to accent and highlight important areas.",
+          "Semantic colours communicate feedback, status or urgency. Do not use them for decoration.",
+        ],
+        citation: read9("fluent", "Fluent 2, Color", "https://fluent2.microsoft.design/color"),
+      },
     },
     takeaway:
-      "Every system names colours by role and asks you not to reuse a role for a different job. None of these pages sets its own contrast ratio; the testable numbers come from WCAG.",
+      "Every system gives colours role-based names, whatever else it layers on top, and several ask you not to reuse a role for a different job. Carbon and Fluent both keep neutrals dominant and colour sparing. USWDS adds a grade scale that makes lightness comparable across hues. None of the pages read sets its own contrast ratio; the testable numbers come from WCAG.",
   },
   {
     id: "typography",
@@ -1096,9 +1154,29 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: src("govuk", "GOV.UK Design System, Service navigation", "https://design-system.service.gov.uk/components/service-navigation/"),
       },
+      carbon: {
+        headline: "A header, with optional side panels",
+        points: [
+          "The UI shell header is the highest level of navigation, and identifies the UI by name.",
+          "It can be used alone for simple products, or with a left panel for deeper navigation.",
+          "A right panel holds system-level actions tied to an icon in the header.",
+          "The header spans the full width of the viewport.",
+        ],
+        citation: read9("carbon", "Carbon, UI shell header", "https://www.carbondesignsystem.com/building-blocks/core/components/ui-shell-header/guidelines"),
+      },
+      uswds: {
+        headline: "By user task, in priority order",
+        points: [
+          "List all important sections as links in the horizontal navigation.",
+          "Present links in priority order, with higher-demand links further left.",
+          "Do not model navigation on your organisation's structure. Structure it by what people most often need.",
+          "Highlight the current section, and base the structure on research with users.",
+        ],
+        citation: read9("uswds", "USWDS, Header", "https://designsystem.digital.gov/components/header/"),
+      },
     },
     takeaway:
-      "Five is the ceiling in both systems that give a number. All four keep primary navigation for destinations only, in the same place on every screen. Actions, account controls and secondary links go elsewhere.",
+      "Five is the ceiling in both systems that give a number. The first four keep primary navigation for destinations only, in the same place on every screen; actions, account controls and secondary links go elsewhere. USWDS adds that the order should follow demand and the structure should follow what people need, not the organisation chart.",
   },
   {
     id: "table",
