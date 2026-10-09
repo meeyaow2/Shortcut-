@@ -89,6 +89,7 @@ const nav: NavItem[] = [
     label: "AI + Design",
     children: [
       { href: "/ai", label: "Overview" },
+      { href: "/ai/agents", label: "Designing with Agents" },
       { href: "/ai/updates", label: "AI Updates" },
       { href: "/ai/generative-ui", label: "Generative UI" },
       { href: "/ai/workflow", label: "AI in Your Workflow" },

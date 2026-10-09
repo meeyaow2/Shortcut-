@@ -15,6 +15,7 @@ import { ExternalLink } from "../ui/primitives";
 
 const sections = [
   { href: "/ai", label: "Overview" },
+  { href: "/ai/agents", label: "Designing with Agents" },
   { href: "/ai/updates", label: "Updates" },
   { href: "/ai/generative-ui", label: "Generative UI" },
   { href: "/ai/workflow", label: "Workflow" },
@@ -32,7 +33,8 @@ export function AiSubnav() {
     <nav aria-label="AI + Design" className="-mx-4 overflow-x-auto border-b border-line px-4 sm:mx-0 sm:px-0">
       <ul className="flex gap-1">
         {sections.map((section) => {
-          const current = pathname === section.href;
+          // The agents track has chapter pages beneath it.
+          const current = pathname === section.href || (section.href === "/ai/agents" && pathname.startsWith("/ai/agents/"));
           return (
             <li key={section.href}>
               <Link

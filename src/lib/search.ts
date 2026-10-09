@@ -1,3 +1,4 @@
+import { agentChapters, confidentWrong, contextFiles, exampleAgents, trustCheck } from "@/data/agents";
 import { answers } from "@/data/answers";
 import { aiTools, aiWorkflows, lessons, toolComparisons } from "@/data/ai";
 import { cheatSheets } from "@/data/cheat-sheets";
@@ -298,6 +299,12 @@ const index: Doc[] = [
     doc(
       { type: "workflow", id: w.id, title: "AI for " + w.stage.toLowerCase(), detail: w.useWhen, href: "/ai/workflow#" + w.id, context: "global", contentType: "Craft guidance" },
       [w.goodUse, w.weakUse, w.commonFailure, w.inputNeeded.join(" "), w.designerOwns.join(" "), "ai workflow ux"].join(" "),
+    ),
+  ),
+  ...agentChapters.map((c) =>
+    doc(
+      { type: "workflow", id: "agents-" + c.id, title: "Designing with Agents: " + c.title, detail: c.summary, href: "/ai/agents/" + c.id, context: "global", contentType: "Learning module" },
+      [c.subtitle, c.thirty.join(" "), (c.goodUse ?? []).join(" "), (c.weakUse ?? []).join(" "), (c.give ?? []).join(" "), (c.verify ?? []).join(" "), c.failure ?? "", c.sections.map((s) => s.title + " " + (s.items ?? []).join(" ") + " " + (s.rows ?? []).map((r) => r.label + " " + r.text).join(" ")).join(" "), "agent agents agentic ai design workflow", c.id === "trust" ? "trust ai output hallucination verify confident wrong fake citation " + trustCheck.join(" ") + " " + confidentWrong.map((x) => x.claim).join(" ") : "", c.id === "prologue" ? "context files " + contextFiles.map((f) => f.name).join(" ") : "", c.id === "building-agents" ? "agent template build " + exampleAgents.map((a) => a.name).join(" ") : "", c.id === "design-systems" ? "ai design systems tokens machine readable" : ""].join(" "),
     ),
   ),
   ...lessons.map((l) =>
