@@ -659,9 +659,48 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: src("govuk", "GOV.UK Design System, Text input", "https://design-system.service.gov.uk/components/text-input/"),
       },
+      atlassian: {
+        headline: "A visible label, no placeholder",
+        points: [
+          "The label must say what the field requires and sit left-aligned directly above the input.",
+          "Make sure all fields have a visible label.",
+          "Do not use placeholder text. Search fields are the only exception, with a search icon and an accessible label.",
+          "Use helper text for extra information or the accepted format.",
+        ],
+        citation: read9("atlassian", "Atlassian Design System, Text field usage", "https://atlassian.design/components/textfield/usage"),
+      },
+      carbon: {
+        headline: "For input that cannot be predicted",
+        points: [
+          "Use a text input when people enter unique information that a preset list could not cover.",
+          "If people can only choose from a predefined list, use a selection control instead.",
+          "Text input is for a single line. Text area is for more than a few words.",
+          "Two styles, default and fluid, share the same function.",
+        ],
+        citation: read9("carbon", "Carbon, Text input", "https://www.carbondesignsystem.com/building-blocks/core/components/text-input/guidelines"),
+      },
+      uswds: {
+        headline: "Sized to the answer, validated late",
+        points: [
+          "Use fields appropriate to the length of the input. The length is a hint about how much to write.",
+          "Consider the mobile context: text inputs are harder for mobile users than desktop users.",
+          "Only show error messages after someone has interacted with the field.",
+          "Avoid placeholder text.",
+        ],
+        citation: read9("uswds", "USWDS, Text input", "https://designsystem.digital.gov/components/text-input/"),
+      },
+      fluent: {
+        headline: "Width fits the expected content",
+        points: [
+          "An input is for short, free-form text. For more than one line, use a textarea.",
+          "The width of the input should fit the approximate length of the content expected.",
+          "Avoid placeholder text for essential information, and always combine it with a label.",
+        ],
+        citation: read9("fluent", "Fluent 2, Input usage", "https://fluent2.microsoft.design/components/web/react/core/input/usage"),
+      },
     },
     takeaway:
-      "Three of the four warn that placeholder text disappears and cannot stand in for a label. A visible label above the field is the one choice none of them argues against. GOV.UK's point about sizing the field to the expected answer is the least followed and easiest to adopt.",
+      "Most of these systems warn that placeholder text disappears and cannot stand in for a label. A visible label above the field is the one choice none of them argues against. Sizing the field to the expected answer, which GOV.UK, USWDS and Fluent each ask for, is the least followed and easiest to adopt.",
   },
   {
     id: "select",
@@ -862,9 +901,39 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: src("govuk", "GOV.UK Design System, Accordion", "https://design-system.service.gov.uk/components/accordion/"),
       },
+      carbon: {
+        headline: "When space is at a premium",
+        points: [
+          "Use to organise related information, and to shorten pages when content is not crucial to read in full.",
+          "Use when long content cannot be shown at once, as on a mobile interface or in a side panel.",
+          "If people are likely to read all of the content, do not use an accordion: it adds the burden of an extra click.",
+          "For large amounts of nested information, consider a tree view.",
+        ],
+        citation: read9("carbon", "Carbon, Accordion", "https://www.carbondesignsystem.com/building-blocks/core/components/accordion/guidelines"),
+      },
+      uswds: {
+        headline: "Only a few pieces needed",
+        points: [
+          "Use it if people will need only a few specific pieces of content on a page.",
+          "Do not use it if people need to see most or all of the information. Use well-formatted text.",
+          "Accordions increase cognitive load, because people have to decide which headers to open.",
+          "Make the entire header selectable.",
+        ],
+        citation: read9("uswds", "USWDS, Accordion", "https://designsystem.digital.gov/components/accordion/"),
+      },
+      fluent: {
+        headline: "Never required information",
+        points: [
+          "Never put information that is required for the current task inside an accordion.",
+          "Items are closed by default, and opening one closes the others unless you allow several open.",
+          "Never put information in one item that needs to be referenced in another.",
+          "Keep headers brief; they wrap at smaller widths.",
+        ],
+        citation: read9("fluent", "Fluent 2, Accordion usage", "https://fluent2.microsoft.design/components/web/react/core/accordion/usage"),
+      },
     },
     takeaway:
-      "Every system that has one says the same two things: never hide what everyone needs, and never nest. GOV.UK goes further and asks you to cut the content before reaching for an accordion.",
+      "Every system that has one says not to hide what people need, and none encourages nesting. GOV.UK goes further and asks you to cut the content before reaching for an accordion. USWDS names the cost: people have to decide which headers to open.",
   },
   {
     id: "navigation",
@@ -955,9 +1024,19 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: src("govuk", "GOV.UK Design System, Table", "https://design-system.service.gov.uk/components/table/"),
       },
+      uswds: {
+        headline: "Tabular data and directories",
+        points: [
+          "Use a table for tabular information and for directories of similarly structured items.",
+          "Do not use tables in place of a layout grid.",
+          "Cell content should be brief and scannable. Paragraphs in a cell belong under headings instead.",
+          "Always use a header row, and format each column consistently.",
+        ],
+        citation: read9("uswds", "USWDS, Table", "https://designsystem.digital.gov/components/table/"),
+      },
     },
     takeaway:
-      "The basic table in every system is for reading and comparing, not managing data. Sorting, selection and pagination are treated as a separate, heavier component or left to you. Right-align numbers and write real column headers; both are stated outright.",
+      "The basic table in every system is for reading and comparing, not managing data. Sorting, selection and pagination are treated as a separate, heavier component or left to you. Write real column headers, which the systems ask for outright, and right-align numbers you want compared.",
   },
   {
     id: "tabs",
@@ -994,6 +1073,36 @@ export const explorerTopics: ExplorerTopic[] = [
           "Too many tabs or long labels wrap onto more than one line.",
         ],
         citation: src("govuk", "GOV.UK Design System, Tabs", "https://design-system.service.gov.uk/components/tabs/"),
+      },
+      atlassian: {
+        headline: "For concise content people return to",
+        points: [
+          "Tabs organise content by grouping similar information on the same page.",
+          "Use tabs to switch between views within the same context. Do not use them to navigate to different pages or states.",
+          "Keep the number of tabs low, and surface important information outside them.",
+          "Left and right arrow keys move between tabs; the Tab key moves into the content.",
+        ],
+        citation: read9("atlassian", "Atlassian Design System, Tabs usage", "https://atlassian.design/components/tabs/usage"),
+      },
+      carbon: {
+        headline: "Group related information",
+        points: [
+          "Use tabs to group related information into categories, so people do not navigate away from their workflow.",
+          "For filtering the same content, use a content switcher instead.",
+          "For a linear, step by step process, use a progress indicator.",
+          "Do not use tabs if people need to compare information in different groups.",
+        ],
+        citation: read9("carbon", "Carbon, Tabs", "https://www.carbondesignsystem.com/building-blocks/core/components/tabs/guidelines"),
+      },
+      fluent: {
+        headline: "Tabs do not scroll or wrap",
+        points: [
+          "A tablist switches between categories of related information without going to a different page.",
+          "Tabs in a horizontal tablist will not scroll or wrap. To show more, include an overflow menu button.",
+          "Tablists are less effective in smaller layouts. When space is limited, consider an accordion or a dropdown.",
+          "One tab, usually the first, should be active on first render.",
+        ],
+        citation: read9("fluent", "Fluent 2, Tablist usage", "https://fluent2.microsoft.design/components/web/react/core/tablist/usage"),
       },
     },
     takeaway:
@@ -1211,6 +1320,11 @@ export const explorerTopics: ExplorerTopic[] = [
 /** A citation for a page read on 8 October 2026, when the second set of systems was added. */
 function read(sourceId: SourceId, label: string, url: string): Citation {
   return { sourceId, label, url, dateVerified: "2026-10-08" };
+}
+
+/** A citation for a page read on 9 October 2026. */
+function read9(sourceId: SourceId, label: string, url: string): Citation {
+  return { sourceId, label, url, dateVerified: "2026-10-09" };
 }
 
 /** A citation for a page checked on VERIFIED. */
