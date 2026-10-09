@@ -149,6 +149,16 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: cite.govukLayout,
       },
+      atlassian: {
+        headline: "Six breakpoints, by viewport width",
+        points: [
+          "xxs 320 to 479, xs 480 to 767, s 768 to 1023, m 1024 to 1439, l 1440 to 1767, xl 1768 px and above.",
+          "Columns go from 2 on mobile to 6 on tablet and 12 on desktop.",
+          "Margins are 16 px up to 1023 px and 32 px from 1024 px.",
+          "Design for at least two device sizes, and always include mobile.",
+        ],
+        citation: viewportCite.atlassianGrid,
+      },
     },
     takeaway:
       "The numbers differ because the units and platforms differ, so do not copy one system's breakpoints into another. What they agree on: design for the space available, start small, and keep the same functionality at every size. For a Singapore government web service, SGDS's 320, 768 and 1440 are the sizes to hand off.",

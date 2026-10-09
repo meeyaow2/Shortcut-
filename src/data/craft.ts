@@ -306,6 +306,7 @@ export const e = {
     official: [
       { text: "Default maximum page width is 1020 px; prefer a two-thirds column for readability.", citation: cite.govukLayout },
       { text: "Deliver at least 320, 768 and 1440 px layouts.", citation: cite.sgdsBreakpoint },
+      { text: "A fixed-wide grid has a maximum width of 1296 px. A fixed-narrow grid, for long-form reading, has a maximum of 864 px.", citation: viewportCite.atlassianGrid },
     ],
     starter: { label: "Content width", context: "Application layouts, desktop" },
   }),
@@ -447,6 +448,7 @@ export const e = {
     official: [
       { text: "Deliver at least 320, 768 and 1440 px layouts.", citation: cite.sgdsBreakpoint },
       { text: "The responsive spacing scale uses smaller values on small screens for its larger steps.", citation: cite.govukSpacing },
+      { text: "Grid margins are 16 px for viewports up to 1023 px and 32 px from 1024 px.", citation: viewportCite.atlassianGrid },
     ],
     starter: { label: "Page margins", context: "Desktop. 16–20 px on mobile" },
   }),
@@ -483,6 +485,7 @@ export const e = {
     mentorNote: "Decide the narrowest a card can be and still work. The column count follows from that.",
     starter: { label: "Columns", context: "Content grids, desktop" },
     official: [
+      { text: "The grid has 2 columns from 320 px, 6 from 480 px and 12 from 1024 px.", citation: viewportCite.atlassianGrid },
       { text: "On iPhone Duo a split view expands on the inner display and collapses to a single pane on the outer display. In a grid, prefer an even number of columns so content divides cleanly at the fold.", citation: viewportCite.duoHig, viewportApplicability: ["foldable"] },
       { text: "A large unfolded foldable in landscape is like a tablet, and a two-pane layout makes good use of the width. Folded, a single column is straightforward and effective.", citation: viewportCite.androidFoldables, viewportApplicability: ["foldable"] },
     ],
@@ -607,6 +610,7 @@ export const e = {
     commonMistakes: ["Breakpoints copied from a framework without checking where this layout breaks.", "Only the breakpoint widths tested, never the widths between them.", "A new breakpoint for each new device."],
     mentorNote: "Add a breakpoint because the layout breaks, not because an iPad exists.",
     official: [
+      { text: "Six breakpoints by viewport width: 320, 480, 768, 1024, 1440 and 1768 px.", citation: viewportCite.atlassianGrid },
       { text: "Width classes: compact under 600 dp, medium 600 to 840, expanded 840 to 1200, large 1200 to 1600, extra large 1600 and up. Google calls them opinionated breakpoints.", citation: viewportCite.androidSizeClasses },
       { text: "Deliver at least 320, 768 and 1440 px layouts.", citation: cite.sgdsBreakpoint },
     ],

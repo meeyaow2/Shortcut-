@@ -12,6 +12,7 @@ import { daysBetween } from "@/lib/dates";
 import { ContextNotice } from "../layout/ContextSwitch";
 import { Button } from "../ui/Button";
 import { EmptyState, FilterGroup } from "../ui/primitives";
+import { NothingFound } from "../visual/Diagrams";
 import { UpdateCard } from "./UpdateCard";
 
 const ALL = "all";
@@ -106,6 +107,7 @@ export function UpdatesView() {
           </div>
         ) : (
           <EmptyState
+            visual={<NothingFound />}
             title="No updates match these filters"
             action={<Button onClick={() => router.replace(pathname, { scroll: false })}>Clear filters</Button>}
           >

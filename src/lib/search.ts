@@ -12,6 +12,7 @@ import { resources } from "@/data/resources";
 import { getSource } from "@/data/sources";
 import { caseStudies, getSystem, systems, uiConcepts } from "@/data/systems";
 import { updates } from "@/data/updates";
+import { resolveViewportValue } from "@/data/viewports";
 import type { Context, ContextFilter } from "@/types";
 
 export type HitType = "system" | "practice" | "figma" | "guidance" | "cheatsheet" | "check" | "workflow" | "prompt" | "tool" | "explorer" | "update" | "resource" | "answer";
@@ -52,6 +53,8 @@ interface Doc extends SearchHit {
   bodyText: string;
   /** A word the query must contain for this item to appear at all. */
   requires?: string;
+  /** Titles to use when the query names a viewport, keyed by that viewport. */
+  viewportTitles?: Record<string, string>;
 }
 
 /** Lowercased words with a leading space, so a term can be matched at word starts only. */
@@ -59,9 +62,11 @@ function words(text: string): string {
   return ` ${text.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim()}`;
 }
 
-function doc(hit: SearchHit, body: string, requires?: string): Doc {
-  return { ...hit, titleText: words(hit.title), bodyText: words(`${hit.detail} ${body}`), requires };
+function doc(hit: SearchHit, body: string, requires?: string, viewportTitles?: Record<string, string>): Doc {
+  return { ...hit, titleText: words(hit.title), bodyText: words(`${hit.detail} ${body}`), requires, viewportTitles };
 }
+
+const VIEWPORT_WORDS = ["mobile", "tablet", "laptop", "desktop"] as const;
 
 // Words people use for a system or reference that its own text does not.
 const systemKeywords: Record<string, string> = {
@@ -125,6 +130,8 @@ const index: Doc[] = [
               contentType: entry.kind === "industry-convention" ? "Industry convention" : "Craft guidance",
             },
             `${sheet.title} ${entry.viewportValues ? "mobile tablet laptop desktop large viewport responsive screen size " + Object.values(entry.viewportValues).join(" ") : ""} ${(entry.viewportApplicability ?? []).join(" ")} ${(entry.input ?? []).join(" ")} ${(entry.deviceReferences ?? []).map((d) => d.device + " " + d.guidance).join(" ")} ${(entry.whenToUse ?? []).join(" ")} ${entry.commonRange ?? ""} ${entry.why} ${entry.mentorNote ?? ""} ${(entry.commonMistakes ?? []).join(" ")} ${(entry.scale ?? []).map((s) => `${s.label} ${s.use}`).join(" ")} ${(entry.official ?? []).map((o) => `${o.text} ${o.citation.label}`).join(" ")}`,
+            undefined,
+            entry.viewportValues && Object.fromEntries(VIEWPORT_WORDS.flatMap((word) => { const value = resolveViewportValue(entry.viewportValues, word); return value ? [[word, entry.title + " on " + word + ": " + value.value]] : []; })),
           ),
         ),
     ),
@@ -432,8 +439,10 @@ export function search(query: string, limitPerGroup = 6, context: ContextFilter 
   for (const { doc: d } of scored) {
     if (results[d.type].length < limitPerGroup) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { titleText, bodyText, requires, ...hit } = d;
-      results[d.type].push(hit);
+      const { titleText, bodyText, requires, viewportTitles, ...hit } = d;
+      // "mobile card padding" should show the mobile value, not the general one.
+      const named = VIEWPORT_WORDS.find((word) => terms.includes(" " + word));
+      results[d.type].push(named && viewportTitles?.[named] ? { ...hit, title: viewportTitles[named] } : hit);
     }
   }
   return results;

@@ -12,6 +12,7 @@ const READ = "2026-10-09";
 
 export const viewportCite = {
   duoHig: { sourceId: "apple", label: "Apple HIG, Designing for iPhone Duo", url: "https://developer.apple.com/design/human-interface-guidelines/designing-for-iphone-duo", datePublished: "2026-09-09", dateVerified: READ } as Citation,
+  atlassianGrid: { sourceId: "atlassian", label: "Atlassian Design System, Grid", url: "https://atlassian.design/foundations/grid", dateVerified: READ } as Citation,
   duoSpecs: { sourceId: "apple", label: "Apple, iPhone Duo technical specifications", url: "https://www.apple.com/iphone-duo/specs/", dateVerified: READ } as Citation,
   androidSizeClasses: { sourceId: "material", label: "Android Developers, Use window size classes", url: "https://developer.android.com/develop/ui/compose/layouts/adaptive/use-window-size-classes", dateVerified: READ } as Citation,
   androidFoldables: { sourceId: "material", label: "Android Developers, Learn about foldables", url: "https://developer.android.com/develop/ui/compose/layouts/adaptive/foldables/learn-about-foldables", dateVerified: READ } as Citation,

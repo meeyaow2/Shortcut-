@@ -6,7 +6,14 @@ import { Suspense } from "react";
 import { EditorialLabel, MentorNote } from "@/components/craft/Craft";
 import { DoDont } from "@/components/practice/Practice";
 import { SourceMeta } from "@/components/source/Source";
+import { AgendaTimeline, ProcessStrip } from "@/components/visual/Diagrams";
 import { getPracticeGuide, getPracticeTemplate, practiceGuides } from "@/data/practice";
+
+// The shape of the whole activity, drawn above its steps. The highlighted step is the one the rest exist to serve.
+const flows: Record<string, { steps: string[]; emphasise: number[]; caption: string }> = {
+  "user-interview": { steps: ["Before", "Interview", "Debrief", "Synthesis", "Finding"], emphasise: [4], caption: "An interview is one step of five. The finding is what it is for; notes that never reach synthesis were not worth taking." },
+  synthesis: { steps: ["Notes", "Clusters", "Themes", "Insights", "Opportunities"], emphasise: [3], caption: "Each step says more with fewer items. An insight is the first point at which someone outside the team can act on it." },
+};
 
 type Props = { params: Promise<{ guide: string }> };
 
@@ -122,6 +129,11 @@ async function Guide({ params }: Props) {
           </Section>
 
           <Section id="steps" title="Step by step">
+            {flows[guide.id] && (
+              <div className="mb-5">
+                <ProcessStrip {...flows[guide.id]} />
+              </div>
+            )}
             {/* Numbered: the steps happen in this order. */}
             <ol className="divide-y divide-line">
               {guide.steps.map((step, index) => (
@@ -140,6 +152,9 @@ async function Guide({ params }: Props) {
 
           {guide.agenda && (
             <Section id="agenda" title="Example agenda: problem framing, 80 minutes">
+              <div className="mb-4">
+                <AgendaTimeline rows={guide.agenda} />
+              </div>
               <dl className="divide-y divide-line rounded-md border border-line">
                 {guide.agenda.map((row) => (
                   <div key={row.activity} className="grid grid-cols-[5rem_1fr] gap-x-4 px-4 py-2.5">

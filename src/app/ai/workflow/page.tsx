@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { WorkflowCard } from "@/components/ai/Ai";
 import { EditorialLabel } from "@/components/craft/Craft";
 import { PageHeader } from "@/components/ui/primitives";
+import { ProcessStrip } from "@/components/visual/Diagrams";
 import { aiWorkflows } from "@/data/ai";
 
 export const metadata: Metadata = { title: "AI in Your Workflow" };
@@ -17,6 +18,14 @@ export default function AiWorkflowPage() {
           <EditorialLabel kind="craft-guidance" />
         </div>
       </PageHeader>
+
+      <div className="max-w-4xl pt-8">
+        <ProcessStrip
+          steps={["Research", "AI synthesis", "Designer validation", "Flow", "Prototype", "AI critique", "Designer decision"]}
+          emphasise={[2, 6]}
+          caption="One way AI fits into product design. The highlighted steps are yours: the model proposes, and a designer checks and decides."
+        />
+      </div>
 
       <div className="grid gap-10 pt-8 lg:grid-cols-[13rem_1fr]">
         <nav aria-label="Stages" className="hidden lg:sticky lg:top-24 lg:block lg:self-start">

@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { SearchResults } from "@/components/search/SearchResults";
 import { ButtonLink } from "@/components/ui/Button";
 import { EmptyState, PageHeader } from "@/components/ui/primitives";
+import { NothingFound } from "@/components/visual/Diagrams";
 import { ContextNotice } from "@/components/layout/ContextSwitch";
 import { useContentContext } from "@/hooks/useLibrary";
 import { countHits, search } from "@/lib/search";
@@ -35,6 +36,7 @@ function Results() {
           query && (
             <div className="mx-3">
               <EmptyState
+                visual={<NothingFound />}
                 title="Nothing matches that search"
                 action={<ButtonLink href={`/ask?q=${encodeURIComponent(query)}`}>Ask UX instead</ButtonLink>}
               >

@@ -2,6 +2,7 @@
 
 import { useViewport } from "@/hooks/useViewport";
 import type { CraftEntry } from "@/types";
+import { InstancesDiagram, SizingDiagram, TokenChain, VariantsDiagram } from "./Diagrams";
 import { ElevationSpecimen, LineHeightSpecimen, LineLengthSpecimen, NeutralSpecimen, RadiusSpecimen, SpacingSpecimen, Specimen, TypeScaleSpecimen } from "./Specimens";
 import { ColumnsPreview, FoldSchematic, NavPreview, PaddingPreview } from "./ViewportPreviews";
 
@@ -42,6 +43,14 @@ export function EntryVisual({ entry }: { entry: CraftEntry }) {
       return <ColumnsPreview values={entry.viewportValues} />;
     case "navigation-by-viewport":
       return <NavPreview />;
+    case "auto-layout-sizing":
+      return <SizingDiagram />;
+    case "figma-modes":
+      return <TokenChain />;
+    case "figma-components":
+      return <InstancesDiagram />;
+    case "figma-properties":
+      return <VariantsDiagram />;
     case "foldables":
       return <FoldEntry />;
     default:

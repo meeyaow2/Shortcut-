@@ -1,6 +1,7 @@
 import { referenceCaseStudies, referenceProfiles } from "./references";
 import { cite } from "./citations";
 import { getExplorerTopic } from "./explorer";
+import { viewportCite } from "./viewports";
 import type { Citation, OfficialNote, SourceId, Update } from "@/types";
 
 /**
@@ -307,7 +308,16 @@ export const responsiveGuidance: Record<string, ResponsiveGuidance> = {
     topics: "Modal sizes",
     notes: [{ text: "Modals come in four responsive sizes: extra small, small, medium and large.", citation: getExplorerTopic("modal")!.cells!.carbon!.citation }],
   },
-  atlassian: unread,
+  atlassian: {
+    status: "read",
+    label: "Responsive guidance read",
+    topics: "Breakpoints, grid, content width",
+    notes: [
+      ...fromCell("breakpoints", "atlassian"),
+      { text: "Breakpoints are based on the viewport width, not the width of the main content area.", citation: viewportCite.atlassianGrid },
+      { text: "Fixed-wide grids have a maximum width of 1296 px and are the default. Fixed-narrow grids, at 864 px, are for long-form reading. Fluid grids have no maximum and should be used sparingly.", citation: viewportCite.atlassianGrid },
+    ],
+  },
   primer: unread,
   uswds: unread,
   "uber-base": { status: "login", label: "Responsive guidance behind staff login", notes: [] },
