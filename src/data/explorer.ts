@@ -434,9 +434,38 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: cite.govukTypeScale,
       },
+      atlassian: {
+        headline: "Its own app typefaces",
+        points: [
+          "In-app experiences use Atlassian Sans and Atlassian Mono.",
+          "Text styles and typography tokens bundle font family, size and line height.",
+          "Principles: optimise for readability, create visual harmony, and contextualise for different users.",
+        ],
+        citation: read9("atlassian", "Atlassian Design System, Typography", "https://atlassian.design/foundations/typography"),
+      },
+      carbon: {
+        headline: "Productive and expressive type sets",
+        points: [
+          "The productive type set is for product spaces, with a more condensed treatment to keep focus on tasks.",
+          "The expressive set is larger, for editorial and marketing, and would be distracting in product.",
+          "Productive headings are fixed. Expressive headings are responsive and change size at breakpoints.",
+          "The typeface is IBM Plex.",
+        ],
+        citation: read9("carbon", "Carbon, Typography", "https://www.carbondesignsystem.com/building-blocks/foundations/typography/overview"),
+      },
+      fluent: {
+        headline: "Body text at 14 px on the web",
+        points: [
+          "The web type ramp runs from 10 px captions to a 68 px display size.",
+          "Body 1 is 14 px with a 20 px line height.",
+          "Segoe UI is the primary typeface, with native system fonts on other platforms.",
+          "Use sentence case; avoid all caps.",
+        ],
+        citation: read9("fluent", "Fluent 2, Typography", "https://fluent2.microsoft.design/typography"),
+      },
     },
     takeaway:
-      "Body size ranges from 16 to 19 px on the web and 17 pt on iPhone, so the common 14 px product-UI body is smaller than any of these systems' defaults. All four keep the scale short and build hierarchy from a few clear steps.",
+      "On the web, body size runs from 14 px in Fluent to 19 px in GOV.UK, and Apple's is 17 pt on iPhone. The common 14 px product-UI body matches Fluent and is smaller than the government systems' defaults. Most build hierarchy from a few clear steps, and Carbon is explicit that product screens and marketing pages need different type sets.",
   },
   {
     id: "spacing",
@@ -532,9 +561,30 @@ export const explorerTopics: ExplorerTopic[] = [
         citation: src("govuk", "GOV.UK Design System, Styles", "https://design-system.service.gov.uk/styles/"),
         none: true,
       },
+      atlassian: {
+        headline: "Seven tokens, by kind of element",
+        points: [
+          "2 px for small details such as badges and checkboxes; 4 px for supporting elements such as tags.",
+          "6 px for interactive elements: buttons, inputs and selects.",
+          "8 px for cards and menus; 12 px for modals, tables and large containers; 16 px for video players.",
+          "A full radius is for circular, people-related elements such as avatars.",
+          "Atlassian says the values may change and should be read as an indication only.",
+        ],
+        citation: read9("atlassian", "Atlassian Design System, Radius", "https://atlassian.design/foundations/radius"),
+      },
+      fluent: {
+        headline: "4 px by default",
+        points: [
+          "Corner radius on rectangles is 4 pixels in most cases.",
+          "Shapes smaller than 32 pixels use 2 pixels. Large and extra-large components use 8 and 12.",
+          "Follow iOS and Android guidelines in mobile contexts.",
+          "Four forms: rectangle, circle, pill and beak.",
+        ],
+        citation: read9("fluent", "Fluent 2, Shapes", "https://fluent2.microsoft.design/shapes"),
+      },
     },
     takeaway:
-      "SGDS and Material land on the same steps, 4, 8, 12, 16 and 24, and both tie the value to the size or kind of component. Neither applies one radius to everything.",
+      "SGDS and Material land on the same steps, 4, 8, 12, 16 and 24, and both tie the value to the size or kind of component. Atlassian and Fluent run smaller, at 6 and 4 px for a button, and also size the radius to the element. None applies one radius to everything.",
   },
   {
     id: "elevation",
@@ -578,9 +628,28 @@ export const explorerTopics: ExplorerTopic[] = [
         citation: src("govuk", "GOV.UK Design System, Styles", "https://design-system.service.gov.uk/styles/"),
         none: true,
       },
+      atlassian: {
+        headline: "Four levels, two with shadows",
+        points: [
+          "Four basic elevation levels: sunken, default, raised and overlay.",
+          "Only the two highest, raised and overlay, are paired with shadows.",
+          "In dark theme, higher elevations also use lighter surface colours, because shadows are harder to see.",
+        ],
+        citation: read9("atlassian", "Atlassian Design System, Elevation", "https://atlassian.design/foundations/elevation"),
+      },
+      fluent: {
+        headline: "Six shadow types, named by blur",
+        points: [
+          "Sharp, crisp shadows indicate closeness to a surface; larger, softer ones indicate distance.",
+          "Shadows combine a directional key shadow with a soft ambient one.",
+          "The ramp is named by blur: shadow 2 has a 2 pixel blur and shadow 64 a 64 pixel blur.",
+          "Windows uses strokes in place of key shadows to outline an object.",
+        ],
+        citation: read9("fluent", "Fluent 2, Elevation", "https://fluent2.microsoft.design/elevation"),
+      },
     },
     takeaway:
-      "Only one of the four leans on drop shadows, and it asks for them to be subtle. Material uses colour, Apple uses translucent materials, GOV.UK uses nothing. In every case height is reserved for navigation, menus and overlays, not ordinary content.",
+      "Among the first four systems only one leans on drop shadows, and asks for them to be subtle: Material uses colour, Apple translucent materials, GOV.UK nothing. Atlassian and Fluent do use shadows, though Atlassian only on its two highest levels. Height is mostly kept for things that sit above the page, not ordinary content.",
   },
   {
     id: "motion",
@@ -614,9 +683,29 @@ export const explorerTopics: ExplorerTopic[] = [
         citation: src("govuk", "GOV.UK Design System, Styles", "https://design-system.service.gov.uk/styles/"),
         none: true,
       },
+      carbon: {
+        headline: "Six duration tokens, 70 to 700 ms",
+        points: [
+          "70 and 110 ms for micro-interactions such as buttons, toggles and fades.",
+          "150 and 240 ms for small expansions, short movements and toasts.",
+          "400 ms for large expansions and important notifications; 700 ms for background dimming.",
+          "Productive motion is significantly faster than expressive motion, and larger changes take longer.",
+        ],
+        citation: read9("carbon", "Carbon, Motion", "https://www.carbondesignsystem.com/building-blocks/foundations/motion/overview"),
+      },
+      fluent: {
+        headline: "Quick, natural, sized to the element",
+        points: [
+          "Give larger elements more time to animate than smaller ones.",
+          "Aim for fast, smooth motion without making people wait.",
+          "Linear easing can feel unnatural; use it only where a constant rate is needed, such as rotation.",
+          "Motion should be functional: applied with purpose, to show the next step or a change.",
+        ],
+        citation: read9("fluent", "Fluent 2, Motion", "https://fluent2.microsoft.design/motion"),
+      },
     },
     takeaway:
-      "Both systems that speak to motion say the same thing: animate only when it explains a change, keep it short, and respect reduced-motion settings. The two government systems give little or nothing, so there is no official motion spec to follow for a Singapore service.",
+      "Material and Apple say the same thing: animate only when it explains a change, keep it short, and respect reduced-motion settings. Carbon and Fluent agree that motion should be quick and purposeful, and Carbon is the only one read that publishes durations, from 70 to 700 ms. The two government systems give little or nothing, so there is no official motion spec to follow for a Singapore service.",
   },
   {
     id: "text-input",
@@ -747,9 +836,39 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: src("govuk", "GOV.UK Design System, Select", "https://design-system.service.gov.uk/components/select/"),
       },
+      atlassian: {
+        headline: "A label outside the field",
+        points: [
+          "Use select to let people choose one or more items from a list of menu items.",
+          "Do not use placeholder text to clarify the field. Use the field label and helper text.",
+          "Keep the label outside the field so it stays visible.",
+          "Menu items can be grouped under headings.",
+        ],
+        citation: read9("atlassian", "Atlassian Design System, Select usage", "https://atlassian.design/components/select/usage"),
+      },
+      carbon: {
+        headline: "Not for two options",
+        points: [
+          "Do not use a dropdown when there are two options. Use a radio button group.",
+          "Do not nest dropdowns or use them for overly complex information.",
+          "Consider the native select if the experience is mostly form-based or often used on mobile.",
+          "Variants: dropdown, multiselect and combo box.",
+        ],
+        citation: read9("carbon", "Carbon, Dropdown", "https://www.carbondesignsystem.com/building-blocks/core/components/dropdown/guidelines"),
+      },
+      uswds: {
+        headline: "Seven to 15 options, used sparingly",
+        points: [
+          "Use the select only for about seven to 15 options, when space is limited.",
+          "Fewer than seven options: use radio buttons. More than 15: consider a combo box.",
+          "For choosing more than one, use checkboxes. People often do not understand multi-select.",
+          "Do not submit the form automatically when an option is chosen.",
+        ],
+        citation: read9("uswds", "USWDS, Select", "https://designsystem.digital.gov/components/select/"),
+      },
     },
     takeaway:
-      "This is the sharpest disagreement in the Explorer: GOV.UK calls select a last resort on research evidence, while the others treat it as a normal space-saving control. They agree at the edges: use radios for two or three options, and something searchable for long lists.",
+      "This is the sharpest disagreement in the Explorer: GOV.UK and USWDS both treat select as a last resort, while most others treat it as a normal space-saving control. They agree at the edges: radios for a few options, something searchable for long lists. USWDS puts numbers on it: fewer than seven, use radios; more than 15, consider a combo box.",
   },
   {
     id: "modal",
@@ -1154,9 +1273,38 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: src("govuk", "GOV.UK Design System, Checkboxes", "https://design-system.service.gov.uk/components/checkboxes/"),
       },
+      atlassian: {
+        headline: "One or more from a list, or a confirmation",
+        points: [
+          "Use checkboxes when people select one or more options from a list of related items, or when you need explicit confirmation.",
+          "Keep labels short and descriptive, with no punctuation after them.",
+          "A parent checkbox shows an indeterminate state when some, but not all, of its children are selected.",
+          "Do not use a disabled checkbox if it needs to stay in the tab order. Use validation instead.",
+        ],
+        citation: read9("atlassian", "Atlassian Design System, Checkbox usage", "https://atlassian.design/components/checkbox/usage"),
+      },
+      carbon: {
+        headline: "Multiple items in a set",
+        points: [
+          "Used in forms, for filtering and batch actions, and for agreeing to terms.",
+          "A parent checkbox can select or deselect all of its children; partial selection is the indeterminate state.",
+          "If people can select only one option, use radio buttons instead.",
+        ],
+        citation: read9("carbon", "Carbon, Checkbox", "https://www.carbondesignsystem.com/building-blocks/core/components/checkbox/guidelines"),
+      },
+      uswds: {
+        headline: "Vertical lists, positive labels",
+        points: [
+          "Make the label selectable, not only the box.",
+          "List options vertically. Horizontal listings make it hard to tell which label belongs to which box.",
+          "Use positive statements in labels, not negative ones.",
+          "Space selections adequately for touch screens. A tile variant gives larger touch targets.",
+        ],
+        citation: read9("uswds", "USWDS, Checkbox", "https://designsystem.digital.gov/components/checkbox/"),
+      },
     },
     takeaway:
-      "All four agree on the core: checkboxes for many, radios for one, and a mixed state for a parent. GOV.UK adds two rules worth taking anywhere: never pre-select, and offer an explicit none.",
+      "Every system here agrees on the core: checkboxes for many, radios for one. Most describe a mixed state for a parent checkbox. GOV.UK adds two rules worth taking anywhere: never pre-select, and offer an explicit none. USWDS adds a third: list them vertically, with labels that are positive statements.",
   },
   {
     id: "radio",
@@ -1194,9 +1342,39 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: src("govuk", "GOV.UK Design System, Radios", "https://design-system.service.gov.uk/components/radios/"),
       },
+      atlassian: {
+        headline: "Default to the safest option",
+        points: [
+          "Never preselect a high-risk option, especially for payment, privacy or security.",
+          "Make one option the default: the safest and most private first, otherwise the most likely.",
+          "List options in a logical order, such as most to least likely.",
+          "If you need an unselected state, add a None option.",
+        ],
+        citation: read9("atlassian", "Atlassian Design System, Radio usage", "https://atlassian.design/components/radio/usage"),
+      },
+      carbon: {
+        headline: "One item in a set",
+        points: [
+          "Used in forms and to change from one setting to another.",
+          "If people can select several options, use checkboxes instead.",
+          "By default, no option is preselected.",
+          "Labels sit to the right of the inputs in left-to-right languages.",
+        ],
+        citation: read9("carbon", "Carbon, Radio button", "https://www.carbondesignsystem.com/building-blocks/core/components/radio-button/guidelines"),
+      },
+      uswds: {
+        headline: "Set defaults with caution",
+        points: [
+          "Use radio buttons when people select only one option from mutually exclusive choices.",
+          "Setting a default value can bias a decision, seem pushy, or alienate people who do not fit your assumptions.",
+          "List items vertically; horizontal layouts make labels hard to match to buttons.",
+          "If people should be able to select nothing, use checkboxes or add a none of the above option.",
+        ],
+        citation: read9("uswds", "USWDS, Radio buttons", "https://designsystem.digital.gov/components/radio-buttons/"),
+      },
     },
     takeaway:
-      "Radios are for short lists where seeing every option helps. Past the point where the list is hard to scan, three systems send you to a select. Stack them vertically unless there are only two short options.",
+      "Radios are for short lists where seeing every option helps; when the list is long or space is short, several systems send you to a select. They disagree on defaults: Atlassian says to preselect the safest option, Carbon preselects nothing, and USWDS warns that a default can bias the choice. Stack them vertically unless there are only two short options.",
   },
   {
     id: "alert",
@@ -1244,9 +1422,39 @@ export const explorerTopics: ExplorerTopic[] = [
         ],
         citation: src("govuk", "GOV.UK Design System, Notification banner", "https://design-system.service.gov.uk/components/notification-banner/"),
       },
+      atlassian: {
+        headline: "Section messages persist",
+        points: [
+          "Section messages communicate important information in a section of a screen, and persist until the situation is resolved.",
+          "Use them for potentially destructive consequences, required actions, and connectivity or authentication issues.",
+          "Do not rely on colour alone to convey severity.",
+          "For warnings and errors, avoid dead ends: say how to proceed.",
+        ],
+        citation: read9("atlassian", "Atlassian Design System, Section message usage", "https://atlassian.design/components/section-message/usage"),
+      },
+      carbon: {
+        headline: "Disruptive, so used sparingly",
+        points: [
+          "Notifications inform people of updates or changes to system status. They are disruptive and should be used sparingly.",
+          "Inline notifications appear in task flows, usually at the top of the content area.",
+          "Toast notifications are time-based and disappear after a few seconds.",
+          "Callouts load with the page, sit in context and cannot be dismissed.",
+        ],
+        citation: read9("carbon", "Carbon, Notification", "https://www.carbondesignsystem.com/building-blocks/core/components/notification/guidelines"),
+      },
+      uswds: {
+        headline: "Status and validation messages",
+        points: [
+          "An alert keeps people informed of system status, or confirms or corrects an action they just took.",
+          "On long forms, always include in-line validation as well as any message at the top.",
+          "For destructive actions, use a more intrusive pattern such as a confirmation modal.",
+          "Keep the alert title to one line.",
+        ],
+        citation: read9("uswds", "USWDS, Alert", "https://designsystem.digital.gov/components/alert/"),
+      },
     },
     takeaway:
-      "The same word means different things: Apple's alert blocks the screen, while SGDS's alert and GOV.UK's banner sit in the page and Material's snackbar disappears on its own. Choose by how much interruption the message deserves, and use every kind sparingly.",
+      "The same word means different things: Apple's alert blocks the screen, while SGDS's alert and GOV.UK's banner sit in the page and Material's snackbar disappears on its own. Carbon names the kinds outright: inline, toast and callout. Atlassian's section message stays until the situation is resolved. Choose by how much interruption the message deserves, and use every kind sparingly.",
   },
   {
     id: "touch-targets",
