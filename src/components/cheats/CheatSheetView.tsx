@@ -2,6 +2,7 @@
 
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { sheetAiLinks } from "@/data/ai";
 import { useContentContext } from "@/hooks/useLibrary";
@@ -39,6 +40,7 @@ const extras: Record<string, { id: string; title: string }[]> = {
 
 export function CheatSheetView({ sheet }: { sheet: CheatSheet }) {
   const today = useToday();
+  const router = useRouter();
   const { ruleCount, sourceIds, dateVerified } = sheetStats(sheet);
   const context = useContentContext();
   const aiLink = sheetAiLinks[sheet.slug];
@@ -61,8 +63,9 @@ export function CheatSheetView({ sheet }: { sheet: CheatSheet }) {
     if (sheet.slug !== "responsive-design") return;
     const moved: Record<string, string> = { "#iphone-duo": "#iphone-duo", "#foldables": "#foldables", "#foldable-guide": "#recommends" };
     const target = moved[window.location.hash];
-    if (target) window.location.replace(`/cheat-sheets/foldables${window.location.search}${target}`);
-  }, [sheet.slug]);
+    // Through the router, so the base path the site is served under is added.
+    if (target) router.replace(`/cheat-sheets/foldables/${window.location.search}${target}`);
+  }, [sheet.slug, router]);
 
   // Recording the visit is what lets the library flag later changes.
   useEffect(() => {

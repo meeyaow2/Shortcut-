@@ -13,7 +13,7 @@ npm install
 npm run dev
 ```
 
-Then open http://localhost:3000.
+Then open http://localhost:3000/Shortcut-/. The site is served under the `/Shortcut-` base path everywhere, including in development, so links behave the same as on GitHub Pages.
 
 ## Building
 
@@ -21,11 +21,29 @@ Then open http://localhost:3000.
 npm run build
 ```
 
-`npm run lint` and `npx tsc --noEmit` check the code without building. `npm start` serves the production build.
+This writes a static site to `out/` (`output: "export"` in `next.config.ts`). `npm run lint` and `npx tsc --noEmit` check the code without building. `npm start` does not work with a static export; to look at a production build, deploy it or use `npm run dev`.
+
+On Windows, Next.js 16.4 writes the export's prefetch files (`__next.*.txt`) into nested folders instead of flat files, so a Windows build served locally shows 404s for link prefetches. Pages and navigation still work. The GitHub Actions build runs on Linux and writes them correctly.
 
 ## Deployment
 
-The project deploys through Vercel, connected to this GitHub repository. A push to `main` updates the live site. A push to any other branch, or a pull request, gets its own preview URL. No Vercel configuration file is needed.
+The site is a static export hosted on GitHub Pages at https://meeyaow2.github.io/Shortcut-/.
+
+`.github/workflows/deploy-pages.yml` runs on every push to `main`, and can be run by hand from the Actions tab (Deploy to GitHub Pages → Run workflow). It installs dependencies with `npm ci` from `package-lock.json`, runs `npm run build`, and publishes `out/` to Pages.
+
+One-time setup in the repository on GitHub:
+
+1. Settings → Pages → Build and deployment → Source: choose **GitHub Actions**.
+2. Settings → Environments → `github-pages` (created by the first run): if a deployment branch rule is set, it must allow `main`.
+
+What a static host changes:
+
+- `basePath` is `/Shortcut-`. Use `next/link`, `useRouter` or `ButtonLink` for internal links so the base path is added; a hard-coded `href="/…"` on a plain `<a>`, or `window.location` set to `/…`, skips it and breaks on Pages.
+- `trailingSlash: true` writes each route as `route/index.html`, so direct links and refreshes work with or without the slash.
+- Dynamic routes must list every page in `generateStaticParams`. A path that is not listed is not built, and Pages shows the 404 page for it.
+- `cacheComponents` and `partialPrefetching` are off. They turn on Partial Prerendering, which needs a server, and `next build` refuses it with a static export.
+- Search, filters and the viewport selection read the query string in the browser, and reader preferences stay in `localStorage` (`shortcut.library.v1`), so they all work without a server. `localStorage` is shared by every project under `meeyaow2.github.io`, which is why the key is namespaced.
+- Server features (API routes, Server Actions, `cookies()`, `headers()`, rewrites, redirects, middleware/proxy, ISR, default `next/image` optimisation) are not available.
 
 ## Environment variables
 
