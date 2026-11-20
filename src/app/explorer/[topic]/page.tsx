@@ -61,7 +61,9 @@ async function Topic({ params }: Props) {
       </header>
       <div className="pt-8">
         {topic.id === "design-tokens" && <TokenLadder />}
-        {topic.id === "design-tokens" && <h2 className="mb-4 text-2xl font-semibold">How the systems compare</h2>}
+        {/* Every topic needs this level between the page title and each system's column heading; only the
+            tokens page shows it, because there it separates the comparison from the ladder above. */}
+        <h2 className={topic.id === "design-tokens" ? "mb-4 text-2xl font-semibold" : "sr-only"}>How the systems compare</h2>
         <TopicComparison key={topic.id} topic={topic} />
       </div>
     </div>

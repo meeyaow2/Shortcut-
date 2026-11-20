@@ -49,17 +49,19 @@ function Hit({ hit, onNavigate }: { hit: SearchHit; onNavigate?: () => void }) {
   );
 }
 
-function Groups({ results, onNavigate }: { results: Results; onNavigate?: () => void }) {
+/** Groups inside a `region` sit under that region's h2, so they take the next heading level and name the region in their label. */
+function Groups({ results, onNavigate, region }: { results: Results; onNavigate?: () => void; region?: string }) {
+  const Heading = region ? "h3" : "h2";
   return (
     <div className="space-y-4">
       {hitGroups.map(({ type, label }) => {
         const hits = results[type];
         if (hits.length === 0) return null;
         return (
-          <section key={type} aria-label={label}>
-            <h3 className="px-3 pb-1 font-sans text-sm font-semibold tracking-normal text-ink-3">
+          <section key={type} aria-label={region ? `${region}: ${label}` : label}>
+            <Heading className="px-3 pb-1 font-sans text-sm font-semibold tracking-normal text-ink-3">
               {label} <span className="font-normal">({hits.length})</span>
-            </h3>
+            </Heading>
             <ul>
               {hits.map((hit) => (
                 <li key={`${hit.type}:${hit.id}`}>
@@ -93,7 +95,7 @@ export function SearchResults({ results, onNavigate }: { results: Results; onNav
           <h2 className="mx-3 mb-3 border-b-2 border-ink pb-2 font-display text-lg font-semibold">
             {contextLabels[context]} <span className="font-sans text-sm font-normal text-ink-3">({countHits(split[context])})</span>
           </h2>
-          <Groups results={split[context]} onNavigate={onNavigate} />
+          <Groups results={split[context]} onNavigate={onNavigate} region={contextLabels[context]} />
         </section>
       ))}
     </div>
