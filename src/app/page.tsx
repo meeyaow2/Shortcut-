@@ -25,6 +25,7 @@ const quickEntries = [
   { label: "Accessibility", href: "/cheat-sheets/accessibility" },
   { label: "Responsive", href: "/cheat-sheets/responsive-design" },
   { label: "Safe starting points", href: "/starting-points" },
+  { label: "Solo Designer Kit", href: "/solo-designer" },
   { label: "Design QA", href: "/checks" },
   { label: "Singapore UX", href: "/singapore" },
 ];

@@ -235,7 +235,7 @@ export default function FigmaPage() {
               </li>
             ))}
           </ol>
-          <aside aria-label="Figma cheat sheets" className="lg:pt-3">
+          <nav aria-label="Figma cheat sheets" className="lg:pt-3">
             <h3 className="font-sans text-sm font-semibold tracking-normal">Figma cheat sheets</h3>
             <ul className="mt-2 space-y-2">
               {figmaSheets.map((sheet) => (
@@ -248,7 +248,7 @@ export default function FigmaPage() {
               ))}
             </ul>
             {plannedFigmaSheets.length > 0 && <p className="mt-3 text-sm text-ink-2">Not written yet: {plannedFigmaSheets.join(", ")}.</p>}
-          </aside>
+          </nav>
         </div>
       </section>
 

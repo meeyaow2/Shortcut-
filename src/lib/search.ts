@@ -12,6 +12,7 @@ import { openResources, practiceGuides, practiceTemplates } from "@/data/practic
 import { prompts } from "@/data/prompts";
 import { polishExamples, referenceCaseStudies, uxBreakdowns } from "@/data/references";
 import { resources } from "@/data/resources";
+import { soloCheckpoints, soloPrompts } from "@/data/solo";
 import { getSource } from "@/data/sources";
 import { caseStudies, getSystem, systems, uiConcepts } from "@/data/systems";
 import { updates } from "@/data/updates";
@@ -367,6 +368,16 @@ const index: Doc[] = [
     doc(
       { type: "workflow", id: l.id, title: "Lesson: " + l.title, detail: l.takeaway, href: "/ai/learn#" + l.id, context: "global", contentType: "Craft guidance" },
       l.points.join(" ") + " ai learn",
+    ),
+  ),
+  doc(
+    { type: "practice", id: "solo-designer", title: "Solo Designer Kit", detail: "Six checkpoints from brief to build, with review prompts, for a designer working alone.", href: "/solo-designer", context: "global", contentType: "Guide" },
+    "solo designer only designer one person team alone freelance end to end sole designer " + soloCheckpoints.map((c) => [c.when, c.title, c.do, c.output].join(" ")).join(" "),
+  ),
+  ...soloPrompts.map((p) =>
+    doc(
+      { type: "prompt", id: "solo-" + p.id, title: "Prompt: " + p.label.toLowerCase(), detail: p.useWhen, href: "/solo-designer#" + p.id, context: "global", contentType: "Solo Designer Kit" },
+      p.text + " ai prompt review solo designer",
     ),
   ),
   ...prompts.map((p) =>
