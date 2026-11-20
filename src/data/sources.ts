@@ -26,6 +26,7 @@ export const sources: Source[] = [
   { id: "gojek", name: "Gojek Design", short: "Gojek", url: "https://www.gojek.design/", color: "#1F6B2A", tint: "#E3F3E5", context: "global", organisation: "Gojek", sourceType: "article", requirementLevel: "best-practice" },
   { id: "grab", name: "Grab", short: "Grab", url: "https://engineering.grab.com/categories/design/", color: "#00632B", tint: "#E2F4E8", context: "global", organisation: "Grab", sourceType: "article", requirementLevel: "best-practice" },
   { id: "granola", name: "Granola", short: "Granola", url: "https://www.granola.ai/updates", color: "#4A5A1E", tint: "#EEF2DD", context: "global", organisation: "Granola", sourceType: "tool-documentation", requirementLevel: "recommendation" },
+  { id: "google", name: "Google for Developers", short: "Google", url: "https://developers.googleblog.com/", color: "#1A4D99", tint: "#E6EEFA", context: "global", organisation: "Google", sourceType: "tool-documentation", requirementLevel: "recommendation" },
 ];
 
 const byId = new Map(sources.map((s) => [s.id, s]));

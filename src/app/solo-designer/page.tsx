@@ -1,126 +1,162 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PageHeader } from "@/components/ui/primitives";
+import { PromptBlock } from "@/components/ai/Ai";
+import { EditorialLabel } from "@/components/craft/Craft";
+import { SourceBadge } from "@/components/source/Source";
+import { ExternalLink, PageHeader } from "@/components/ui/primitives";
+import { SOLO_REVIEWED, soloCheckpoints, soloPrompts, soloUpdateIds } from "@/data/solo";
+import { updates } from "@/data/updates";
+import { formatDate } from "@/lib/dates";
+import type { Update } from "@/types";
 
-export const metadata: Metadata = { title: "For the solo designer" };
+export const metadata: Metadata = {
+  title: "Solo Designer Kit",
+  description: "Checkpoints, review prompts and recent AI changes for a designer carrying a product from brief to build alone.",
+};
 
-const routines = [
-  {
-    time: "Before starting",
-    title: "Turn an ambiguous request into a problem brief",
-    do: "Write the audience, job to be done, success condition, constraints, and what is still unknown. Confirm these with a stakeholder before drawing screens.",
-    output: "One-page brief + three open questions",
-    check: "Can someone explain the problem without seeing a proposed UI?",
-    href: "/practice",
-    link: "Research and problem framing",
-  },
-  {
-    time: "Before choosing a layout",
-    title: "Compare two real alternatives",
-    do: "Sketch two ways to complete the main task. Use Shortcut's pattern and design-system references to compare trade-offs, rather than asking AI to pick the prettier one.",
-    output: "Two annotated flows and one decision",
-    check: "Can you explain why the chosen flow is better for this user and constraint?",
-    href: "/explorer",
-    link: "Compare design systems",
-  },
-  {
-    time: "Before handoff",
-    title: "Review the states that usually get missed",
-    do: "Check loading, empty, error, success, permissions, long content, keyboard focus, mobile widths, and destructive actions. Record unresolved behaviour instead of inventing it.",
-    output: "States checklist + issue log",
-    check: "Could an engineer implement the edge cases without guessing?",
-    href: "/checks/before-you-send-it",
-    link: "Before You Send It",
-  },
-  {
-    time: "After feedback",
-    title: "Keep decisions traceable",
-    do: "Separate what was observed, what someone requested, what you inferred, and what was approved. Revisit the important assumptions with users when possible.",
-    output: "Short decision log with evidence and owner",
-    check: "Can you tell a later reviewer what changed and why?",
-    href: "/ai/review",
-    link: "Review AI-assisted work",
-  },
-];
+const linkClass = "font-medium text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent";
 
-const prompts = [
-  {
-    label: "Challenge a flow",
-    text: "You are reviewing a product flow, not choosing its visual style. Here is the user task, constraints and proposed steps: [paste]. List missing states, conflicting assumptions and two simpler alternatives. Mark every inference; do not invent user evidence.",
-  },
-  {
-    label: "Audit a component",
-    text: "Review this component specification: [paste]. Create a state matrix for default, hover, focus, disabled, loading, empty, success and error where applicable. Flag responsive, keyboard and screen-reader questions. Do not claim WCAG conformance without testing.",
-  },
-  {
-    label: "Prepare handoff",
-    text: "From these approved screens and notes: [paste], draft a handoff checklist covering behaviours, breakpoints, state changes, content rules and open questions. Keep confirmed facts separate from assumptions. Do not add new features.",
-  },
+const changes = soloUpdateIds
+  .map((id) => updates.find((update) => update.id === id))
+  .filter((update): update is Update => update !== undefined);
+
+const contents = [
+  { href: "#checkpoints", label: "Checkpoints" },
+  { href: "#prompts", label: "Review prompts" },
+  { href: "#changed", label: "What changed" },
 ];
 
 export default function SoloDesignerPage() {
   return (
     <div className="page">
       <PageHeader
-        title="For the solo designer"
-        lede="A compact working kit for when you're the researcher, interaction designer, design-system owner and reviewer. Start with a decision, not another tool."
-      />
-      <p className="mt-6 max-w-3xl text-ink-2">
-        Shortcut editorial · Reviewed 20 November 2026. These are practical working routines, not official requirements. Follow the linked standards and original sources for authoritative guidance.
-      </p>
+        title="Solo Designer Kit"
+        lede="For when you are the researcher, interaction designer, design-system owner and reviewer at once. Six checkpoints, the prompts that support them, and the recent AI changes worth acting on."
+      >
+        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <EditorialLabel kind="craft-guidance" dateReviewed={SOLO_REVIEWED} />
+          <nav aria-label="On this page">
+            <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+              {contents.map((item) => (
+                <li key={item.href}>
+                  <a href={item.href} className="inline-flex min-h-11 items-center text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink hover:decoration-ink md:min-h-0">
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </PageHeader>
 
-      <section className="section-space max-w-4xl" aria-labelledby="routines">
-        <h2 id="routines" className="border-b-2 border-ink pb-2 text-2xl font-semibold">Four checkpoints for your week</h2>
-        <ol className="divide-y divide-line">
-          {routines.map((routine, index) => (
-            <li key={routine.title} className="grid gap-3 py-6 md:grid-cols-[8rem_1fr]">
-              <div className="font-mono text-sm text-ink-2">{String(index + 1).padStart(2, "0")} / {routine.time}</div>
-              <div className="space-y-2">
-                <h3 className="font-display text-xl font-semibold">{routine.title}</h3>
-                <p>{routine.do}</p>
-                <p className="text-ink-2"><strong className="text-ink">Leave with:</strong> {routine.output}</p>
-                <p className="text-ink-2"><strong className="text-ink">Ask yourself:</strong> {routine.check}</p>
-                <Link className="inline-flex min-h-11 items-center font-medium underline underline-offset-4 hover:text-accent" href={routine.href}>{routine.link}</Link>
+      <section className="max-w-4xl pt-8" aria-labelledby="checkpoints">
+        <h2 id="checkpoints" className="anchor-target border-b-2 border-ink pb-2 text-2xl font-semibold md:text-3xl">
+          Six checkpoints
+        </h2>
+        <p className="mt-3 max-w-read text-ink-2">
+          Without a team, nobody stops you at the points where a review would normally happen. Run these yourself. Each one ends with something you can show.
+        </p>
+        <ol className="mt-2 divide-y divide-line">
+          {soloCheckpoints.map((checkpoint, index) => (
+            <li key={checkpoint.id} id={checkpoint.id} className="anchor-target grid gap-x-8 gap-y-2 py-6 md:grid-cols-[9rem_1fr]">
+              <p className="flex gap-3 text-sm text-ink-2 md:flex-col md:gap-0.5">
+                <span className="font-mono text-ink-3">{String(index + 1).padStart(2, "0")}</span>
+                <span className="font-medium">{checkpoint.when}</span>
+              </p>
+              <div className="min-w-0 max-w-read">
+                <h3 className="font-display text-xl font-semibold tracking-tight">{checkpoint.title}</h3>
+                <p className="mt-2">{checkpoint.do}</p>
+                <dl className="mt-3 grid gap-x-4 gap-y-1.5 text-[0.9375rem] sm:grid-cols-[7.5rem_1fr]">
+                  <dt className="font-semibold text-ink-3">Leave with</dt>
+                  <dd className="text-ink-2">{checkpoint.output}</dd>
+                  <dt className="font-semibold text-ink-3">Ask yourself</dt>
+                  <dd className="text-ink-2">{checkpoint.check}</dd>
+                </dl>
+                <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
+                  <Link href={checkpoint.link.href} className={`inline-flex min-h-11 items-center md:min-h-0 ${linkClass}`}>
+                    {checkpoint.link.label}
+                  </Link>
+                  {checkpoint.promptId && (
+                    <a href={`#${checkpoint.promptId}`} className="inline-flex min-h-11 items-center text-ink-2 underline underline-offset-4 hover:text-ink md:min-h-0">
+                      Prompt: {soloPrompts.find((p) => p.id === checkpoint.promptId)?.label}
+                    </a>
+                  )}
+                </p>
               </div>
             </li>
           ))}
         </ol>
       </section>
 
-      <section className="section-space max-w-4xl" aria-labelledby="reuse">
-        <h2 id="reuse" className="border-b-2 border-ink pb-2 text-2xl font-semibold">Three reusable AI review prompts</h2>
-        <p className="mt-3 text-ink-2">Copy the one that matches your task. Give the model your actual requirements and approved components; never paste confidential client material into an unapproved service.</p>
-        <div className="mt-5 space-y-4">
-          {prompts.map((prompt) => (
-            <details key={prompt.label} className="rounded-md border border-line px-4 py-3">
-              <summary className="cursor-pointer font-semibold">{prompt.label}</summary>
-              <p className="mt-3 whitespace-pre-wrap text-ink-2">{prompt.text}</p>
-            </details>
+      <section className="section-space max-w-4xl" aria-labelledby="prompts">
+        <h2 id="prompts" className="anchor-target border-b-2 border-ink pb-2 text-2xl font-semibold md:text-3xl">
+          Review prompts
+        </h2>
+        <p className="mt-3 max-w-read text-ink-2">
+          Fill in the brackets with your real requirements and approved components. Never paste confidential client material into a service your organisation has not approved.
+        </p>
+        <div className="mt-6 space-y-8">
+          {soloPrompts.map((prompt) => (
+            <article key={prompt.id} id={prompt.id} className="anchor-target max-w-read">
+              <h3 className="font-display text-lg font-semibold tracking-tight">{prompt.label}</h3>
+              <p className="mt-1 text-ink-2">{prompt.useWhen}</p>
+              <div className="mt-3">
+                <PromptBlock text={prompt.text} />
+              </div>
+            </article>
           ))}
         </div>
+        <p className="mt-6">
+          <Link href="/ai/prompts" className={linkClass}>
+            More prompts in the Prompt Library
+          </Link>
+        </p>
       </section>
 
-      <section className="section-space max-w-4xl" aria-labelledby="new">
-        <h2 id="new" className="border-b-2 border-ink pb-2 text-2xl font-semibold">What changed in October–November 2026</h2>
-        <div className="mt-4 space-y-5">
-          <div>
-            <h3 className="font-display text-xl font-semibold">Figma agent: reduce busywork, not design judgement</h3>
-            <p className="mt-1">Figma published examples on 9 November of annotating designs from connected feedback and using repeatable agent instructions. For solo work: try one review-to-annotation exercise and manually verify every action item.</p>
-            <a className="mt-1 inline-block min-h-11 py-2 underline underline-offset-4" href="https://www.figma.com/blog/6-easy-ways-to-use-the-figma-agent-right-now/" target="_blank" rel="noopener noreferrer">Figma: six practical examples (9 Nov)</a>
-          </div>
-          <div>
-            <h3 className="font-display text-xl font-semibold">Code-backed design: separate thinking from shipping</h3>
-            <p className="mt-1">Figma's 15 October update describes ways to bring code-backed explorations onto the canvas. Use prototypes to investigate a flow, but document accessibility, edge states and handoff expectations before treating them as production-ready.</p>
-            <a className="mt-1 inline-block min-h-11 py-2 underline underline-offset-4" href="https://www.figma.com/blog/build-by-design/" target="_blank" rel="noopener noreferrer">Figma: Build by Design (15 Oct)</a>
-          </div>
-          <div>
-            <h3 className="font-display text-xl font-semibold">A2UI 1.0: agent interfaces can reuse real components</h3>
-            <p className="mt-1">Google announced A2UI 1.0 on 11 November, a protocol where agents describe interfaces and apps render them using registered components. For designers of AI products, focus on confirmation, recoverability, clear action states and design-system boundaries—not generating arbitrary cards.</p>
-            <a className="mt-1 inline-block min-h-11 py-2 underline underline-offset-4" href="https://developers.googleblog.com/en/a2ui-10-build-delightful-fast-reliable-agentic-experiences/" target="_blank" rel="noopener noreferrer">Google: A2UI 1.0 (11 Nov)</a>
-          </div>
+      <section className="section-space max-w-4xl" aria-labelledby="changed">
+        <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-1 border-b-2 border-ink pb-2">
+          <h2 id="changed" className="anchor-target text-2xl font-semibold md:text-3xl">
+            What changed, October–November 2026
+          </h2>
+          <Link href="/ai/updates" className="-my-2 inline-flex min-h-11 items-center whitespace-nowrap text-sm font-medium text-ink-2 hover:text-accent">
+            All AI updates
+          </Link>
         </div>
-        <p className="mt-5 text-sm text-ink-2">Release descriptions above reflect the linked vendor announcements. Suggested designer actions are Shortcut editorial and not vendor instructions.</p>
-        <Link href="/ai/updates" className="mt-4 inline-flex min-h-11 items-center underline underline-offset-4 hover:text-accent">See all AI updates</Link>
+        <p className="mt-3 max-w-read text-ink-2">
+          <strong className="font-semibold text-ink">Announced</strong> restates the vendor&apos;s own post.{" "}
+          <strong className="font-semibold text-ink">Try</strong> is Shortcut&apos;s suggestion, not a vendor instruction.
+        </p>
+        <ul className="mt-2 divide-y divide-line">
+          {changes.map((update) => (
+            <li key={update.id} className="grid gap-x-8 gap-y-2 py-6 md:grid-cols-[9rem_1fr]">
+              <div className="flex items-center gap-3 md:flex-col md:items-start md:gap-1.5">
+                <SourceBadge id={update.sourceId} />
+                <span className="whitespace-nowrap text-sm text-ink-3">{formatDate(update.datePublished)}</span>
+              </div>
+              <div className="min-w-0 max-w-read">
+                <h3 className="font-display text-xl font-semibold tracking-tight">
+                  <Link href={`/ai/updates#${update.id}`} className="hover:text-accent">
+                    {update.title}
+                  </Link>
+                </h3>
+                <dl className="mt-2 space-y-2">
+                  <div>
+                    <dt className="text-sm font-semibold text-ink-3">Announced</dt>
+                    <dd className="text-ink-2">{update.summary}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-sm font-semibold text-ink-3">Try</dt>
+                    <dd className="font-medium">{update.designerAction}</dd>
+                  </div>
+                </dl>
+                <p className="mt-2 text-sm">
+                  <ExternalLink href={update.sourceUrl}>Read the original post</ExternalLink>
+                  {update.dateVerified && <span className="text-ink-3"> · Checked {formatDate(update.dateVerified)}</span>}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </section>
     </div>
   );

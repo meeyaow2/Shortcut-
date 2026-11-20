@@ -67,6 +67,7 @@ const nav: NavItem[] = [
       { href: "/practice", label: "Overview", group: "Start here" },
       { href: "/practice/templates", label: "Templates", group: "Start here" },
       { href: "/practice/library", label: "Open Design Library", group: "Start here" },
+      { href: "/solo-designer", label: "Solo Designer Kit", group: "Start here" },
       { href: "/practice/discovery", label: "Discovery", group: "Research" },
       { href: "/practice/recruiting", label: "Recruiting Participants", group: "Research" },
       { href: "/practice/user-interview", label: "User Interviews", group: "Research" },
@@ -198,7 +199,7 @@ export function Header() {
       </header>
 
       {/* Scrolls away with the page; the choice it sets is remembered. */}
-      <div className="border-b border-line">
+      <div role="region" aria-label="Guidance region" className="border-b border-line">
         <div className="page flex h-14 items-center justify-start md:h-11 nav:justify-end">
           <ContextSwitch />
         </div>

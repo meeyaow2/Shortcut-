@@ -27,6 +27,7 @@ export type SourceId =
   | "wai"
   | "grab"
   | "granola"
+  | "google"
   | "gojek";
 
 export interface Source {
