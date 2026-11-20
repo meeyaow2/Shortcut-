@@ -10,6 +10,7 @@ import { prompts } from "@/data/prompts";
 export const metadata: Metadata = { title: "AI + Design" };
 
 const doors = [
+  { href: "/solo-designer", title: "Solo designer kit", detail: "Four weekly checkpoints, reusable critique prompts and newly verified AI design changes." },
   { href: "/ai/workflow", title: "AI in your workflow", detail: `${aiWorkflows.length} stages, from discovery to handoff: where AI helps, what to give it, what to check.` },
   { href: "/ai/prompts", title: "Prompt Library", detail: `${prompts.length} task-specific prompts, each with what to provide and what to verify.` },
   { href: "/ai/tools", title: "AI tools", detail: `${aiTools.length} tools, organised by the job you are doing, with when to reach for each.` },
